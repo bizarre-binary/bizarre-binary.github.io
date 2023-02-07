@@ -25,7 +25,7 @@ A bit flipper
 
 <label>
   <input type="checkbox" bind:checked />
-  <span class="bg-blue-300" />
+  <span />
 </label>
 
 <style>
@@ -36,17 +36,12 @@ A bit flipper
 
   label > input + span {
     font-size: 1.2rem;
-    width: 2rem;
     height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 0.1rem solid var(--blue);
-    border-radius: 50%;
-    background: var(--darkblue);
     transition: 0.1s all;
     cursor: pointer;
-    z-index: 999 !important;
   }
 
   label > input + span:hover {

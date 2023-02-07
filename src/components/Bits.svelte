@@ -50,34 +50,37 @@ Take an integer and represent that as a series of bits
     integer = constructInteger(bits);
   }
 
-  const flyOption = { duration: 500 };
+  const transitionOptions = { duration: 500 };
 </script>
 
-<div>
-  <table class="table-auto border border-slate-500 border-collapse">
-    <thead>
-      <tr>
-        {#each sups as sup, idx (idx)}
-          <th transition:fly={flyOption} class="border">
-            <small>2<sup>{sup}</sup></small>
-          </th>
-        {/each}
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {#each bits as bit, idx (idx)}
-          <td
-            transition:fly={flyOption}
-            class="border hover:border-slate-500 text-center"
-            class:bg-yellow-300={!!bit}
-            class:text-gray-600={!!bit}
-          >
-            <Bit checked={!!bit} position={idx} on:flip={onFlip} />
-          </td>
-        {/each}
-      </tr>
-    </tbody>
-  </table>
-  <div>{JSON.stringify(debug)}</div>
-</div>
+<table class="table-auto border border-slate-500 border-collapse">
+  <thead>
+    <tr>
+      {#each sups as sup, idx (idx)}
+        <th transition:fly={transitionOptions} class="border">
+          <small>2<sup>{sup}</sup></small>
+        </th>
+      {/each}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <!-- (id) is important for transition animation -->
+      {#each bits as bit, idx (lengthOfBits - idx)}
+        <td
+          transition:fly={transitionOptions}
+          class="border hover:border-slate-500 text-center"
+          class:bg-yellow-200={!!bit}
+          class:text-gray-800={!!bit}
+        >
+          <Bit checked={!!bit} position={idx} on:flip={onFlip} />
+        </td>
+      {/each}
+    </tr>
+    <tr>
+      <td class="hidden" colspan={lengthOfBits}>
+        {JSON.stringify(debug)}
+      </td>
+    </tr>
+  </tbody>
+</table>
