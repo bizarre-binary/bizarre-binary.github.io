@@ -2,8 +2,13 @@
 
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
-import tailwind from '@astrojs/tailwind';
+import UnoCSS from 'unocss/astro';
 
 export default defineConfig({
-  integrations: [svelte(), tailwind()],
+  integrations: [
+    svelte(),
+    UnoCSS({
+      /* options */
+    }),
+  ],
 });
