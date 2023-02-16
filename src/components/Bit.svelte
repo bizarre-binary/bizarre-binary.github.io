@@ -25,7 +25,7 @@ A bit flipper
 
 <label>
   <input type="checkbox" bind:checked />
-  <span />
+  <span class="bg-white" />
 </label>
 
 <style>

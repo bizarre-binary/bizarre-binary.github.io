@@ -7,6 +7,7 @@ Take an integer and represent that as a series of bits
   import { fly } from 'svelte/transition';
 
   export let integer = 0;
+  export let lengthOfBits: number;
   export let multipleOf = 4;
 
   function extractBit(n: number, bag: number[] = []): number[] {
@@ -29,7 +30,9 @@ Take an integer and represent that as a series of bits
   $: remainder = _bits.length % multipleOf;
   $: paddingLength = remainder === 0 ? 0 : multipleOf - remainder;
   $: bits = [...Array.from({ length: paddingLength }, () => 0), ..._bits];
-  $: lengthOfBits = bits.length;
+  $: {
+    lengthOfBits = bits.length;
+  }
   $: debug = { paddingLength, len: _bits.length, changedPosition, _bits, bits };
   $: sups = Array.from(bits.keys(), (k) => lengthOfBits - k - 1);
 
@@ -50,37 +53,52 @@ Take an integer and represent that as a series of bits
     integer = constructInteger(bits);
   }
 
+  $: borderStyle = (idx: number) =>
+    idx % 4 == 0
+      ? 'border-double border-slate-500'
+      : idx % 3 == 0
+      ? 'border-dashed border-slate-500'
+      : 'border-l-1 border-solid border-slate-300';
+
   const transitionOptions = { duration: 500 };
 </script>
 
-<table class="table-auto border border-slate-500 border-collapse">
+<!-- <unocss-safelist class="bg-yellow-200 text-gray-800" /> -->
+<!-- <unocss-safelist class="border-double border-dashed border-x-2 border-r-0 border-slate-300 border-slate-500" /> -->
+
+<div class="hidden text-left">
+  <pre>{JSON.stringify(debug, null, 2)}</pre>
+</div>
+<table class="table-auto border-0 border-r-1 border-slate-300 border-collapse">
   <thead>
     <tr>
       {#each sups as sup, idx (idx)}
-        <th transition:fly={transitionOptions} class="border">
+        <th
+          transition:fly={transitionOptions}
+          class={`border w-bit text-center border-0 border-x-2 border-r-0 ${borderStyle(
+            lengthOfBits - idx
+          )}`}
+        >
           <small>2<sup>{sup}</sup></small>
         </th>
       {/each}
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr class="border-0">
       <!-- (id) is important for transition animation -->
       {#each bits as bit, idx (lengthOfBits - idx)}
         <td
           transition:fly={transitionOptions}
-          class="border hover:border-slate-500 text-center"
+          class={`border-0 border-x-2 border-r-0 border-/slate-500 text-center ${borderStyle(
+            lengthOfBits - idx
+          )}`}
           class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}
         >
           <Bit checked={!!bit} position={idx} on:flip={onFlip} />
         </td>
       {/each}
-    </tr>
-    <tr>
-      <td class="hidden" colspan={lengthOfBits}>
-        {JSON.stringify(debug)}
-      </td>
     </tr>
   </tbody>
 </table>

@@ -3,8 +3,11 @@ A demo that helps develop components
 -->
 <script lang="ts">
   import Bits from './Bits.svelte';
+  import Digits from './Digits.svelte';
 
-  let integer = 100;
+  let lengthOfBits: number;
+  let integer = 42;
+
   const min = 0;
   const max = 999999999;
 
@@ -21,8 +24,8 @@ A demo that helps develop components
 </script>
 
 <div>
-  <table class="border justify-items-end text-right">
-    <thead class="border">
+  <table class="border-0 justify-items-end text-right">
+    <thead class="border-0">
       <tr>
         <th>
           <div class="text-gray-400">
@@ -39,11 +42,35 @@ A demo that helps develop components
           <input {min} {max} type="number" bind:value={integer} class="text-right" />
         </td>
       </tr>
-      <tr
-        ><td>
+      <tr class="hidden">
+        <td>
           <div class="flex">
             <div class="grow" />
-            <Bits bind:integer />
+            <Bits bind:integer bind:lengthOfBits />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex">
+            <div class="grow" />
+            <Digits bind:integer bind:lengthOfBits bitsToBundle={3} />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex">
+            <div class="grow" />
+            <Bits bind:integer bind:lengthOfBits />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex">
+            <div class="grow" />
+            <Digits bind:integer bind:lengthOfBits />
           </div>
         </td>
       </tr>

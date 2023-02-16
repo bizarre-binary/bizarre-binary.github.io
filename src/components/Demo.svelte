@@ -7,5 +7,13 @@ A demo that helps develop components
 
 <div class="flex">
   <div class="grow bg-yellow-100" />
-  <Tables />
+  <div>
+    <Tables />
+  </div>
+</div>
+<div>
+  Add these:
+  <ol>
+    <li>bitwise operations - https://fubark.github.io/cyber/docs/toc/syntax/#bitwise-operators</li>
+  </ol>
 </div>
