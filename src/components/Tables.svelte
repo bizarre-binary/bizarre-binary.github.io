@@ -14,6 +14,15 @@ A demo that helps develop components
   $: if (integer < min) integer = min;
   $: if (integer > max) integer = max;
 
+  const objectMap = <V, R>(
+    obj: { [key: string]: V },
+    fn: (value: V, key: string, index: number) => R
+  ) => Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
+
+  $: formatted = objectMap({ max, min }, (n: number) =>
+    new Intl.NumberFormat('en-US', {}).format(n)
+  );
+
   function increment() {
     integer++;
   }
@@ -29,7 +38,7 @@ A demo that helps develop components
       <tr>
         <th>
           <div class="text-gray-400">
-            <small>min: {min}, max: {max}</small>
+            <small>min: {formatted.min}, max: {formatted.max}</small>
           </div>
         </th>
       </tr>
