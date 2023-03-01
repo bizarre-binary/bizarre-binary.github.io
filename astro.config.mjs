@@ -2,8 +2,8 @@
 
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
-import UnoCSSConfigured from './my.unocss.config';
+import UnoCSS from 'unocss/astro';
 
 export default defineConfig({
-  integrations: [UnoCSSConfigured, svelte()],
+  integrations: [UnoCSS(), svelte()],
 });

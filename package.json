@@ -22,8 +22,10 @@
     "svelte": "^3.55.1"
   },
   "devDependencies": {
+    "@iconify-json/bi": "^1.1.15",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
+    "@unocss/preset-icons": "^0.50.2",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-astro": "^0.23.0",

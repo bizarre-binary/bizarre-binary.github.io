@@ -1,10 +1,17 @@
-// for ./astro.config.mjs
+// why this file? - https://github.com/unocss/unocss/discussions/2280
 
-import UnoCSS from 'unocss/astro';
+import { defineConfig, presetUno } from 'unocss';
+import presetIcons from '@unocss/preset-icons';
 
 const bitWidth = 1.5;
 
-export default UnoCSS({
+export default defineConfig({
+  presets: [
+    presetIcons({
+      /* options */
+    }),
+    presetUno(),
+  ],
   // use `safelist` to include ones that are not scanned from static analysis
   safelist: 'w-bit w-hex w-octal'.split(' '),
   // or include something like this in individual component so it can be scanned <!-- <unocss-safelist class="bg-yellow-200 text-gray-800" /> -->
@@ -26,5 +33,15 @@ export default UnoCSS({
         'max-width': `${n}rem`,
       }),
     ],
+  ],
+  preflights: [
+    {
+      getCSS: () => `
+        h1 {
+          font-size: 1.25rem; /* 18px */
+          line-height: 1.75rem; /* 28px */
+        }
+      `,
+    },
   ],
 });
