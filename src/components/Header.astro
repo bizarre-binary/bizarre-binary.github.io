@@ -1,0 +1,18 @@
+---
+import HeaderLink from '../components/HeaderLink.astro';
+---
+
+<div class="flex flex-row items-center">
+  <div class="i-bi-0-square text-yellow-500 text-xl"></div>
+  <div class="i-bi-1-square-fill text-yellow-400 text-xl mr-1"></div>
+  <a href="/"><h1 class="font-medium">Bizarre Binary</h1></a>
+  <div class="mx-3"></div>
+  <nav>
+    <section class="">
+      <ul class="unset flex gap-4 [&>li]:p-0">
+        <li><HeaderLink href="/toys">Toys</HeaderLink></li>
+        <li><HeaderLink href="/posts">Posts</HeaderLink></li>
+      </ul>
+    </section>
+  </nav>
+</div>

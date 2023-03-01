@@ -1,0 +1,25 @@
+---
+layout: '../../layouts/Post.astro'
+title: 'Bit visualizer'
+---
+import Tables from '../../components/Tables.svelte';
+
+Hi, I'm a bit visualizer!
+
+<div class="flex not-prose" data-theme="ret/ro">
+  <div class="grow bg-yellow-100" />
+  <div>
+    <Tables client:visible />
+  </div>
+</div>
+
+[a corresponding page](../posts/about-bit-visualizer)
+
+<div>
+  Potential things to add:
+  <ol class="list-decimal">
+    <li>bitwise operations - https://fubark.github.io/cyber/docs/toc/syntax/#bitwise-operators</li>
+    <li>https://www.mathsisfun.com/numbers/bases.html</li>
+    <li>may have a tab that can toggle between number, string</li>
+  </ol>
+</div>

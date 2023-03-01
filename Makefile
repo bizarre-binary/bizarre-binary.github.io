@@ -4,7 +4,7 @@ dev: install
 
 .PHONY: install
 install:
-	npm i
+	npm i --legacy-peer-deps
 
 .PHONY: build
 build: install
