@@ -15,16 +15,18 @@ A bit flipper
 
   export let checked = false;
   export let position = 0;
-  $: {
+
+  // avoid `$: dispatch ...` as I want the dispatch to happen from user interaction only
+  const flip = () => {
     dispatch('flip', {
       checked,
       position,
     });
-  }
+  };
 </script>
 
 <label>
-  <input type="checkbox" bind:checked />
+  <input type="checkbox" bind:checked on:change={flip} />
   <span class="bg-white" />
 </label>
 

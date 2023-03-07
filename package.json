@@ -16,19 +16,17 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/mdx": "^0.17.2",
     "@astrojs/svelte": "^2.0.1",
-    "astro": "^2.0.6",
-    "svelte": "^3.55.1"
-  },
-  "devDependencies": {
     "@iconify-json/bi": "^1.1.15",
     "@kidonng/daisyui": "^2.50.0",
+    "@types/lodash-es": "^4.14.191",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "@unocss/preset-icons": "^0.50.2",
     "@unocss/preset-typography": "^0.50.2",
+    "astro": "^2.0.6",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-astro": "^0.23.0",
@@ -36,9 +34,11 @@
     "eslint-plugin-svelte": "^2.15.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
+    "lodash-es": "^4.17.21",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.8.0",
     "prettier-plugin-svelte": "^2.8.1",
+    "svelte": "^3.55.1",
     "unocss": "^0.50.2",
     "unocss-preset-daisy": "^1.2.0"
   }

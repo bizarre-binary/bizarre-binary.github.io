@@ -1,34 +1,51 @@
 <!-- @component
 A demo that helps develop components
 -->
-<script lang="ts">
-  import Bits from './Bits.svelte';
+<script context="module" lang="ts">
+  import Bits, { toBits } from './Bits.svelte';
   import Digits from './Digits.svelte';
-
-  let lengthOfBits: number;
-  let integer = 42;
+  import { debounce } from '../lib/debounce';
 
   const min = 0;
   const max = 999999999;
-
-  $: if (integer < min) integer = min;
-  $: if (integer > max) integer = max;
 
   const objectMap = <V, R>(
     obj: { [key: string]: V },
     fn: (value: V, key: string, index: number) => R
   ) => Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
+</script>
+
+<script lang="ts">
+  let integer = 42;
+  // caculate initial value to prevent initial UI glitch
+  let lengthOfBits = toBits(integer).length;
+
+  $: _integer = integer;
+
+  // throttle integer input update to be out of the way of with svelte transitions
+  const reconsile = debounce((newValue) => {
+    integer = newValue;
+  });
+
+  $: {
+    reconsile(_integer);
+  }
+
+  $: {
+    if (_integer < min) _integer = min;
+    if (_integer > max) _integer = max;
+  }
 
   $: formatted = objectMap({ max, min }, (n: number) =>
     new Intl.NumberFormat('en-US', {}).format(n)
   );
 
   function increment() {
-    integer++;
+    _integer++;
   }
 
   function decrement() {
-    integer--;
+    _integer--;
   }
 </script>
 
@@ -48,15 +65,7 @@ A demo that helps develop components
         <td>
           <button on:click={increment}>+1</button>
           <button on:click={decrement}>-1</button>
-          <input {min} {max} type="number" bind:value={integer} class="text-right" />
-        </td>
-      </tr>
-      <tr class="hidden">
-        <td>
-          <div class="flex">
-            <div class="grow" />
-            <Bits bind:integer bind:lengthOfBits />
-          </div>
+          <input {min} {max} type="number" bind:value={_integer} class="text-right" />
         </td>
       </tr>
       <tr>

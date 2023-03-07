@@ -6,6 +6,10 @@ dev: install
 install:
 	npm i --legacy-peer-deps
 
+.PHONY: clean-install
+clean-install:
+	npm ci --legacy-peer-deps
+
 .PHONY: build
 build: install
 	npm run build

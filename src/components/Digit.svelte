@@ -19,14 +19,14 @@ A digit that represent any number up to hexadecimal
   $: render = digit.toString(base).toUpperCase();
 
   export let position = 0;
-  $: {
+
+  function flip() {
+    digit = digit == 0 ? base - 1 : 0;
+
     dispatch('update', {
       digit,
       position,
     });
-  }
-  function update() {
-    digit = digit == 0 ? base - 1 : 0;
   }
 </script>
 
@@ -34,5 +34,5 @@ A digit that represent any number up to hexadecimal
   type="button"
   bind:value={render}
   class="w-full text-center cursor-pointer bg-white"
-  on:click={update}
+  on:click={flip}
 />
