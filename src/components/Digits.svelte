@@ -24,6 +24,8 @@ Take an integer and represent that as a series of numbers with a base
       : '',
   ].join(' ');
 
+  $: cellBg = bitsToBundle === 3 ? 'bg-sky-200' : 'bg-purple-200';
+
   $: cellClasses = `text-center ${widthClass} ${borderStyle}`;
 
   $: base = Math.pow(2, bitsToBundle);
@@ -44,6 +46,8 @@ Take an integer and represent that as a series of numbers with a base
 
     integer = constructInteger(digits);
   }
+
+  const bgOpacity = (digit: number) => `--un-bg-opacity: ${digit / base};`;
 
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => digits.length - idx;
@@ -66,7 +70,11 @@ Take an integer and represent that as a series of numbers with a base
     <tr>
       <!-- (id) is important for transition animation -->
       {#each digits as digit, idx (reverseIdx(idx))}
-        <td transition:fly={transitionOptions} class={cellClasses}>
+        <td
+          transition:fly={transitionOptions}
+          class={`${cellClasses} ${cellBg}`}
+          style={bgOpacity(digit)}
+        >
           <Digit {digit} {base} position={idx} on:update={onUpdate} />
         </td>
       {/each}

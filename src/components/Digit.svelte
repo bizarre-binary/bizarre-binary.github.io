@@ -33,6 +33,6 @@ A digit that represent any number up to hexadecimal
 <input
   type="button"
   bind:value={render}
-  class="w-full text-center cursor-pointer bg-white"
+  class="w-full text-center cursor-pointer"
   on:click={flip}
 />
