@@ -42,31 +42,29 @@ Take an integer and represent that as a series of bits
   }
 
   $: borderStyle = (idx: number) =>
-    idx % 4 == 0
-      ? 'border-double border-slate-500'
-      : idx % 3 == 0
-      ? 'border-dashed border-slate-500'
-      : 'border-l-1 border-solid border-slate-300';
+    [
+      'border-0 border-l-2 border-r-0',
+      idx % 4 == 0
+        ? 'border-l-slate-200 border-solid'
+        : idx % 3 == 0
+        ? 'border-l-slate-300 border-dashed'
+        : 'border-l-2 border-l-hidden',
+    ].join(' ');
 
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => lengthOfBits - idx;
 </script>
 
-<!-- <unocss-safelist class="bg-yellow-200 text-gray-800" /> -->
-<!-- <unocss-safelist class="border-double border-dashed border-x-2 border-r-0 border-slate-300 border-slate-500" /> -->
-
 <div class="hidden text-left">
   <pre>{JSON.stringify(debug, null, 2)}</pre>
 </div>
-<table class="table-auto border-0 border-r-1 border-slate-300 border-collapse">
-  <thead>
+<table class="table-auto border-collapse">
+  <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
           transition:fly={transitionOptions}
-          class={`border w-bit text-center border-0 border-x-2 border-r-0 ${borderStyle(
-            lengthOfBits - idx
-          )}`}
+          class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
         >
           <small>2<sup>{sup}</sup></small>
         </th>
@@ -79,9 +77,7 @@ Take an integer and represent that as a series of bits
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
           transition:fly={transitionOptions}
-          class={`border-0 border-x-2 border-r-0 border-/slate-500 text-center ${borderStyle(
-            lengthOfBits - idx
-          )}`}
+          class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
           class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}
         >

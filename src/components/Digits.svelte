@@ -15,7 +15,16 @@ Take an integer and represent that as a series of numbers with a base
   export let lengthOfBits: number;
 
   $: widthClass = bitsToBundle === 4 ? 'w-hex' : bitsToBundle === 3 ? 'w-octal' : '';
-  $: borderStyle = bitsToBundle === 4 ? 'border-double' : bitsToBundle === 3 ? 'border-dashed' : '';
+  $: borderStyle = [
+    'border-0 border-l-2',
+    bitsToBundle === 4
+      ? 'border-slate-200 border-solid'
+      : bitsToBundle === 3
+      ? 'border-slate-300 border-dashed'
+      : '',
+  ].join(' ');
+
+  $: cellClasses = `text-center ${widthClass} ${borderStyle}`;
 
   $: base = Math.pow(2, bitsToBundle);
   $: extractDigits = genExtractDigits(bitsToBundle);
@@ -40,19 +49,14 @@ Take an integer and represent that as a series of numbers with a base
   const reverseIdx = (idx: number) => digits.length - idx;
 </script>
 
-<!-- <unocss-safelist class="border-y-0 border-r-0 border-l-2 border-double border-dashed" /> -->
-
 <div class="hidden text-left">
   <pre>{JSON.stringify(debug, null, 2)}</pre>
 </div>
-<table class="table-auto border-1 border-slate-300 border-collapse">
-  <thead>
+<table class="table-auto border-collapse">
+  <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
-        <th
-          transition:fly={transitionOptions}
-          class={`border-y-0 border-r-0 border-l-2 border-slate-500 text-center ${widthClass} ${borderStyle}`}
-        >
+        <th transition:fly={transitionOptions} class={cellClasses}>
           <small>{base}<sup>{sup}</sup></small>
         </th>
       {/each}
@@ -62,10 +66,7 @@ Take an integer and represent that as a series of numbers with a base
     <tr>
       <!-- (id) is important for transition animation -->
       {#each digits as digit, idx (reverseIdx(idx))}
-        <td
-          transition:fly={transitionOptions}
-          class={`border-y-0 border-r-0 border-l-2 border-slate-500 text-center ${borderStyle}`}
-        >
+        <td transition:fly={transitionOptions} class={cellClasses}>
           <Digit {digit} {base} position={idx} on:update={onUpdate} />
         </td>
       {/each}

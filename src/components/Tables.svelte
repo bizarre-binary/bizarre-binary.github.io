@@ -50,8 +50,8 @@ A demo that helps develop components
 </script>
 
 <div>
-  <table class="border-0 justify-items-end text-right">
-    <thead class="border-0">
+  <table class="border-0 justify-items-end text-right border-collapse">
+    <thead>
       <tr>
         <th>
           <div class="text-gray-400">
