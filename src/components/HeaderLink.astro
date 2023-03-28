@@ -1,16 +1,21 @@
 ---
-const { href, class: className, ...props } = Astro.props;
+const { href, ...props } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '');
 
-const isHome = href === '/' && path === '';
-const isOtherPages =
-  typeof href === 'string' && href.length > 1
-    ? path.substring(1).startsWith(href.substring(1))
-    : false;
-const isActive = isHome || isOtherPages;
+type navs = '/posts' | '/toys';
+const isPosts = path.startsWith('/posts');
+const isToys = !isPosts; // which also treats the '/' (root) page as '/toys'
+const isMatched: boolean = {
+  '/posts': isPosts,
+  '/toys': isToys,
+}[href as navs];
 ---
 
-<!-- DO NOT FORMAT. IT ADDS AN EXTRA SPACE ON RENDERED CONTENT. -->
-<a href={href} class:list={[className, { show: isActive }, 'unset animated-link']} {...props}
-  ><slot />
-</a>
+<a
+  href={href}
+  class:list={[
+    'decoration-yellow-300 decoration-2 underline-offset-8 active:text-slate-800 active:underline active:decoration-yellow-200',
+    { underline: isMatched, 'text-slate-500': !isMatched },
+  ]}
+  {...props}><slot /></a
+>
