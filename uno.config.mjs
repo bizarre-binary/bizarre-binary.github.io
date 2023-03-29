@@ -17,7 +17,7 @@ export default defineConfig({
     presetTypography(),
   ],
   // use `safelist` to include ones that are not scanned from static analysis
-  safelist: 'w-bit w-hex w-octal'.split(' '),
+  safelist: 'w-bit w-hex w-octal bg-yellow-200'.split(' '),
   // or include something like this in individual component so it can be scanned <!-- <unocss-safelist class="bg-yellow-200 text-gray-800" /> -->
   shortcuts: [
     // somehow without `safelist`, shortcuts are not being recognized at the moment
