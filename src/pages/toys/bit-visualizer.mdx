@@ -2,24 +2,18 @@
 layout: '../../layouts/Post.astro'
 title: 'Bit Visualizer'
 ---
-import Tables from '../../components/Tables.svelte';
+import Number from '../../components/Number.svelte';
 
 Hi, I'm a bit visualizer!
 
-<div class="flex not-prose" data-theme="ret/ro">
-  <div class="grow bg-yello/w-100" />
-  <div>
-    <Tables client:visible />
-  </div>
+<div class="not-prose">
+  <Number client:visible />
 </div>
 
 [a corresponding page](../posts/about-bit-visualizer)
 
-<div>
-  Potential things to add:
-  <ol class="list-decimal">
-    <li>bitwise operations - https://fubark.github.io/cyber/docs/toc/syntax/#bitwise-operators</li>
-    <li>https://www.mathsisfun.com/numbers/bases.html</li>
-    <li>may have a tab that can toggle between number, string</li>
-  </ol>
-</div>
+#### Potential things to add:
+- [ ] use localstorage to remember the numbers
+- [ ] bitwise operations - https://fubark.github.io/cyber/docs/toc/syntax/#bitwise-operators
+- [ ] https://www.mathsisfun.com/numbers/bases.html
+- [ ] may have a tab that can toggle between number, string
