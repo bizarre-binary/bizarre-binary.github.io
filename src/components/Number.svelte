@@ -9,21 +9,33 @@ A demo that helps develop components
 
   const min = 0;
   const max = 9_192_631_770;
+  const integerKey = 'number-integer';
+
+  // for this to work consistently client:only directive is necessary from .astro components
+  export const initialInteger = () => {
+    const cached = localStorage.getItem(integerKey);
+    return cached ? parseInt(cached) : 42;
+  };
+
+  export const cacheInteger = (integer: number) => {
+    localStorage.setItem(integerKey, integer.toString());
+  };
 </script>
 
 <script lang="ts">
-  let integer = 42;
+  let integer = initialInteger();
 
   // use `integerInput` to bridge the input and real value
   $: integerInput = integer;
 
   // throttle integer input update to be out of the way of with svelte transitions
   const reconsile = debounce((newValue) => {
-    integer = newValue;
+    integer = newValue || 0; // in case the input has empty string
   });
 
   $: {
     reconsile(integerInput);
+    cacheInteger(integer);
   }
 
   $: {

@@ -6,12 +6,13 @@ Take an integer and represent that as a series of numbers with a base
   import type { UpdateDigitEvent } from './Digit.svelte';
   import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../lib/digit';
-  import { motion } from '../lib/consts';
+  import { motion } from '../lib/defaults';
 </script>
 
 <script lang="ts">
   export let bitsToBundle = 4;
-  export let integer = 0;
+  export let integer = 42;
+
   export let lengthOfBits: number;
 
   $: widthClass = bitsToBundle === 4 ? 'w-hex' : bitsToBundle === 3 ? 'w-octal' : '';
@@ -60,7 +61,7 @@ Take an integer and represent that as a series of numbers with a base
   <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
-        <th transition:fly={transitionOptions} class={cellClasses}>
+        <th transition:fly|local={transitionOptions} class={cellClasses}>
           <small>{base}<sup>{sup}</sup></small>
         </th>
       {/each}
@@ -71,7 +72,7 @@ Take an integer and represent that as a series of numbers with a base
       <!-- (id) is important for transition animation -->
       {#each digits as digit, idx (reverseIdx(idx))}
         <td
-          transition:fly={transitionOptions}
+          transition:fly|local={transitionOptions}
           class={`${cellClasses} ${cellBg}`}
           style={bgOpacity(digit)}
         >

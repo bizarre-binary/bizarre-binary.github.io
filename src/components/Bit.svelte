@@ -42,7 +42,6 @@ A bit flipper
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.1s all;
     cursor: pointer;
   }
 

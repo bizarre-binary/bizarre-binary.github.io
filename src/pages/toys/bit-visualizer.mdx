@@ -3,11 +3,14 @@ layout: '../../layouts/Post.astro'
 title: 'Bit Visualizer'
 ---
 import Number from '../../components/Number.svelte';
+import TurboPersist from '../../components/TurboPersist.astro';
 
 Hi, I'm a bit visualizer!
 
 <div class="not-prose">
-  <Number client:visible />
+  <TurboPersist turbo-id="number">
+    <Number client:visible />
+  </TurboPersist>
 </div>
 
 [a corresponding page](../posts/about-bit-visualizer)

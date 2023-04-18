@@ -2,6 +2,8 @@
 A demo that helps develop components
 -->
 <script context="module" lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   const objectMap = <V, R>(
     obj: { [key: string]: V },
     fn: (value: V, key: string, index: number) => R
@@ -16,8 +18,6 @@ A demo that helps develop components
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   export let min = 0;
   export let max = 999999999;
 

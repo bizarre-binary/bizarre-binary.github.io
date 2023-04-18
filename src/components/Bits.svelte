@@ -6,7 +6,7 @@ Take an integer and represent that as a series of bits
   import type { BitFlipEvent } from './Bit.svelte';
   import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../lib/digit';
-  import { motion } from '../lib/consts';
+  import { motion } from '../lib/defaults';
 
   const defaultMultipleOf = 4;
   const extractBit = genExtractDigits(1);
@@ -20,7 +20,7 @@ Take an integer and represent that as a series of bits
 </script>
 
 <script lang="ts">
-  export let integer = 0;
+  export let integer = 42;
   export let lengthOfBits: number;
   export let multipleOf = defaultMultipleOf;
 
@@ -63,7 +63,7 @@ Take an integer and represent that as a series of bits
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
-          transition:fly={transitionOptions}
+          transition:fly|local={transitionOptions}
           class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
         >
           <small>2<sup>{sup}</sup></small>
@@ -76,7 +76,7 @@ Take an integer and represent that as a series of bits
       <!-- (id) is important for transition animation -->
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
-          transition:fly={transitionOptions}
+          transition:fly|local={transitionOptions}
           class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
           class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}

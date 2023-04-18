@@ -1,4 +1,4 @@
-import { delay } from './consts';
+import { delay } from './defaults';
 import _debounce from 'lodash-es/debounce';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
