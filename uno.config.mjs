@@ -25,6 +25,8 @@ export default defineConfig({
       'w-bit': `w-${bitWidth}rem`,
       'w-octal': `w-${bitWidth * 3}rem`,
       'w-hex': `w-${bitWidth * 4}rem`,
+      'math-inline': 'inline-block text-sm',
+      'icon-link': 'i-bi-link-45deg inline-block text-lg text-slate-300',
     },
   ],
   rules: [
