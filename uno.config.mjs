@@ -1,13 +1,12 @@
 // why this file? - https://github.com/unocss/unocss/discussions/2280
 
-import { defineConfig, presetUno, presetTypography, transformerDirectives } from 'unocss';
+import { defineConfig, presetUno, presetTypography } from 'unocss';
 import presetIcons from '@unocss/preset-icons';
-import presetDaisy from 'unocss-preset-daisy';
+import { presetDaisy } from 'unocss-preset-daisy';
 
 const bitWidth = 1.5;
 
 export default defineConfig({
-  transformers: [transformerDirectives()],
   presets: [
     presetIcons({
       /* options */

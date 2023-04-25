@@ -4,11 +4,11 @@ dev: install
 
 .PHONY: install
 install:
-	npm i --legacy-peer-deps
+	npm i
 
 .PHONY: clean-install
 clean-install:
-	npm ci --legacy-peer-deps
+	npm ci
 
 .PHONY: build
 build: install

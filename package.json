@@ -45,6 +45,6 @@
     "remark-math": "^5.1.1",
     "svelte": "^3.55.1",
     "unocss": "^0.50.2",
-    "unocss-preset-daisy": "^1.2.0"
+    "unocss-preset-daisy": "^4.0.0"
   }
 }
