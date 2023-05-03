@@ -2,12 +2,12 @@
 layout: '../../layouts/Post.astro'
 title: 'About Bit Visualizer'
 author: Heechul Ryu
-draft: true
+dateCreated: 2023-05-03 PST
 ---
 import Number from '../../components/Number.svelte';
 import TurboPersist from '../../components/TurboPersist.astro';
 
-This is a post about bit visualizer. You may have come [from here](../toys/bit-visualizer).
+This is a post about Bit Visualizer. You may have come [from here](../toys/bit-visualizer).
 
 <div class="not-prose">
   <TurboPersist turbo-id="number">
@@ -15,62 +15,51 @@ This is a post about bit visualizer. You may have come [from here](../toys/bit-v
   </TurboPersist>
 </div>
 
-## Is Binary A Native Number System to You?
+## Is Binary a Native Number System to You?
 
 Certainly not to me!
 
-Most modern computers are only comfortable with the binary or base 2 number system.
-And I'm a human and I'm mostly comfortable with the base 10 or decimal number system.
+If you're a human like me, the base-10 or decimal system is your comfort zone, but most [modern computers work in binary (base-2)](https://youtu.be/uTNCVRxuP_c).
 
-If you are like me who writes code some times, we intend to instruct computers to do certain actions or computations for us.
-Most of the time we can write in the languages that are not so foreign to people thanks to high level programming languages and all the tooling that makes possible.
-But sometimes we will still need to either understand how computer interprets numbers or work directly with binary numbers to achieve granular control.
+When programming, we often work with high-level languages and tools that make binary representation unnecessary.
+However, there are still times when we need to work with binary numbers for more granular control or to understand how computers interpret numbers.
 
-## A Bit About Binaries
+## A Bit About Binary Numbers
 
-Whether it's text, image or video, if it's stored or transferred via computers (including your smartphone).
+Whether it's text, image, or video, if it's stored or transferred via computers (including your smartphone).
 The data is made of a series of bits.
 
 A bit is either $0$ or $1$, so it can represent two different states.
-And we often say $1$ is switched on and $0$ is switched off but that's only because we choose to interpret two states in that way.
-We can actually interpret the numbers in any ways we want. Thus depends on how we decide to interpret the chunk of a series of bits, it becomes audio, video, image, text or anything really.
+And we often say $1$ is switched on and $0$ is switched off but that's only because we **choose** to interpret two states in that way.
+We can actually interpret the numbers in any way we want. Thus depends on how we decide to interpret the chunk of a series of bits, it becomes audio, video, image, text, or anything really.
 
-Binary is everything but the nature of having just $0$ and $1$ makes it really difficult to look at its contents as is to make any sense of it easily.
+Binary numbers are to represent everything in computers but the nature of having just $0$ and $1$ makes it difficult to read and make sense of.
 
-## Enter Bit Visualizer
+## Hexadecimal and Octal
+> Wait a second, isn't this about binary? Why are we talking about octal (base 8) and hex[adecimal] (base 16) and what are they?
 
-I'm not ashamed that I didn't have a crystal clear understanding of the relationship between _binary_ and _octal_ and _hexadecimal_ until recently even after a decade since I started programming. Or should I be?
-Anyhow after a little research, I got satisfied to map the relationship between the three in a way that is clear enough to me.
+Hexadecimal and octal are number systems that group binary digits together for easier reading and representation.
 
-Also because except for few, we don't handle binary and its friends all the time. Therefore I think it's natural that we get rusty with it at some point.
-And I thought it would be great if anyone can do refresh these concept really quick and interactively not just via having to calculate between different number systems by hand.
-
-Wouldn't it be nice if there is something that we can "touch" to feel what it's like instantaneously not necessarily having to read and digest the concepts again just because we didn't work with binaries yesterday?
-That's why I created this website and this toy. You are welcome and enjoy!
-
-## Wait a Second, Isn't This About Binary?
-_Why are we talking about octal (base 8) and hex[adecimal] (base16) and what are they? While you go ahead and play with the toy, Let me leave a short note on rationales of hex and octal._
-
-Instead of denote each binary individually, you can also group a few into one number. It's sort of like a _compression_:
-- zip 3 bits into one octal and unzip to one octal to 3 bits
-- zip 4 bits into one hexadecimal and unzip to one hexadecimal to 4 bits
+For example, instead of denoting each binary digit individually, we can also group some into one number. It's sort of like a _compression_:
+- zip 3 bits into one octal digit and unzip one octal digit to 3 bits
+- zip 4 bits into one hexadecimal digit and vice versa
 
 And this practice has been done with a tool like `hexdump` and `xxd` for a long time.
 
-If you have access to macOS or Linux machine, you can try `echo -n 1 | xxd ` for hex (or `echo -n 1 | xxd -b` for binary and `echo -n 1 | od`) to see it yourself.
+On macOS or Linux machines, you can try the following commands to see the results of converting numbers between binary, hexadecimal, and octal:
 
 ```bash
 # printing character `1` (1 byte)
 
-$ echo -n 1 | xxd -b
+$ echo -n 1 | xxd -b  # for binary
 00000000: 00110001                                               1
 
-$ echo -n 1 | xxd
+$ echo -n 1 | xxd     # for hex
 00000000: 31                                       1
 
-$ echo -n 1 | od  # by default, grouped by 2 bytes
-0000000 000061    # `[0]00` is 0 and `110` is 6 in octal is `001` == 1 in octal hence `[000]061`
-0000001           # because it reads from the right to left within the segment
+$ echo -n 1 | od      # for octal. by default, it's grouped by 2 bytes
+0000000 000061        # `[0]00` is 0 and `110` is 6 in octal is `001` == 1 in octal hence `[000]061`
+0000001               # because it reads from right to left within the segment
 
 # printing character `11` (2 bytes)
 
@@ -96,7 +85,7 @@ $ echo -n 111 | od
 0000000 030461 000061
 0000003
 
-# let's play a bit with `od` to print different octal values depends on how we would like to interpret the binaries
+# let's play a bit with `od` to print different octal values depending on how we would like to interpret the binaries
 
 $ echo -n 111 | od -t o1  # or `od -b` to group per byte instead of 2-byte
 0000000 061 061 061
@@ -115,35 +104,36 @@ $ echo -n 1111 | od -t d2 # clean cut by 2-byte to see it clearly
 0000004
 ```
 
-_There is also https://hexed.it/ and https://cryptii.com/pipes/text-octal that you can play with._
+> There is also https://hexed.it/ and https://cryptii.com/pipes/text-octal that you can play with.
 
-For example, $101$ in binary and octal for that is $5$ and they are the exactly same number just a different way to denote.
+For example, $101$ in binary is $5$ in octal and they are exactly the same number just a different way to denote.
 
-For binary, because there is only two different state per bit and they are tend to get long very quickly (to hold any reasonably complex states), which makes hard to make sense of it at first glance and impractical to trace which information stops and starts where.
+For binary, because there are only two different states per bit and they tend to get long very quickly (to hold any reasonably complex states), which makes it hard to make sense of it at first glance and impractical to trace which information stops and starts where.
 
 But when it's "zipped", now the same number/data is magically a lot more digestible.
 
 ### When Is Octal (base 8, 3-bit) Useful?
 
-I actually don't know much about when octal is being used other than [unix file permissions](https://chmod-calculator.com/).
+I actually don't know much about when the octal system is being used other than [unix file permissions](https://chmod-calculator.com/).
 
-I will say octal $644$ `rw-r--r--` helps to tell apart the three values $6$, $4$, $4$ than the binary counterpart, $110100100$, although `rw-r--r--` maps much visually to the binary one.
+On that note, I will say the octal one, $644$ `rw-r--r--` is more helpful to tell apart the three values, $6$, $4$, $4$ than the binary counterpart, $110100100$, although it actually lines up with `rw-r--r--` when they are side by side.
 
 Also octal [seems to be used more in the past](https://softwareengineering.stackexchange.com/a/98733/416039).
 
 ### When Is Hexadecimal (base 16, 4-bit) Useful?
 
 Unlike octal, hex is used a lot.
-My guess is that not only it _compress_ 4 bits (with values between $0000$ to $1111$) into one digit (between $0$ and $F$ ($15$)) that represent 16 different states,
-but also one hex can represent a half a byte (8 bits). Which makes it possible to represent a byte with just 2 digits. $16^2 = 256$ different state with just two digits!
+My guess for the usefulness is that not only does it _compress_ 4 bits (between $0000$ and $1111$) into one hex digit (between $0$ and $F$ ($15$)) that represent 16 different states,
+but also one hex digit being a nibble, a half of a byte. Which allows it to represent a byte with just 2 digits. $16^2 = 256$ different state with just two digits!
 
-_I also just discovered [an article](https://medium.com/@savas/why-do-we-use-hexadecimal-d6d80b56f026) that basically going with the same idea in a much more detailed way._
+_I also just discovered [an article](https://medium.com/@savas/why-do-we-use-hexadecimal-d6d80b56f026) that aligns with this notion in a much more detailed way._
 
-One of the most popular usage is to represent RGB color with three bytes (6 hex digits) like `#000000` or `#FFFFFF`. In this case, `#` is just to indicate that this is hex value. One byte being one of Red, Green, Blue.
+One of the most popular uses is to represent RGB color with three bytes (6 hex digits) like `#000000` or `#FFFFFF`. In this case, `#` is just to indicate that this is a hex value.
+One byte is one of Red, Green, and Blue.
 
-MAC address and IPv6 address also uses hexadecimal as mentioned in [here](https://teachcomputerscience.com/uses-of-hexadecimal/).
+MAC address and IPv6 address also uses hexadecimal as mentioned [here](https://teachcomputerscience.com/uses-of-hexadecimal/).
 
-But anything that requires to look at the binary data can use hex notation since the minimal unit of data is often 4 bits or multiples of that.
+But for anything that requires looking at the binary data, the hex notation can be useful especially when segmenting by 4 bits makes sense.
 
 ```bash
 # here is a small bmp file that looks below, I just named it "chess.bmp"
@@ -167,47 +157,58 @@ $ xxd chess.bmp
 00000070: 0000 ffff ff00 0000 00ff ffff 0000 00ff  ................
 00000080: ffff 0000 0000                           ......
 # see probably `ffffff` being a white pixel and `000000` being a black pixel?
-# and maybe `00` in between mean the end of line?
+# and maybe `00` in between mean the end of the line?
 # ¯\_(ツ)_/¯ I don't know...  you tell me with https://en.wikipedia.org/wiki/BMP_file_format
 ```
 
 ## Why Not Other Base Systems?
 
-[This article](https://medium.com/@savas/why-do-we-use-hexadecimal-d6d80b56f026) that as I discovered from above should explain this very well. But also let me add my own reductions.
+[This article](https://medium.com/@savas/why-do-we-use-hexadecimal-d6d80b56f026) I discovered above should explain this very well. But also let me add my own reductions.
 
 ### Let's First Start With Base 10
 You can't really group bits into base 10 because you can't make the value $10$ from powering $2$ with any integer.
 Because of $2^3=8$ and $2^4=16$. Right?
+I don't think there is a way to shoe horn a number system that is not a power of 2 to a binary computer and even if there is one, it will be inefficient.
+Actually, we do this all the time but at a much higher level like for end users to interpret the data or high-level programming languages that deal with the internal working of binaries but not as direct mapping like how other power of 2 number systems.
 
 ### Why Not Base 4 (2-bit)?
 
-Base 4 ($0$ to $3$) system is two insignificant to be useful. Only 4 different states and _compressing_ just half the length.
-Remember even the octal or base 8 was not very widely used?
+Base 4 ($0$ to $3$) or [quaternary system](https://en.wikipedia.org/wiki/Quaternary_numeral_system) is a bit awkward to be a wide use. Only 4 different states and _compressing_ just half the length.
+Remember even the octal or base 8 is not very used much?
 
 ### Why Not Base 32 (5-bit) and Beyond?
 
-You already have noticed that with the hexadecimal or base 16 system had to "borrow" 6 characters ($A$ to $F$) from the alphabet
-to represent from $11$ to $15$ since the regular Arabic numerals that we use to denote base 10 system only has ten distinctive digits.
+You already have noticed that the hexadecimal or base 16 system had to "borrow" 6 characters ($A$ to $F$) from the alphabet
+to represent from $11$ to $15$ since the regular Arabic numerals that we use to denote the base 10 system only have ten distinctive digits.
 
 With the base 32 system, we will need 16 more characters to borrow and I don't think we can really map each character to a specific number in our head as easily as the ones from the hexadecimal.
 
-And one base 32 digit will _compress_ 5 bits. Which is awkward to "regular" data since [bits are not usually grouped into 5](https://learn.sparkfun.com/tutorials/binary/bits-nibbles-and-bytes).
-But on the other hand hexadecimal can _compress_ anything that is made up of nibble (4-bit).
+And one base-32 digit will _compress_ 5 bits. Which is awkward to "regular" data since [bits are not usually grouped into 5](https://learn.sparkfun.com/tutorials/binary/bits-nibbles-and-bytes).
+But on the other hand, hexadecimal can _compress_ anything that is made up of nibble (4-bit).
 
-Same circumstances for base 32 can apply to bigger bases.
+The same circumstances for base 32 can apply to bigger bases.
 
 #### They Are Actually Being Used
-However [base 32 (5-bit)](https://en.wikipedia.org/wiki/Base32) and [base 64 (6-bit)](https://en.wikipedia.org/wiki/Base64) are actually being used because they are useful in different sense.
+However, [base 32 (5-bit)](https://en.wikipedia.org/wiki/Base32) and [base 64 (6-bit)](https://en.wikipedia.org/wiki/Base64) are actually being used because they are useful in a different sense.
 
-Hexadecimal can represent the binary data that is comfortable to human since it's close to decimal and many other good reasons we talked about.
-That mean you can convert binary to hex and vice versa. Therefore you can transfer this data in a hexadecimal form. e.g. a binary file content.
-However 2 characters per a byte is not the most efficient. With base 64 in particular, this becomes 4 characters per 3 bytes. $50%$ more efficient than base 16.
+Hexadecimal can represent the binary data that is comfortable to humans since it's close to decimal and many other good reasons we talked about.
+That means you can convert binary to hex and vice versa. Therefore you can transfer this data in a hexadecimal form. e.g. a binary file content.
+However, 2 characters per byte is not the most efficient. With base 64 in particular, this becomes 4 characters per 3 bytes. $50%$ more efficient than base 16.
 
-A trade off between understandability and portability. So it's useful to transfer the data with a requirement of only via printable characters.
+A trade-off between understandability and portability. So it's useful to transfer the data with a requirement of only via printable characters.
 
 Base 64 is actually quite interesting so I'm hoping to post about it in the future.
 
 ### Bonus: What the Heck Is Octet?
 _It is nothing to do with Octal (3-bit)._
 
-Octet means 8 bits. Basically another (strict) way to call a byte because byte actually does not necessarily have to mean 8 bits as none 8 bit bytes existed before.
+Octet means 8 bits. Basically another (strict) way to call a byte because byte actually does not necessarily have to mean 8 bits as none 8-bit bytes existed before.
+
+## Enter Bit Visualizer
+
+As I brushed up on these concepts this time, I asked myself. What if there is a tool that helps people better understand binary and its related concepts, such as octal and hexadecimal?
+In a way that is quick and interactive to refresh your memory of these concepts and get a feel for how they work, without having to read and digest the concepts all over again.
+
+That's why I created the Bit Visualizer and this website. You are welcome and enjoy!
+
+[Go to Bit Visualizer](../toys/bit-visualizer).

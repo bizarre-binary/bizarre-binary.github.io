@@ -1,16 +1,50 @@
 ---
 import Layout from './Layout.astro';
+import { format } from '../lib/date';
+
+interface Frontmatter {
+  title: string;
+  author?: string;
+  draft?: boolean;
+  toy?: boolean;
+  dateCreated?: string;
+  dateUpdated?: string;
+}
 
 export interface Props {
-  title: string;
+  frontmatter: Frontmatter;
 }
 
 const { frontmatter } = Astro.props;
+
+const { title, author, toy, dateCreated, dateUpdated } = frontmatter;
+
+const dates = [format(dateCreated), format(dateUpdated)].filter((d) => !!d);
+
+const prefixes = {
+  0: [],
+  1: ['on'],
+  2: ['created on', 'updated on'],
+}[dates.length as 0 | 1 | 2];
+
+const formattedDate = dates.map((date, idx) => `${prefixes[idx]} ${date}`).join(' and ');
 ---
 
-<Layout title={frontmatter.title}>
+<Layout title={title}>
   <article class="prose">
-    <h1>{frontmatter.title}</h1>
+    <h1 class="mb-1.5">{title}</h1>
+    {
+      !toy && (
+        <small class="text-slate">
+          {author && (
+            <span>
+              <span class="text-stone">written by</span> {author}
+            </span>
+          )}
+          {formattedDate && <span class="text-stone">{formattedDate}</span>}
+        </small>
+      )
+    }
     <slot />
   </article>
 </Layout>
