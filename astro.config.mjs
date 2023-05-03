@@ -5,13 +5,19 @@ import svelte from '@astrojs/svelte';
 import UnoCSS from 'unocss/astro';
 import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
+import remarkCollapse from 'remark-collapse';
 import rehypeSlug from 'rehype-slug';
 import rehypeMathjax from 'rehype-mathjax';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const markdown = {
-  remarkPlugins: [remarkMath],
+  remarkPlugins: [
+    // not using at the moment
+    [remarkCollapse, { test: 'collapsed' }],
+    remarkMath,
+  ],
   rehypePlugins: [
+    // needed for rehypeAutolinkHeadings
     rehypeSlug,
     [
       rehypeAutolinkHeadings,
