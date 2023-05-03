@@ -1,11 +1,13 @@
 ---
 layout: '../../layouts/Post.astro'
 title: 'Bit Visualizer'
+author: Heechul Ryu
+draft: true
 ---
 import Number from '../../components/Number.svelte';
 import TurboPersist from '../../components/TurboPersist.astro';
 
-Hi, I'm a bit visualizer!
+Hi 👋🏼, I'm Bit Visualizer!
 
 <div class="not-prose">
   <TurboPersist turbo-id="number">
@@ -13,10 +15,19 @@ Hi, I'm a bit visualizer!
   </TurboPersist>
 </div>
 
-[a corresponding page](../posts/about-bit-visualizer)
+You can click the boxes above to flip the bit or octal or hex value.
+You can also directly change the number in the input box (or clicking buttons below) on the right.
+Have fun!
 
-#### Potential things to add:
-- [ ] use localstorage to remember the numbers
+> 📝 _Looking for an explanation? [Visit this page](../posts/about-bit-visualizer)._
+
+---
+
+<small class="text-slate-600">
+#### Things Might Be Added Later
+- [ ] ability to edit binary, octal, hex directly
 - [ ] bitwise operations - https://fubark.github.io/cyber/docs/toc/syntax/#bitwise-operators
 - [ ] https://www.mathsisfun.com/numbers/bases.html
-- [ ] may have a tab that can toggle between number, string
+- [ ] tabs that can toggle between number, string, and other types of representations
+- [ ] mention little and big endian ? - https://betterexplained.com/articles/understanding-big-and-little-endian-byte-order/
+</small>

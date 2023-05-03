@@ -27,7 +27,6 @@ const markdown = {
     ],
     rehypeMathjax,
   ],
-  gfm: false,
 };
 
 // https://astro.build/config
