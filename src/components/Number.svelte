@@ -8,7 +8,8 @@ A demo that helps develop components
   import { debounce } from '../lib/debounce';
 
   const min = 0;
-  const max = 9_192_631_770;
+  // const max = 9_192_631_770; good bye my first choice, you just overflow...
+  const max = 4_294_967_295; // under the limit of 32 bits
   const integerKey = 'number-integer';
 
   // for this to work consistently client:only directive is necessary from .astro components
