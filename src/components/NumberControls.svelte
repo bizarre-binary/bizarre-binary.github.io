@@ -1,5 +1,5 @@
 <!-- @component
-A demo that helps develop components
+A auxiliary controls that supports changing numbers using buttons and input box
 -->
 <script context="module" lang="ts">
   import { createEventDispatcher } from 'svelte';
@@ -18,6 +18,7 @@ A demo that helps develop components
 </script>
 
 <script lang="ts">
+  import InputNumberLocaled from './InputNumberLocaled.svelte';
   export let min = 0;
   export let max = 999999999;
 
@@ -43,13 +44,13 @@ A demo that helps develop components
   }
 </script>
 
-<div class="pb-0.5">
-  <input
+<!-- `dir="rtl"` allowed to avoid inserting `text-right w-full` to `<InputNumberLocaled />` and wrapping the component with `flex` and `flex-grow` -->
+<div class="pb-0.5" dir="rtl">
+  <InputNumberLocaled
     {min}
     {max}
-    type="number"
     bind:value={integer}
-    class="rounded-md px-1.5 border border-solid w-full max-w-[9rem] text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+    class="rounded-md px-1.5 border border-solid max-w-[9rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
   />
 </div>
 <div>
