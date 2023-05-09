@@ -47,9 +47,9 @@ Two things are enhanced:
 </script>
 
 <!-- inspired by https://github.com/yairEO/react-number-input but with a different approach of using two input tags instead of manipulating the text -->
-<div class="relative inline-block">
+<div class="relative inline-block w-full">
   <!-- position: absolute being slightly tricky to deal with the case of aligning things to the right but it's possible to control that from outer level -->
-  <!-- the cleanest solution is using `dir="rtl"` and it allow you to avoid using `w-full`, `flex`, `flex-grow`, `text-right` here and there to achieve the similar things  -->
+  <!-- the cleanest solution is using `dir="rtl"` and it allow you to avoid using `flex`, `flex-grow` and there to achieve the similar things  -->
   <!-- an example for that can be found at ./NumberControls.svelte -->
   <div class="absolute">
     <input value={localed} class={clazz} on:focus={focusInput} />

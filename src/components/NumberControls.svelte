@@ -45,13 +45,16 @@ A auxiliary controls that supports changing numbers using buttons and input box
 </script>
 
 <!-- `dir="rtl"` allowed to avoid inserting `text-right w-full` to `<InputNumberLocaled />` and wrapping the component with `flex` and `flex-grow` -->
+<!-- actually above is not true with chrome so wrapped it with `dir="ltr"` and inserted `w-full text-right` as well -->
 <div class="pb-0.5" dir="rtl">
-  <InputNumberLocaled
-    {min}
-    {max}
-    bind:value={integer}
-    class="rounded-md px-1.5 border border-solid max-w-[9rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-  />
+  <div dir="ltr" class="max-w-[9rem]">
+    <InputNumberLocaled
+      {min}
+      {max}
+      bind:value={integer}
+      class="w-full text-right rounded-md px-1.5 border border-solid max-w-[9rem] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+    />
+  </div>
 </div>
 <div>
   <button class="btn btn-outline btn-xs btn-info" on:click={setToMax} disabled={integer == max}>
