@@ -46,7 +46,7 @@ A auxiliary controls that supports changing numbers using buttons and input box
 
 <!-- `dir="rtl"` allowed to avoid inserting `text-right w-full` to `<InputNumberLocaled />` and wrapping the component with `flex` and `flex-grow` -->
 <!-- actually above is not true with chrome so wrapped it with `dir="ltr"` and inserted `w-full text-right` as well -->
-<div class="pb-0.5" dir="rtl">
+<div class="py-1" dir="rtl">
   <div dir="ltr" class="max-w-[9rem]">
     <InputNumberLocaled
       {min}
