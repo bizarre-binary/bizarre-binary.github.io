@@ -61,7 +61,7 @@ Take an integer and represent that as a series of numbers with a base
   <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
-        <th transition:fly|local={transitionOptions} class={cellClasses}>
+        <th in:fly|local={transitionOptions} class={cellClasses}>
           <small>{base}<sup>{sup}</sup></small>
         </th>
       {/each}
@@ -72,7 +72,7 @@ Take an integer and represent that as a series of numbers with a base
       <!-- (id) is important for transition animation -->
       {#each digits as digit, idx (reverseIdx(idx))}
         <td
-          transition:fly|local={transitionOptions}
+          in:fly|local={transitionOptions}
           class={`${cellClasses} ${cellBg}`}
           style={bgOpacity(digit)}
         >

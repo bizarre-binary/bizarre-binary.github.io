@@ -63,7 +63,7 @@ Take an integer and represent that as a series of bits
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
-          transition:fly|local={transitionOptions}
+          in:fly|local={transitionOptions}
           class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
         >
           <small>2<sup>{sup}</sup></small>
@@ -76,7 +76,7 @@ Take an integer and represent that as a series of bits
       <!-- (id) is important for transition animation -->
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
-          transition:fly|local={transitionOptions}
+          in:fly|local={transitionOptions}
           class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
           class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}
