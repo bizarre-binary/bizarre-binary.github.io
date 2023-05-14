@@ -47,5 +47,8 @@
     "svelte": "^3.55.1",
     "unocss": "^0.50.2",
     "unocss-preset-daisy": "^4.0.0"
+  },
+  "dependencies": {
+    "@astrojs/partytown": "^1.2.1"
   }
 }

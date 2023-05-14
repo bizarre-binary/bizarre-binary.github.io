@@ -9,6 +9,7 @@ import remarkCollapse from 'remark-collapse';
 import rehypeSlug from 'rehype-slug';
 import rehypeMathjax from 'rehype-mathjax';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import partytown from '@astrojs/partytown';
 
 const markdown = {
   remarkPlugins: [
@@ -33,5 +34,14 @@ const markdown = {
 export default defineConfig({
   // this should apply to mdx as well
   markdown,
-  integrations: [UnoCSS(), svelte(), mdx()],
+  integrations: [
+    UnoCSS(),
+    svelte(),
+    mdx(),
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
+    }),
+  ],
 });
