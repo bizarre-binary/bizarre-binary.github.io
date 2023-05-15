@@ -65,6 +65,9 @@ A demo that helps develop components
 </script>
 
 <!-- flipping direction twice and adding flex here and there to overflow on left not right - thanks to https://stackoverflow.com/a/39874526/1570165 -->
+<!-- <div dir="rtl" class="flex [view-transition-name:bb-number]"> -->
+<!-- currently above causes an infinite loop on chrome ~113.0.5672.92 -->
+<!-- so refrain from using it until it's resolved -->
 <div dir="rtl" class="flex">
   <div dir="ltr">
     <div class="flex">

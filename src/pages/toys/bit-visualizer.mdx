@@ -5,14 +5,14 @@ author: Heechul Ryu
 toy: true
 ---
 import Number from '../../components/Number.svelte';
-import TurboPersist from '../../components/TurboPersist.astro';
+import OpacitySkeleton from '../../components/OpacitySkeleton.svelte';
 
 Hi 👋🏼, I'm Bit Visualizer!
 
 <div class="not-prose">
-  <TurboPersist turbo-id="number">
+  <OpacitySkeleton client:visible>
     <Number client:visible />
-  </TurboPersist>
+  </OpacitySkeleton>
 </div>
 
 You can click the boxes above to flip the bit or octal or hex value.
