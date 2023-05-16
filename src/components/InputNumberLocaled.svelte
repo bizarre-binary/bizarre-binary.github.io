@@ -52,7 +52,12 @@ Two things are enhanced:
   <!-- the cleanest solution is using `dir="rtl"` and it allow you to avoid using `flex`, `flex-grow` and there to achieve the similar things  -->
   <!-- an example for that can be found at ./NumberControls.svelte -->
   <div class="absolute">
-    <input value={localed} class={clazz} on:focus={focusInput} />
+    <input
+      value={localed}
+      class={clazz}
+      on:focus={focusInput}
+      aria-label="number in base 10 (to show)"
+    />
   </div>
   <div class="opacity-0 focus-within:opacity-[100] z-10 relative">
     <input
@@ -63,6 +68,7 @@ Two things are enhanced:
       bind:value={integerInput}
       class={clazz}
       class:bg-yellow-200={unsanitary}
+      aria-label="number in base 10 (to edit)"
     />
   </div>
 </div>
