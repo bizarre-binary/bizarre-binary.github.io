@@ -10,7 +10,10 @@
     function gtag() {
       dataLayer.push(arguments);
     }
-    gtag('js', new Date());
-    gtag('config', 'G-2PFC5181P7');
+
+    if (window.location.hostname === 'bizarre-binary.github.io') {
+      gtag('js', new Date());
+      gtag('config', 'G-2PFC5181P7');
+    }
   </script>
 </>

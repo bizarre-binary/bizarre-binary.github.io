@@ -13,7 +13,7 @@ const { title } = Astro.props;
 <!DOCTYPE html>
 <html lang="en" data-theme="pastel">
   <head>
-    <GATag />
+    {import.meta.env.PROD && <GATag />}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="view-transition" content="same-origin" />
