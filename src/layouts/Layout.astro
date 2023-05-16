@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import GATag from '../components/GATag.astro';
+import PWA from '../components/PWA.astro';
 import GlobalStyle from '../components/GlobalStyle.astro';
 
 export interface Props {
@@ -17,15 +18,18 @@ const description = titleFromProps ? `${defaultTitle} - ${title}` : title;
 <!DOCTYPE html>
 <html lang="en" data-theme="pastel">
   <head>
+    <title>{title}</title>
     {import.meta.env.PROD && <GATag />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="view-transition" content="same-origin" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FACC15" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#FACC15" />
     <GlobalStyle />
+    <PWA />
   </head>
   <body class="m-auto max-w-prose">
     <header class="py-3">

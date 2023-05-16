@@ -1,0 +1,24 @@
+---
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { pwaInfo } from 'virtual:pwa-info';
+---
+
+<>
+  <script>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    import { registerSW } from 'virtual:pwa-register';
+
+    registerSW({
+      immediate: true,
+      onRegisteredSW(swScriptUrl: string) {
+        console.log('SW registered: ', swScriptUrl);
+      },
+      onOfflineReady() {
+        console.log('PWA application ready to work offline');
+      },
+    });
+  </script>
+  {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+</>

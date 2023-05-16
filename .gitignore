@@ -24,3 +24,4 @@ pnpm-debug.log*
 .direnv
 .devenv*
 devenv.local.nix
+dev-dist
