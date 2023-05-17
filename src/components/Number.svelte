@@ -3,8 +3,8 @@ A demo that helps develop components
 -->
 <script context="module" lang="ts">
   import OctBitHex from './OctBitHex.svelte';
-  import NumberControls from './NumberControls.svelte';
-  import { NCClickEvent } from './NumberControls.svelte';
+  import NumberControls from './parts/NumberControls.svelte';
+  import { NCClickEvent } from './parts/NumberControls.svelte';
   import { debounce } from '../lib/debounce';
 
   const min = 0;

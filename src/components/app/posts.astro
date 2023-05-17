@@ -1,5 +1,5 @@
 ---
-const allPosts = await Astro.glob('../pages/posts/*.mdx');
+const allPosts = await Astro.glob('../../pages/posts/*.mdx');
 ---
 
 <ul>
@@ -7,7 +7,7 @@ const allPosts = await Astro.glob('../pages/posts/*.mdx');
     allPosts.map((post) => (
       <li>
         <a href={post.url} class="link">
-          <span class="i-bi-link-45deg text-ye/llow-500 te/xt-xl inline-block align-middle " />
+          <span class="i-bi-link-45deg inline-block align-middle" />
           {post.frontmatter.title}
         </a>
       </li>

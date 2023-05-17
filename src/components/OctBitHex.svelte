@@ -2,8 +2,8 @@
 A combination of octal and bit and hexadecimal together
 -->
 <script context="module" lang="ts">
-  import Bits, { toBits } from './Bits.svelte';
-  import Digits from './Digits.svelte';
+  import Bits, { toBits } from './parts/Bits.svelte';
+  import Digits from './parts/Digits.svelte';
 </script>
 
 <script lang="ts">

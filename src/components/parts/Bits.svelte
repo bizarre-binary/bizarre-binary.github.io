@@ -5,8 +5,8 @@ Take an integer and represent that as a series of bits
   import Bit from './Bit.svelte';
   import type { BitFlipEvent } from './Bit.svelte';
   import { fly } from 'svelte/transition';
-  import { genExtractDigits, genConstructInteger, getExponents } from '../lib/digit';
-  import { motion } from '../lib/defaults';
+  import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
+  import { motion } from '../../lib/defaults';
 
   const defaultMultipleOf = 4;
   const extractBit = genExtractDigits(1);

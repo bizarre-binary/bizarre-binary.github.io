@@ -1,5 +1,5 @@
 ---
-const allToys = await Astro.glob('../pages/toys/*.mdx');
+const allToys = await Astro.glob('../../pages/toys/*.mdx');
 ---
 
 <ul>
@@ -7,7 +7,7 @@ const allToys = await Astro.glob('../pages/toys/*.mdx');
     allToys.map((toy) => (
       <li>
         <a href={toy.url} class="link">
-          <span class="i-bi-link-45deg text-ye/llow-500 te/xt-xl inline-block align-middle " />
+          <span class="i-bi-link-45deg inline-block align-middle" />
           {toy.frontmatter.title}
         </a>
       </li>

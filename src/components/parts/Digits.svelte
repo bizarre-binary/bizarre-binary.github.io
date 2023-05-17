@@ -5,8 +5,8 @@ Take an integer and represent that as a series of numbers with a base
   import Digit from './Digit.svelte';
   import type { UpdateDigitEvent } from './Digit.svelte';
   import { fly } from 'svelte/transition';
-  import { genExtractDigits, genConstructInteger, getExponents } from '../lib/digit';
-  import { motion } from '../lib/defaults';
+  import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
+  import { motion } from '../../lib/defaults';
 </script>
 
 <script lang="ts">
