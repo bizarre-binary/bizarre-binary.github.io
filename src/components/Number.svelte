@@ -69,8 +69,8 @@ A demo that helps develop components
 <!-- currently above causes an infinite loop on chrome ~113.0.5672.92 -->
 <!-- so refrain from using it until it's resolved -->
 <div dir="rtl" class="flex">
-  <div dir="ltr">
-    <div class="flex">
+  <div dir="ltr" class="overflow-hidden lg:overflow-visible">
+    <div class="flex overflow-x-scroll">
       <div class="grow" />
       <OctBitHex bind:integer />
     </div>
