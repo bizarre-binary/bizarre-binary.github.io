@@ -4,7 +4,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 
 type navs = '/posts' | '/toys';
 const isPosts = path.startsWith('/posts');
-const isToys = !isPosts; // which also treats the '/' (root) page as '/toys'
+const isToys = path.startsWith('/toys');
 const isMatched: boolean = {
   '/posts': isPosts,
   '/toys': isToys,

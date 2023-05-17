@@ -40,7 +40,7 @@ export default defineConfig({
         globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}'],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         navigateFallbackAllowlist: [/^\/404$/],
       },
       registerType: 'autoUpdate',

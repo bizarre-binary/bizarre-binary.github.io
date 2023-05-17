@@ -32,12 +32,17 @@ const description = titleFromProps ? `${defaultTitle} - ${title}` : title;
     <PWA />
   </head>
   <body class="m-auto max-w-prose">
-    <header class="py-3">
+    <header class="py-3 sticky top-0 bg-white">
       <Header />
     </header>
-    <main>
+    <main class="[min-height:75vh]">
       <slot />
     </main>
-    <footer class="my-10"></footer>
+    <footer class="mt-25 mb-10 prose text-gray">
+      <small>
+        The content of this site is licensed under the
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0.</a>
+      </small>
+    </footer>
   </body>
 </html>

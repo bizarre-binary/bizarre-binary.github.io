@@ -15,5 +15,5 @@ build: install
 	npm run build
 
 .PHONY: preview
-preview: install
+preview: build
 	npm run preview
