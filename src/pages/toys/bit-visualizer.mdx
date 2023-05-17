@@ -4,16 +4,11 @@ title: 'Bit Visualizer'
 author: Heechul Ryu
 toy: true
 ---
-import Number from '../../components/Number.svelte';
-import OpacitySkeleton from '../../components/parts/OpacitySkeleton.svelte';
+import Number from '../../components/EmbeddableNumber.svelte';
 
 Hi 👋🏼, I'm Bit Visualizer!
 
-<div class="not-prose">
-  <OpacitySkeleton client:visible>
-    <Number client:visible />
-  </OpacitySkeleton>
-</div>
+<Number client:visible />
 
 You can click the boxes above to flip the bit or octal or hex value.
 You can also directly change the number in the input box (or click the buttons below) on the right.

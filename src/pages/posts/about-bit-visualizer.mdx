@@ -4,16 +4,11 @@ title: 'About Bit Visualizer'
 author: Heechul Ryu
 dateCreated: 2023-05-03 PST
 ---
-import Number from '../../components/Number.svelte';
-import OpacitySkeleton from '../../components/parts/OpacitySkeleton.svelte';
+import Number from '../../components/EmbeddableNumber.svelte';
 
 This is a post about Bit Visualizer. You may have come [from here](/toys/bit-visualizer).
 
-<div class="not-prose">
-  <OpacitySkeleton client:visible>
-    <Number client:visible />
-  </OpacitySkeleton>
-</div>
+<Number client:visible />
 
 ## Is Binary a Native Number System to You?
 

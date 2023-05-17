@@ -3,14 +3,10 @@ layout: '../layouts/Post.astro'
 title: Interact with Binary Numbers!
 ---
 
-import Number from '../components/Number.svelte';
-import OpacitySkeleton from '../components/parts/OpacitySkeleton.svelte';
+import Number from '../components/EmbeddableNumber.svelte';
 
-
-<div class="not-prose mt-10">
-  <OpacitySkeleton client:visible>
-    <Number client:visible />
-  </OpacitySkeleton>
+<div class="mt-7">
+  <Number client:visible />
 </div>
 
 Above is [the first toy at Bizarre Binary](./toys/bit-visualizer) and more will come!
