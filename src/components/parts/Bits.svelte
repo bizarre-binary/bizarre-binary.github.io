@@ -21,15 +21,16 @@ Take an integer and represent that as a series of bits
 
 <script lang="ts">
   export let integer = 42;
-  export let lengthOfBits: number;
   export let multipleOf = defaultMultipleOf;
+  export let max = -1;
+  export let borderOctal = true;
 
   let changedPosition = 0;
 
-  $: bits = toBits(integer, multipleOf);
-  $: {
-    lengthOfBits = bits.length;
-  }
+  $: untrimmedBits = toBits(integer, multipleOf);
+  $: bits = max > 0 ? untrimmedBits.slice(max * -1) : untrimmedBits;
+  $: lengthOfBits = bits.length;
+
   $: sups = getExponents(bits);
   $: constructInteger = genConstructInteger();
   $: debug = { changedPosition, bits };
@@ -41,15 +42,19 @@ Take an integer and represent that as a series of bits
     integer = constructInteger(bits);
   }
 
-  $: borderStyle = (idx: number) =>
-    [
-      'border-0 border-l-2 border-r-0',
-      idx % 4 == 0
-        ? 'border-l-slate-200 border-solid'
-        : idx % 3 == 0
-        ? 'border-l-slate-300 border-dashed'
-        : 'border-l-2 border-l-hidden',
-    ].join(' ');
+  const border = {
+    common: 'border-0 border-l-2 border-r-0',
+    hex: 'border-l-slate-200 border-solid',
+    octal: 'border-l-slate-300 border-dashed',
+    hidden: 'border-l-hidden',
+  };
+  const borderExtra = (idx: number) => {
+    if (idx % 4 == 0) return border.hex;
+    else if (idx % 3 == 0 && borderOctal) return border.octal;
+    return border.hidden;
+  };
+
+  $: borderStyle = (idx: number) => [border.common, borderExtra(idx)].join(' ');
 
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => lengthOfBits - idx;
@@ -77,7 +82,9 @@ Take an integer and represent that as a series of bits
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
+          class={`hover:outline outline-gray-300 w-bit text-center ${borderStyle(
+            lengthOfBits - idx
+          )}`}
           class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}
         >

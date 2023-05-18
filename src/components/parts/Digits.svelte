@@ -14,6 +14,7 @@ Take an integer and represent that as a series of numbers with a base
   export let integer = 42;
 
   export let lengthOfBits: number;
+  export let max = -1;
 
   $: widthClass = bitsToBundle === 4 ? 'w-hex' : bitsToBundle === 3 ? 'w-octal' : '';
   $: borderStyle = [
@@ -34,7 +35,8 @@ Take an integer and represent that as a series of numbers with a base
   $: shouldBeLength = Math.ceil(lengthOfBits / bitsToBundle); // firstly tidy
   $: _digits = extractDigits(integer).slice(shouldBeLength * -1);
   $: paddingLength = lengthOfBits > _digits.length * bitsToBundle ? 1 : 0; // secondly pad
-  $: digits = [...Array.from({ length: paddingLength }, () => 0), ..._digits];
+  $: untrimmedDigits = [...Array.from({ length: paddingLength }, () => 0), ..._digits];
+  $: digits = max > 0 ? untrimmedDigits.slice(max * -1) : untrimmedDigits;
   $: sups = getExponents(digits);
   $: constructInteger = genConstructInteger(bitsToBundle);
 
@@ -73,7 +75,7 @@ Take an integer and represent that as a series of numbers with a base
       {#each digits as digit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`${cellClasses} ${cellBg}`}
+          class={`outline-gray-300 hover:outline ${cellClasses} ${cellBg}`}
           style={bgOpacity(digit)}
         >
           <Digit {digit} {base} position={idx} on:update={onUpdate} />

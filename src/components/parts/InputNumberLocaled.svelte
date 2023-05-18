@@ -8,7 +8,7 @@ Two things are enhanced:
   - and communicate that via the background color of the input box
 -->
 <script lang="ts">
-  let clazz: string;
+  let clazz = '';
   export { clazz as class };
 
   export let min = 0;

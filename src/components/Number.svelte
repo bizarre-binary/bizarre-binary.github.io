@@ -2,7 +2,7 @@
 A demo that helps develop components
 -->
 <script context="module" lang="ts">
-  import OctBitHex from './OctBitHex.svelte';
+  import OctBitHex from './blend/OctBitHex.svelte';
   import NumberControls from './parts/NumberControls.svelte';
   import { NCClickEvent } from './parts/NumberControls.svelte';
   import { debounce } from '../lib/debounce';

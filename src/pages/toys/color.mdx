@@ -1,0 +1,18 @@
+---
+layout: '../../layouts/Post.astro'
+title: 'True Color Visualizer'
+toy: true
+---
+import Color from '../../components/Color.svelte';
+import OpacitySkeleton from '../../components/parts/OpacitySkeleton.svelte';
+
+<div class="not-prose">
+  <OpacitySkeleton client:visible>
+    <Color client:visible />
+  </OpacitySkeleton>
+</div>
+
+24 bits can be used to represent [True color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)).
+8 bits each of R, G, B.
+
+This is how **a single pixel** is used by a lot of computers and smart-phones out there.
