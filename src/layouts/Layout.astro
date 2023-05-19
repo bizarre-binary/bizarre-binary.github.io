@@ -31,14 +31,15 @@ const description = titleFromProps ? `${defaultTitle} - ${title}` : title;
     <GlobalStyle />
     <PWA />
   </head>
-  <body class="m-auto max-w-prose px-2 md:px-0">
-    <header class="py-3 sticky top-0 bg-white">
+  <body class="m-auto max-w-prose px-2 md:px-0 flex flex-col [min-height:100svh]">
+    <header class="py-3 sticky z-20 top-0 bg-white">
       <Header />
     </header>
-    <main class="[min-height:75dvh]">
+    <main>
       <slot />
     </main>
-    <footer class="mt-25 mb-10 prose text-gray">
+    <div class="grow"></div>
+    <footer class="mt-25 mb-7 prose text-gray">
       <small>
         The content of this site is licensed under the
         <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0.</a>
