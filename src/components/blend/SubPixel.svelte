@@ -42,7 +42,7 @@ Visualize a sub pixel with 8 bits
   </div>
   <label
     for={undefined}
-    class="block outline-blue-500 focus-within:outline rounded flex items-center border p-0.5 mx-0.1"
+    class="block rounded flex items-center p-0.5 mx-0.1 hover:outline hover:outline-gray-300 focus-within:outline focus-within:outline-blue-500 focus-within:hover:outline-blue-500"
   >
     <div class="grow" />
     <div class="grow" />
