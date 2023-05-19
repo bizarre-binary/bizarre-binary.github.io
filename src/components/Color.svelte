@@ -41,11 +41,21 @@ Visualize True color
   $: colorNumbers = `(${r}, ${g}, ${b})`;
 </script>
 
-<div class="flex">
+<div class="flex items-center">
   <div class="grow" />
-  <SubPixel label={{ text: 'R', color: '#C00000' }} bind:integer={r} color={`#${sr}0000`} />
-  <SubPixel label={{ text: 'G', color: '#00C000' }} bind:integer={g} color={`#00${sg}00`} />
-  <SubPixel label={{ text: 'B', color: '#0000F0' }} bind:integer={b} color={`#0000${sb}`} />
+  <div class="w-fit sm:flex sm:w-auto">
+    <div class="grow" />
+    <div>
+      <SubPixel label={{ text: 'R', color: '#C00000' }} bind:integer={r} color={`#${sr}0000`} />
+    </div>
+    <div class="border border-0 border-t-1 sm:border-t-0 mt-2 sm:mt-0">
+      <SubPixel label={{ text: 'G', color: '#00C000' }} bind:integer={g} color={`#00${sg}00`} />
+    </div>
+    <div class="border border-0 border-t-1 sm:border-t-0 mt-2 sm:mt-0">
+      <SubPixel label={{ text: 'B', color: '#0000F0' }} bind:integer={b} color={`#0000${sb}`} />
+    </div>
+    <div class="grow" />
+  </div>
   <div class="grow" />
 </div>
 <div class="my-5">
