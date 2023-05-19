@@ -13,7 +13,7 @@ Visualize a sub pixel with 8 bits
 <script lang="ts">
   export let integer = 42;
   export let color = '#50d71e';
-  export let label = { text: 'label', color: '#000' };
+  export let tint = { text: 'label', color: '#000' };
 
   // use `integerInput` to bridge the input and real value
   $: integerInput = integer;
@@ -34,11 +34,20 @@ Visualize a sub pixel with 8 bits
 </script>
 
 <div class="mx-0.5">
-  <div class="text-lg text-center m-0.5" style={`color: ${label.color};`}>
-    {label.text}
+  <div class="hidden sm:block text-lg text-center m-0.5" style={`color: ${tint.color};`}>
+    {tint.text}
   </div>
-  <div>
-    <BitHex bind:integer minLength={8} max={8} borderOctal={false} />
+  <div class="rounded" style={`background-color: ${tint.color}0F`}>
+    <div class="mix-blend-multiply">
+      <BitHex
+        bind:integer
+        minLength={8}
+        max={8}
+        borderOctal={false}
+        borderHex={false}
+        overrideCellBg={`${tint.color}50`}
+      />
+    </div>
   </div>
   <label
     for={undefined}

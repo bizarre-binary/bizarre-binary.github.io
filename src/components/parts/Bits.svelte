@@ -7,6 +7,7 @@ Take an integer and represent that as a series of bits
   import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
   import { motion } from '../../lib/defaults';
+  import { toHex, fromHex } from '../../lib/convert';
 
   const defaultMultipleOf = 4;
   const extractBit = genExtractDigits(1);
@@ -24,6 +25,8 @@ Take an integer and represent that as a series of bits
   export let multipleOf = defaultMultipleOf;
   export let max = -1;
   export let borderOctal = true;
+  export let borderHex = true;
+  export let overrideCellBg: string | null = null;
 
   let changedPosition = 0;
 
@@ -43,18 +46,30 @@ Take an integer and represent that as a series of bits
   }
 
   const border = {
-    common: 'border-0 border-l-2 border-r-0',
+    common: 'border-0 border-l-2 first:border-l-0 border-r-0',
     hex: 'border-l-slate-200 border-solid',
     octal: 'border-l-slate-300 border-dashed',
     hidden: 'border-l-hidden',
   };
+
   const borderExtra = (idx: number) => {
-    if (idx % 4 == 0) return border.hex;
+    if (idx % 4 == 0 && borderHex) return border.hex;
     else if (idx % 3 == 0 && borderOctal) return border.octal;
     return border.hidden;
   };
 
   $: borderStyle = (idx: number) => [border.common, borderExtra(idx)].join(' ');
+
+  const maxAlpha = overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255;
+  const getOpacityHex = (n: number) =>
+    toHex(Math.max(0, Math.min(maxAlpha, Math.round(n * maxAlpha))), 2);
+
+  const bgOpacity = (bit: boolean) => `--un-bg-opacity: ${bit ? 1 : 0};`;
+  const customBg = (bit: boolean) =>
+    overrideCellBg
+      ? `background-color: ${overrideCellBg.substring(0, 7)}${getOpacityHex(bit ? 1 : 0)};`
+      : '';
+  const style = (bit: number) => (overrideCellBg ? customBg(!!bit) : bgOpacity(!!bit));
 
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => lengthOfBits - idx;
@@ -78,15 +93,15 @@ Take an integer and represent that as a series of bits
   </thead>
   <tbody>
     <tr class="border-0">
-      <!-- (id) is important for transition animation -->
+      <!-- (idx) is important for transition animation -->
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`hover:outline outline-gray-300 w-bit text-center ${borderStyle(
+          class={`bg-yellow-200 hover:outline outline-gray-300 w-bit text-center ${borderStyle(
             lengthOfBits - idx
           )}`}
-          class:bg-yellow-200={!!bit}
           class:text-gray-800={!!bit}
+          style={style(bit)}
         >
           <Bit checked={!!bit} position={idx} on:flip={onFlip} />
         </td>
