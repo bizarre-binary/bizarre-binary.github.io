@@ -33,7 +33,7 @@ Visualize a sub pixel with 8 bits
   }
 </script>
 
-<div class="mx-0.5">
+<div class="mx-0.5 flex flex-row-reverse sm:flex-col">
   <div class="hidden sm:block text-lg text-center m-0.5" style={`color: ${tint.color};`}>
     {tint.text}
   </div>
@@ -49,25 +49,31 @@ Visualize a sub pixel with 8 bits
       />
     </div>
   </div>
-  <label
-    for={undefined}
-    class="block rounded flex items-center p-0.5 mx-0.1 hover:outline hover:outline-gray-300 focus-within:outline focus-within:outline-blue-500 focus-within:hover:outline-blue-500"
-  >
+  <div class="flex flex-col pb-6 sm:pb-0">
     <div class="grow" />
-    <div class="grow" />
-    <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
-    <div
-      class="rounded outline outline-gray-50 block w-0 h-0 pr-[12%] pb-[12%] mx-0.3"
-      style={`background-color: ${color};`}
-    />
-    <div>
-      <InputNumberLocaled
-        {min}
-        {max}
-        bind:value={integerInput}
-        class="focus:outline-none w-17 px-2"
-      />
+    <div class="px-6 sm:hidden text-xl" style={`color: ${tint.color};`}>
+      {tint.text}
     </div>
-    <div class="grow" />
-  </label>
+    <label
+      for={undefined}
+      class="block rounded flex items-center p-0.5 mx-0.1 hover:outline hover:outline-gray-300 focus-within:outline focus-within:outline-blue-500 focus-within:hover:outline-blue-500 min-w-[8rem]"
+    >
+      <div class="grow" />
+      <div class="grow" />
+      <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
+      <div
+        class="rounded outline outline-gray-50 block w-0 h-0 pr-[1.3rem] pb-[1.3rem] mx-0.3"
+        style={`background-color: ${color};`}
+      />
+      <div class="text-xl sm:text-base">
+        <InputNumberLocaled
+          {min}
+          {max}
+          bind:value={integerInput}
+          class="focus:outline-none w-17 px-2"
+        />
+      </div>
+      <div class="grow" />
+    </label>
+  </div>
 </div>

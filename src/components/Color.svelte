@@ -42,13 +42,13 @@ Visualize True color
   <div class="grow" />
   <div class="w-fit sm:flex sm:w-auto">
     <div class="grow" />
-    <div class="color-[#C00000]">
+    <div>
       <SubPixel tint={{ text: 'Red', color: '#C00000' }} bind:integer={r} color={`#${sr}0000`} />
     </div>
-    <div class="color-[#00A800]/75 mt-2 sm:mt-0">
+    <div class="mt-2 sm:mt-0">
       <SubPixel tint={{ text: 'Green', color: '#00A800' }} bind:integer={g} color={`#00${sg}00`} />
     </div>
-    <div class="color-[#0070F0]/75 mt-2 sm:mt-0">
+    <div class="mt-2 sm:mt-0">
       <SubPixel tint={{ text: 'Blue', color: '#0070F0' }} bind:integer={b} color={`#0000${sb}`} />
     </div>
     <div class="grow" />
@@ -63,7 +63,7 @@ Visualize True color
     <div class="grow" />
     <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
     <div
-      class="rounded outline outline-gray-200 block w-0 h-0 pr-[8%] pb-[8%] mx-0.3"
+      class="rounded outline outline-gray-200 block w-0 h-0 pr-[3.5rem] pb-[3.5rem] mx-0.3"
       style={`background-color: ${colorHex};`}
     />
     <div class="mx-2">
