@@ -4,6 +4,7 @@ Visualize a sub pixel with 8 bits
 <script context="module" lang="ts">
   import BitHex from './BitHex.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
+  import { colord } from 'colord';
   import { debounce } from '../../lib/debounce';
 
   const min = 0;
@@ -14,6 +15,9 @@ Visualize a sub pixel with 8 bits
   export let integer = 42;
   export let color = '#50d71e';
   export let tint = { text: 'label', color: '#000' };
+
+  $: hsl = colord(color).toHsl();
+  $: rangeShdw = `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
 
   // use `integerInput` to bridge the input and real value
   $: integerInput = integer;
@@ -49,7 +53,7 @@ Visualize a sub pixel with 8 bits
       />
     </div>
   </div>
-  <div class="flex flex-col pb-6 sm:pb-0">
+  <div class="flex flex-col mr-5 sm:mr-0">
     <div class="grow" />
     <div class="px-6 sm:hidden text-xl" style={`color: ${tint.color};`}>
       {tint.text}
@@ -75,5 +79,23 @@ Visualize a sub pixel with 8 bits
       </div>
       <div class="grow" />
     </label>
+    <!-- using two range per breakpoint for now due to variation doesn't work with daisy ui yet -->
+    <!-- https://github.com/kidonng/unocss-preset-daisy/issues/14 -->
+    <input
+      type="range"
+      {min}
+      {max}
+      bind:value={integer}
+      class="hidden sm:block range range-xs origin-center rotate-180 my-0.5"
+      style={`--range-shdw: ${rangeShdw};`}
+    />
+    <input
+      type="range"
+      {min}
+      {max}
+      bind:value={integer}
+      class="sm:hidden range range-lg origin-center rotate-180 my-3"
+      style={`--range-shdw: ${rangeShdw};`}
+    />
   </div>
 </div>
