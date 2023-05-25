@@ -2,7 +2,6 @@
 Visualize True color
 -->
 <script context="module" lang="ts">
-  import type { RGBA } from '@lib/convert';
   import { toRGBA, fromRGBA, toHex } from '@lib/convert';
   import { isHexDark, toHsl } from '@lib/color';
   import { debounce } from '@lib/debounce';
@@ -30,9 +29,7 @@ Visualize True color
 <script lang="ts">
   let { pixels, selected } = initialPixels();
 
-  export const cachePixel = debounce((rgba: RGBA, selected: number) => {
-    pixels[selected] = fromRGBA(rgba);
-    pixels = pixels;
+  export const cachePixel = debounce((selected: number) => {
     localStorage.setItem(pixelsKey, JSON.stringify({ pixels, selected }));
   });
 
@@ -44,7 +41,9 @@ Visualize True color
   }
 
   function onUpdate({ detail: { position, rgba } }: CustomEvent<UpdatePixelEvent>) {
-    cachePixel(rgba, position);
+    pixels[position] = fromRGBA(rgba);
+    pixels = pixels;
+    cachePixel(position);
   }
 
   const hex = (pixel: number) => `#${toHex(pixel, 8)}`;
