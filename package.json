@@ -13,6 +13,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "vite": "vite",
+    "test": "vitest",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -48,6 +50,7 @@
     "svelte": "^3.55.1",
     "unocss": "^0.50.2",
     "unocss-preset-daisy": "^4.0.0",
-    "vite-plugin-pwa": "^0.14.7"
+    "vite-plugin-pwa": "^0.14.7",
+    "vitest": "^0.31.1"
   }
 }

@@ -2,74 +2,104 @@
 Visualize True color
 -->
 <script context="module" lang="ts">
-  import SubPixel from './blend/SubPixel.svelte';
-  import { toHex } from '../lib/convert';
+  import type { RGBA } from '@lib/convert';
+  import { toRGBA, fromRGBA, toHex } from '@lib/convert';
+  import { isHexDark, toHsl } from '@lib/color';
+  import { debounce } from '@lib/debounce';
+  import type { UpdatePixelEvent } from '@components/blend/Pixel.svelte';
 
-  const rgbKey = 'color-pixel';
-
-  type RGB = { r: number; g: number; b: number };
-  // for this to work consistently client:only directive is necessary from .astro components
-  export const initialPixel = (): RGB => {
-    const cached = localStorage.getItem(rgbKey);
-    return cached ? JSON.parse(cached) : { r: 254, g: 240, b: 138 };
+  type colorStorage = {
+    pixels: [number, number, number, number, number, number];
+    selected: 0;
   };
 
-  export const cachePixel = (rgb: RGB) => {
-    localStorage.setItem(rgbKey, JSON.stringify(rgb));
+  const pixelsKey = 'color-pixels';
+
+  // for this to work consistently client:only directive is necessary from .astro components
+  export const initialPixels = (): colorStorage => {
+    const cached = localStorage.getItem(pixelsKey);
+    return cached
+      ? JSON.parse(cached)
+      : {
+          pixels: [0x845ec2ff, 0xd65db1ff, 0xff6f91ff, 0xff9671ff, 0xffc75fff, 0xf9f871ff],
+          selected: 0,
+        };
   };
 </script>
 
 <script lang="ts">
-  let { r, g, b } = initialPixel();
+  let { pixels, selected } = initialPixels();
 
+  export const cachePixel = debounce((rgba: RGBA, selected: number) => {
+    pixels[selected] = fromRGBA(rgba);
+    pixels = pixels;
+    localStorage.setItem(pixelsKey, JSON.stringify({ pixels, selected }));
+  });
+
+  import Pixel from './blend/Pixel.svelte';
+
+  $: selectedPixel = toRGBA(pixels[selected]);
   $: {
-    cachePixel({ r, g, b });
+    cachePixel(selectedPixel, selected);
   }
 
-  const toSubPixel = (i: number) => {
-    return toHex(i, 2);
+  function onUpdate({ detail: { position, rgba } }: CustomEvent<UpdatePixelEvent>) {
+    cachePixel(rgba, position);
+  }
+
+  const hex = (pixel: number) => `#${toHex(pixel, 8)}`;
+
+  const hsl = (pixel: number) => {
+    const hsl = toHsl(hex(pixel));
+
+    return `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
   };
 
-  $: sr = toSubPixel(r);
-  $: sg = toSubPixel(g);
-  $: sb = toSubPixel(b);
+  const tabTextColor = (pixel: number) => (isHexDark(hex(pixel)) ? 'white' : 'black');
 
-  $: colorHex = `#${sr}${sg}${sb}`.toUpperCase();
-  $: colorNumbers = `(${r}, ${g}, ${b})`;
+  $: labelStyle = (isSelected: boolean, pixel: number, selectedPixel: number) =>
+    !isSelected
+      ? `background-color: ${hex(pixel)};--bc: ${hsl(selectedPixel)};`
+      : `--tab-border-color: ${hex(pixel)} !important;`;
+  $: hexStyle = (isSelected: boolean, pixel: number) =>
+    !isSelected
+      ? `color: ${tabTextColor(pixel)};`
+      : `background-color: ${hex(pixel)}; color: ${tabTextColor(pixel)}`;
 </script>
 
-<div class="flex items-center">
+<div class="flex">
   <div class="grow" />
-  <div class="w-fit sm:flex sm:w-auto">
-    <div class="grow" />
-    <div>
-      <SubPixel tint={{ text: 'Red', color: '#C00000' }} bind:integer={r} color={`#${sr}0000`} />
-    </div>
-    <div class="mt-2 sm:mt-0">
-      <SubPixel tint={{ text: 'Green', color: '#00A800' }} bind:integer={g} color={`#00${sg}00`} />
-    </div>
-    <div class="mt-2 sm:mt-0">
-      <SubPixel tint={{ text: 'Blue', color: '#0070F0' }} bind:integer={b} color={`#0000${sb}`} />
-    </div>
-    <div class="grow" />
+  <div class="tabs mb-2 sm:mb-1">
+    {#each pixels as pixel, idx}
+      <label
+        class="tab tab-bordered rounded-t !px-1 !sm:px-5 text-xs sm:text-base ![--un-border-opacity:1] border-b-1"
+        class:rounded-br={idx === selected - 1}
+        class:rounded-bl={idx === selected + 1}
+        class:tab-active={idx === selected}
+        class:tab-lifted={idx === selected}
+        class:![--un-border-opacity:0]={idx === selected}
+        style={labelStyle(selected === idx, pixel, pixels[selected])}
+      >
+        <input
+          type="radio"
+          bind:group={selected}
+          name="color-tab"
+          class="radio hidden opacity-0"
+          value={idx}
+        />
+        <div
+          class="font-mono uppercase rounded"
+          class:px-1={idx === selected}
+          style={hexStyle(selected === idx, pixel)}
+        >
+          {hex(pixel).substring(1, 7)}
+        </div>
+      </label>
+    {/each}
   </div>
   <div class="grow" />
 </div>
-<div class="my-5">
-  <label
-    for={undefined}
-    class="block focus-within:outline outline-none rounded flex items-center p-0.5 mx-0.1"
-  >
-    <div class="grow" />
-    <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
-    <div
-      class="rounded outline outline-gray-200 block w-0 h-0 pr-[3.5rem] pb-[3.5rem] mx-0.3"
-      style={`background-color: ${colorHex};`}
-    />
-    <div class="mx-2">
-      <pre class="text-xs text-left">{colorNumbers}</pre>
-      <pre class="text-3xl text-center">{colorHex}</pre>
-    </div>
-    <div class="grow" />
-  </label>
-</div>
+
+{#key selected}
+  <Pixel pixel={selectedPixel} position={selected} on:update={onUpdate} />
+{/key}

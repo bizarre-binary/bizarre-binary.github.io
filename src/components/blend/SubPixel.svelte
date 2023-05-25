@@ -4,7 +4,7 @@ Visualize a sub pixel with 8 bits
 <script context="module" lang="ts">
   import BitHex from './BitHex.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
-  import { colord } from 'colord';
+  import { toHsl } from '@lib/color';
   import { debounce } from '../../lib/debounce';
 
   const min = 0;
@@ -16,7 +16,7 @@ Visualize a sub pixel with 8 bits
   export let color = '#50d71e';
   export let tint = { text: 'label', color: '#000' };
 
-  $: hsl = colord(color).toHsl();
+  $: hsl = toHsl(color);
   $: rangeShdw = `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
 
   // use `integerInput` to bridge the input and real value
@@ -74,7 +74,7 @@ Visualize a sub pixel with 8 bits
           {min}
           {max}
           bind:value={integerInput}
-          class="focus:outline-none w-17 px-2"
+          class="focus:outline-none w-17 px-2 bg-transparent"
         />
       </div>
       <div class="grow" />

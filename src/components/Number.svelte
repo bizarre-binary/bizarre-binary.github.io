@@ -5,7 +5,7 @@ A demo that helps develop components
   import OctBitHex from './blend/OctBitHex.svelte';
   import NumberControls from './parts/NumberControls.svelte';
   import { NCClickEvent } from './parts/NumberControls.svelte';
-  import { debounce } from '../lib/debounce';
+  import { debounce } from '@lib/debounce';
 
   const min = 0;
   // const max = 9_192_631_770; good bye my first choice, you just overflow...
@@ -18,9 +18,9 @@ A demo that helps develop components
     return cached ? parseInt(cached) : 42;
   };
 
-  export const cacheInteger = (integer: number) => {
+  export const cacheInteger = debounce((integer: number) => {
     localStorage.setItem(integerKey, integer.toString());
-  };
+  });
 </script>
 
 <script lang="ts">
