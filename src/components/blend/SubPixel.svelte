@@ -79,23 +79,27 @@ Visualize a sub pixel with 8 bits
       </div>
       <div class="grow" />
     </label>
-    <!-- using two range per breakpoint for now due to variation doesn't work with daisy ui yet -->
-    <!-- https://github.com/kidonng/unocss-preset-daisy/issues/14 -->
-    <input
-      type="range"
-      {min}
-      {max}
-      bind:value={integer}
-      class="hidden sm:block range range-xs origin-center rotate-180 my-0.5"
-      style={`--range-shdw: ${rangeShdw};`}
-    />
-    <input
-      type="range"
-      {min}
-      {max}
-      bind:value={integer}
-      class="sm:hidden range range-lg origin-center rotate-180 my-3"
-      style={`--range-shdw: ${rangeShdw};`}
-    />
+    <div class="origin-center rotate-180 my-3">
+      <!-- using different range per "breakpoint" for now due to variation doesn't work with daisy ui yet -->
+      <!-- https://github.com/kidonng/unocss-preset-daisy/issues/14 -->
+      <!-- non touch screen -->
+      <input
+        type="range"
+        {min}
+        {max}
+        bind:value={integer}
+        class="block [@media(pointer:coarse)]:hidden range range-sm"
+        style={`--range-shdw: ${rangeShdw};`}
+      />
+      <!-- touch screen -->
+      <input
+        type="range"
+        {min}
+        {max}
+        bind:value={integer}
+        class="hidden [@media(pointer:coarse)]:block range range-lg"
+        style={`--range-shdw: ${rangeShdw};`}
+      />
+    </div>
   </div>
 </div>

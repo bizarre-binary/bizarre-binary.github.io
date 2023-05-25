@@ -66,17 +66,19 @@ Visualize True color
       : `background-color: ${hex(pixel)}; color: ${tabTextColor(pixel)}`;
 </script>
 
-<div class="flex">
+<div class="flex w-screen sm:w-auto">
   <div class="grow" />
   <div class="tabs mb-2 sm:mb-1">
+    <!-- uno safelist class="rounded-br rounded-bl tab-active tab-lifted sm:hover:outline hover:cursor-default" -->
     {#each pixels as pixel, idx}
       <label
-        class="tab tab-bordered rounded-t !px-1 !sm:px-5 text-xs sm:text-base ![--un-border-opacity:1] border-b-1"
+        class="tab tab-bordered rounded-t !px-1 !sm:px-3 text-xs sm:text-base ![--un-border-opacity:1] border-b-1 outline-gray hover:z-10 [@media(hover:none)]:outline-0"
         class:rounded-br={idx === selected - 1}
         class:rounded-bl={idx === selected + 1}
+        class:sm:hover:outline={idx !== selected}
+        class:hover:cursor-default={idx == selected}
         class:tab-active={idx === selected}
         class:tab-lifted={idx === selected}
-        class:![--un-border-opacity:0]={idx === selected}
         style={labelStyle(selected === idx, pixel, pixels[selected])}
       >
         <input
@@ -87,8 +89,7 @@ Visualize True color
           value={idx}
         />
         <div
-          class="font-mono uppercase rounded"
-          class:px-1={idx === selected}
+          class="font-mono uppercase rounded px-0.5 sm:px-2"
           style={hexStyle(selected === idx, pixel)}
         >
           {hex(pixel).substring(1, 7)}

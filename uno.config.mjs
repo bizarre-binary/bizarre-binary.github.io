@@ -24,12 +24,6 @@ export default defineConfig({
     'opacity-0',
     'opacity-50',
     'opacity-100',
-    'rounded-br',
-    'rounded-bl',
-    'tab-active',
-    'tab-lifted',
-    'shadow-inner',
-    '![--un-border-opacity:0]',
   ],
   // or include something like this in individual component so it can be scanned <!-- <unocss-safelist class="bg-yellow-200 text-gray-800" /> -->
   shortcuts: [
