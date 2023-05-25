@@ -7,15 +7,15 @@ Visualize True color
   import { debounce } from '@lib/debounce';
   import type { UpdatePixelEvent } from '@components/blend/Pixel.svelte';
 
-  type colorStorage = {
+  type ColorStorage = {
     pixels: [number, number, number, number, number, number];
-    selected: 0;
+    selected: number;
   };
 
   const pixelsKey = 'color-pixels';
 
   // for this to work consistently client:only directive is necessary from .astro components
-  export const initialPixels = (): colorStorage => {
+  export const initialPixels = (): ColorStorage => {
     const cached = localStorage.getItem(pixelsKey);
     return cached
       ? JSON.parse(cached)
@@ -37,7 +37,7 @@ Visualize True color
 
   $: selectedPixel = toRGBA(pixels[selected]);
   $: {
-    cachePixel(selectedPixel, selected);
+    cachePixel(selected);
   }
 
   function onUpdate({ detail: { position, rgba } }: CustomEvent<UpdatePixelEvent>) {
