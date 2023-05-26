@@ -90,7 +90,7 @@ Visualize True color
           value={idx}
         />
         <div
-          class="font-mono uppercase rounded px-0.5 sm:px-2"
+          class="my-1 font-mono uppercase rounded px-0.5 sm:px-2"
           style={hexStyle(selected === idx, pixel)}
         >
           {hex(pixel).substring(1, 7)}

@@ -12,7 +12,27 @@ import OpacitySkeleton from '../../components/parts/OpacitySkeleton.svelte';
   </OpacitySkeleton>
 </div>
 
-24 bits can be used to represent [True color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)).
-8 bits each of Red, Green, Blue.
+---
 
-This is how **a single pixel** is used by a lot of computers and smart-phones out there.
+#### How Many Bits per Pixel?
+24 bits can be used to represent [True color](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit)).
+> Typically 8 bits each of Red, Green, and Blue (8 bits per channel) which represents **a single pixel**. (_we are ignoring the alpha channel here_)
+
+Here we are using the 6-digit version of [the RGB hexadecimal notations from W3C](https://www.w3.org/TR/css-color-4/#hex-color).
+
+> You can read the documentation from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/hex-color) as well.
+
+Each channel (8-bit), `00-FF` can be notated in base-10 numbers between $0$ to $255$ too.
+That allows you to use the numbers with [rgb()](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb) via CSS.
+
+#### Is True Color Sufficient?
+So that's about how we store and read the data for the color.
+> We used 24 bits, "True Color" here.
+
+But this is not the end of the story and how we actually interpret and render colors is a lot more complex than that.
+
+The color you see here is via [sRGB](https://en.wikipedia.org/wiki/SRGB) which has been the most popular way on the web.
+
+If you are keen on learning more about the subject, there are many resources to go down the rabbit hole including:
+- https://developer.chrome.com/articles/high-definition-css-color-guide/
+- https://www.w3.org/TR/css-color-4/
