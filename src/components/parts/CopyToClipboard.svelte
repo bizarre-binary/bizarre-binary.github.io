@@ -71,7 +71,7 @@ A wrapper for copy to clipboard function
 </script>
 
 <div
-  class="mb-2 tooltip tooltip-bottom tooltip-success tooltip-error before:mt-0.8 after:mt-1 hover:before:opacity-80 hover:after:opacity-80"
+  class="mb-2 tooltip tooltip-bottom before:mt-0.8 after:mt-1 hover:before:opacity-80 hover:after:opacity-80 tooltip-open tooltip-success tooltip-error"
   class:tooltip-success={showFeedback && feedback.type === success}
   class:tooltip-error={showFeedback && feedback.type === error}
   class:tooltip-open={showFeedback}
