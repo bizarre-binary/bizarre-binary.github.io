@@ -100,7 +100,7 @@ Take an integer and represent that as a series of numbers with a base
       {#each digits as digit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`outline-gray-300 hover:outline ${cellClasses} ${cellBg}`}
+          class={`relative hover:z-10 focus-within:z-10 outline-gray-300 hover:outline ${cellClasses} ${cellBg}`}
           style={style(digit)}
         >
           <Digit {digit} {base} position={idx} on:update={onUpdate} />

@@ -97,7 +97,7 @@ Take an integer and represent that as a series of bits
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`bg-yellow-200 hover:outline outline-gray-300 w-bit text-center ${borderStyle(
+          class={`relative hover:z-10 bg-yellow-200 hover:outline outline-gray-300 w-bit text-center ${borderStyle(
             lengthOfBits - idx
           )}`}
           class:text-gray-800={!!bit}
