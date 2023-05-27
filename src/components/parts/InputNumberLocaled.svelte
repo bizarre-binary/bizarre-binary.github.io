@@ -8,6 +8,8 @@ Two things are enhanced:
   - and communicate that via the background color of the input box
 -->
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   let clazz = '';
   export { clazz as class };
 
@@ -41,8 +43,18 @@ Two things are enhanced:
 
   $: localed = integer.toLocaleString();
 
+  // workaround with astro SSR
+  let domDocument: Document;
+  onMount(() => {
+    domDocument = document;
+  });
+
+  // `whenFocused` is to key to not be in a way to move focus around with tab and shift tab key
+  $: whenFocused = domDocument ? domDocument.activeElement === actualInputUI : false;
+
   function focusInput() {
     if (actualInputUI) actualInputUI.focus();
+    whenFocused = true;
   }
 </script>
 
@@ -52,12 +64,14 @@ Two things are enhanced:
   <!-- the cleanest solution is using `dir="rtl"` and it allow you to avoid using `flex`, `flex-grow` and there to achieve the similar things  -->
   <!-- an example for that can be found at ./NumberControls.svelte -->
   <div class="absolute">
-    <input
-      value={localed}
-      class={clazz}
-      on:focus={focusInput}
-      aria-label="number in base 10 (to show)"
-    />
+    {#if !whenFocused}
+      <input
+        value={localed}
+        class={clazz}
+        on:focus={focusInput}
+        aria-label="number in base 10 (to show)"
+      />
+    {/if}
   </div>
   <div class="opacity-0 focus-within:opacity-[100] z-10 relative">
     <input
@@ -69,6 +83,12 @@ Two things are enhanced:
       class={clazz}
       class:bg-yellow-200={unsanitary}
       aria-label="number in base 10 (to edit)"
+      on:focus={() => {
+        whenFocused = true;
+      }}
+      on:blur={() => {
+        whenFocused = false;
+      }}
     />
   </div>
 </div>
