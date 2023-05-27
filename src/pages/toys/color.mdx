@@ -3,14 +3,9 @@ layout: '../../layouts/Post.astro'
 title: 'True Color Picker'
 toy: true
 ---
-import Color from '../../components/Color.svelte';
-import OpacitySkeleton from '../../components/parts/OpacitySkeleton.svelte';
+import Color from '../../components/glue/EmbeddableColor.svelte';
 
-<div class="not-prose">
-  <OpacitySkeleton client:visible>
-    <Color client:visible />
-  </OpacitySkeleton>
-</div>
+<Color client:visible />
 
 ---
 
