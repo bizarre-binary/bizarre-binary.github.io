@@ -83,7 +83,7 @@ A logarithmical <input type="range">
         value={valueL}
         on:change={onChange}
         class="range range-xs"
-        style={`--range-shdw: ${rangeShdw};`}
+        style:--range-shdw={rangeShdw}
       />
     </div>
   </div>

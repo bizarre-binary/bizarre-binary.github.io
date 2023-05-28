@@ -69,7 +69,7 @@ Pixel that contains sub pixels
         <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
         <div
           class="rounded outline outline-gray-200 block w-0 h-0 pr-[3.5rem] pb-[3.5rem] mx-0.3"
-          style={`background-color: ${colorHex};`}
+          style:background-color={colorHex}
         />
         <div class="mx-2">
           <pre class="text-xs text-left">{colorNumbers}</pre>

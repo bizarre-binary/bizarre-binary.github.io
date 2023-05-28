@@ -38,10 +38,10 @@ Visualize a sub pixel with 8 bits
 </script>
 
 <div class="mx-0.5 flex flex-row-reverse sm:flex-col">
-  <div class="hidden sm:block text-lg text-center m-0.5" style={`color: ${tint.color};`}>
+  <div class="hidden sm:block text-lg text-center m-0.5" style:color={tint.color}>
     {tint.text}
   </div>
-  <div class="rounded" style={`background-color: ${tint.color}0F`}>
+  <div class="rounded" style:background-color={`${tint.color}0F`}>
     <div class="mix-blend-multiply">
       <BitHex
         bind:integer
@@ -55,7 +55,7 @@ Visualize a sub pixel with 8 bits
   </div>
   <div class="flex flex-col mr-5 sm:mr-0">
     <div class="grow" />
-    <div class="px-6 sm:hidden text-xl" style={`color: ${tint.color};`}>
+    <div class="px-6 sm:hidden text-xl" style:color={tint.color}>
       {tint.text}
     </div>
     <label
@@ -67,7 +67,7 @@ Visualize a sub pixel with 8 bits
       <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
       <div
         class="rounded outline outline-gray-50 block w-0 h-0 pr-[1.3rem] pb-[1.3rem] mx-0.3"
-        style={`background-color: ${color};`}
+        style:background-color={color}
       />
       <div class="text-xl sm:text-base">
         <InputNumberLocaled
@@ -89,7 +89,7 @@ Visualize a sub pixel with 8 bits
         {max}
         bind:value={integer}
         class="block [@media(pointer:coarse)]:hidden range range-sm"
-        style={`--range-shdw: ${rangeShdw};`}
+        style:--range-shdw={rangeShdw}
       />
       <!-- touch screen -->
       <input
@@ -98,7 +98,7 @@ Visualize a sub pixel with 8 bits
         {max}
         bind:value={integer}
         class="hidden [@media(pointer:coarse)]:block range range-lg"
-        style={`--range-shdw: ${rangeShdw};`}
+        style:--range-shdw={rangeShdw}
       />
     </div>
   </div>
