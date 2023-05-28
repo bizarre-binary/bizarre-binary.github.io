@@ -107,7 +107,7 @@ A digit that represent any number up to hexadecimal
     bind:value={digit}
     on:keydown={superChargeKeyDown}
   >
-    {#each digits as d}
+    {#each digits.reverse() as d}
       <option value={d}>
         {render(d)}
       </option>
