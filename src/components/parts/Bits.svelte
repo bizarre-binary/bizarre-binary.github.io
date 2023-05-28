@@ -46,9 +46,9 @@ Take an integer and represent that as a series of bits
   }
 
   const border = {
-    common: 'border-0 border-l-2 first:border-l-0 border-r-0',
-    hex: 'border-l-slate-200 border-solid',
-    octal: 'border-l-slate-300 border-dashed',
+    common: 'digit-border-common',
+    hex: 'digit-border-hex',
+    octal: 'digit-border-octal',
     hidden: 'border-l-hidden',
   };
 

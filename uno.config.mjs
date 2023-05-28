@@ -34,6 +34,9 @@ export default defineConfig({
       'w-hex': `w-${bitWidth * 4}rem`,
       'math-inline': 'inline-block text-sm',
       'icon-link': 'i-bi-link-45deg inline-block align-middle text-slate-300',
+      'digit-border-common': 'border-0 border-l-2 first:border-l-0',
+      'digit-border-hex': 'border-slate-200 border-solid',
+      'digit-border-octal': 'border-slate-300 border-dashed',
     },
   ],
   rules: [

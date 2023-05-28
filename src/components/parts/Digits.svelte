@@ -20,24 +20,22 @@ Take an integer and represent that as a series of numbers with a base
   export let overrideCellBg: string | null = null;
 
   const border = {
-    common: 'border-0 border-l-2 first:border-l-0',
-    hex: 'border-slate-200 border-solid',
-    octal: 'border-slate-300 border-dashed',
+    common: 'digit-border-common',
+    hex: 'digit-border-hex',
+    octal: 'digit-border-octal',
     none: '',
   };
 
   const borderExtra = () => {
-    if (bitsToBundle % 4) return border.hex;
-    else if (bitsToBundle % 3 == 0) return border.octal;
+    if (bitsToBundle % 4 === 0) return border.hex;
+    else if (bitsToBundle % 3 === 0) return border.octal;
     return border.none;
   };
 
   $: widthClass = bitsToBundle === 4 ? 'w-hex' : bitsToBundle === 3 ? 'w-octal' : '';
-  $: borderStyle = [
-    'border-0 first:border-l-0',
-    borderExtra(),
-    drawBorder ? 'border-l-2' : 'border-l-0',
-  ].join(' ');
+  $: borderStyle = [borderExtra(), drawBorder ? 'border-l-2 first:border-l-0' : 'border-l-0'].join(
+    ' '
+  );
 
   $: cellBg = bitsToBundle === 3 ? 'bg-sky-200' : 'bg-purple-200';
 
