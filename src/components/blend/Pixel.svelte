@@ -44,7 +44,7 @@ Pixel that contains sub pixels
   $: colorNumbers = `(${r}, ${g}, ${b})`;
 </script>
 
-<div class="flex items-center">
+<div class="flex items-center lt-xs:overflow-x-scroll">
   <div class="grow" />
   <div class="w-fit sm:flex sm:w-auto">
     <div class="grow" />

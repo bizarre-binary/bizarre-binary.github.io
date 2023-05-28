@@ -37,7 +37,7 @@ Visualize a sub pixel with 8 bits
   }
 </script>
 
-<div class="mx-0.5 flex flex-row-reverse sm:flex-col">
+<div class="mx-0.5 flex flex-row-reverse lt-xs:flex-row sm:flex-col">
   <div class="hidden sm:block text-lg text-center m-0.5" style:color={tint.color}>
     {tint.text}
   </div>
@@ -53,14 +53,14 @@ Visualize a sub pixel with 8 bits
       />
     </div>
   </div>
-  <div class="flex flex-col mr-5 sm:mr-0">
+  <div class="flex flex-col xs:mr-5 lt-xs:ml-5 sm:mr-0 lt-xs:w-30">
     <div class="grow" />
     <div class="px-6 sm:hidden text-xl" style:color={tint.color}>
       {tint.text}
     </div>
     <label
       for={undefined}
-      class="block rounded flex items-center p-0.5 mx-0.1 hover:outline hover:outline-gray-300 focus-within:outline focus-within:outline-blue-500 focus-within:hover:outline-blue-500 min-w-[8rem]"
+      class="block rounded flex items-center p-0.5 mx-0.1 hover:outline hover:outline-gray-300 focus-within:outline focus-within:outline-blue-500 focus-within:hover:outline-blue-500 xs:min-w-[8rem]"
     >
       <div class="grow" />
       <div class="grow" />
