@@ -3,6 +3,7 @@ A demo that helps develop components
 -->
 <script context="module" lang="ts">
   import OctBitHex from './blend/OctBitHex.svelte';
+  import LogRange from './parts/LogRange.svelte';
   import NumberControls from './parts/NumberControls.svelte';
   import { NCClickEvent } from './parts/NumberControls.svelte';
   import { debounce } from '@lib/debounce';
@@ -64,6 +65,7 @@ A demo that helps develop components
   }
 </script>
 
+<LogRange {min} {max} bind:value={integerInput} />
 <!-- flipping direction twice and adding flex here and there to overflow on left not right - thanks to https://stackoverflow.com/a/39874526/1570165 -->
 <!-- <div dir="rtl" class="flex [view-transition-name:bb-number]"> -->
 <!-- currently above causes an infinite loop on chrome ~113.0.5672.92 -->

@@ -38,6 +38,13 @@ export default defineConfig({
   ],
   rules: [
     [
+      // e.g. `mlv-[my-var]`
+      /^mlv-\[([a-z|-]+)\]$/,
+      ([, v]) => ({
+        'margin-left': `var(--${v})`,
+      }),
+    ],
+    [
       // e.g. `w-1.5rem`
       /^w-(\d+(\.\d+)?)rem$/,
       ([, n]) => ({
@@ -57,4 +64,16 @@ export default defineConfig({
       `,
     },
   ],
+  theme: {
+    // based on https://tailwindcss.com/docs/responsive-design
+    // and basically adding my custom `xs`
+    breakpoints: {
+      xs: '384px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
+  },
 });
