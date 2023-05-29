@@ -57,18 +57,29 @@ A auxiliary controls that supports changing numbers using buttons and input box
   </div>
 </div>
 <div>
-  <button class="btn btn-outline btn-xs btn-info" on:click={setToMax} disabled={integer == max}>
+  <!-- safe list class="btn-disabled" -->
+  <button
+    class="btn btn-outline btn-xs btn-info min-w-12"
+    on:click={setToMax}
+    disabled={integer == max}
+    class:btn-disabled={integer === max}
+  >
     max
   </button>
   <small class="text-gray-400">{formatted.max}</small>
-  <button class="btn btn-outline btn-xs btn-primary" on:click={setToMin} disabled={integer == min}>
+  <button
+    class="btn btn-outline btn-xs btn-primary min-w-12"
+    on:click={setToMin}
+    disabled={integer === min}
+    class:btn-disabled={integer === min}
+  >
     min
   </button>
   <small class="text-gray-400">{formatted.min}</small>
-  <button class="btn btn-outline btn-xs btn-success" on:click={increment}>
+  <button class="btn btn-outline btn-xs btn-success min-w-12" on:click={increment}>
     {integer === max ? 'min' : '+1'}
   </button>
-  <button class="btn btn-outline btn-xs btn-warning" on:click={decrement}>
+  <button class="btn btn-outline btn-xs btn-warning min-w-12" on:click={decrement}>
     {integer === min ? 'max' : '-1'}
   </button>
 </div>
