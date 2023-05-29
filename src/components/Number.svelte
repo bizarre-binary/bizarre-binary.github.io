@@ -73,7 +73,7 @@ A demo that helps develop components
 <div dir="rtl" class="flex">
   <!-- using tricks of `p-n` and `m--n` to unclip the overflow of the edges -->
   <div dir="ltr" class="overflow-hidden xl:overflow-visible p-2 m--2">
-    <div class="flex overflow-x-scroll p-1 m--1">
+    <div class="flex overflow-x-auto p-1 m--1">
       <div class="grow" />
       <OctBitHex bind:integer />
     </div>
