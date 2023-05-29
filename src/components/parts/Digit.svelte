@@ -93,7 +93,7 @@ A digit that represent any number up to hexadecimal
   };
 </script>
 
-<div class="relative focus-within:text-transparent">
+<div class="relative">
   <!-- `text-center` for `select` element doesn't work in safari -->
   <!-- so working around with placing a `div` element just before `select` -->
   <div class="absolute left-0 bottom-0 text-center w-full">
@@ -101,11 +101,9 @@ A digit that represent any number up to hexadecimal
   </div>
   <!-- `text-transparent` so that we rely on the `div` above -->
   <!-- `relative` is important to stay on top of the `div` that is `absolute` -->
-  <!-- unfortunately `text-transparent` hide things on Edge (if not Windows in general) so added more hacks that works also for Edge as well -->
-  <!-- by utilizing `text-left translate-x-9/20 focus:text-black outline-none`  -->
   <select
     data-position={position}
-    class="relative w-full text-transparent bg-transparent appearance-none text-left translate-x-9/20 focus:text-black outline-none"
+    class="relative w-full text-transparent bg-transparent appearance-none"
     bind:value={digit}
     on:keydown={superChargeKeyDown}
   >
