@@ -72,14 +72,17 @@ A demo that helps develop components
 <!-- so refrain from using it until it's resolved -->
 <div dir="rtl" class="flex">
   <!-- using tricks of `p-n` and `m--n` to unclip the overflow of the edges -->
-  <div dir="ltr" class="overflow-hidden xl:overflow-visible p-2 m--2">
-    <div class="flex overflow-x-auto p-1 m--1">
+  <div class="overflow-hidden xl:overflow-visible p-2 m--2 lt-xl:min-w-full">
+    <!-- use overflow-x-scroll over overflow-x-auto due to the nature of dynamic value -->
+    <!-- but use overflow-x-auto on xl screen since there is no possibility of scrolling there -->
+    <div class="flex overflow-x-scroll xl:overflow-x-auto p-1 m--1">
+      <div dir="ltr">
+        <OctBitHex bind:integer />
+      </div>
       <div class="grow" />
-      <OctBitHex bind:integer />
     </div>
-    <div class="text-right">
+    <div dir="ltr" class="text-right">
       <NumberControls bind:integer={integerInput} {max} {min} on:click={onControl} />
     </div>
   </div>
-  <div class="grow" />
 </div>

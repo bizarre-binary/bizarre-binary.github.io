@@ -101,6 +101,9 @@ Visualize True color
   <div class="grow" />
 </div>
 
-{#key selected}
-  <Pixel pixel={selectedPixel} position={selected} on:update={onUpdate} />
-{/key}
+<!-- mx--n is to center even with some overflow (within the size of n) -->
+<div class="sm:mx--6">
+  {#key selected}
+    <Pixel pixel={selectedPixel} position={selected} on:update={onUpdate} />
+  {/key}
+</div>
