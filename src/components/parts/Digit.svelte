@@ -108,7 +108,9 @@ A digit that represent any number up to hexadecimal
     on:keydown={superChargeKeyDown}
   >
     {#each [...digits].reverse() as d}
-      <option value={d}>
+      <!-- styling option is necessary on Edge browser if not Windows in general -->
+      <!-- to reset the trick above for Safari -->
+      <option value={d} class="text-center text-black">
         {render(d)}
       </option>
     {/each}
