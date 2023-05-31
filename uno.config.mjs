@@ -41,6 +41,8 @@ export default defineConfig({
       'digit-border-common': 'border-0 border-l-2 first:border-l-0',
       'digit-border-hex': 'border-slate-200 border-solid',
       'digit-border-octal': 'border-slate-300 border-dashed',
+      'input-number-hide-arrows':
+        '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
     },
   ],
   rules: [
