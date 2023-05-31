@@ -15,6 +15,7 @@ Two things are enhanced:
 
   export let min = 0;
   export let max = 999999999;
+  export let strictRangeOnInput = false;
 
   let actualInputUI: HTMLElement;
 
@@ -38,6 +39,11 @@ Two things are enhanced:
   };
 
   $: {
+    if (strictRangeOnInput) {
+      if (integerInput < min) integerInput = min;
+      if (integerInput > max) integerInput = max;
+    }
+
     sanitizeInput(integerInput);
   }
 
@@ -89,6 +95,7 @@ Two things are enhanced:
       on:blur={() => {
         whenFocused = false;
       }}
+      on:change
     />
   </div>
 </div>

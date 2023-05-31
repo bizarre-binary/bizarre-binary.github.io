@@ -21,17 +21,20 @@ Take an integer and represent that as a series of bits
 </script>
 
 <script lang="ts">
+  export let compact = false;
+  export let powered = false;
   export let integer = 42;
   export let multipleOf = defaultMultipleOf;
-  export let max = -1;
+  export let maxLength = -1;
   export let borderOctal = true;
   export let borderHex = true;
+  export let octetBorder = false;
   export let overrideCellBg: string | null = null;
 
   let changedPosition = 0;
 
   $: untrimmedBits = toBits(integer, multipleOf);
-  $: bits = max > 0 ? untrimmedBits.slice(max * -1) : untrimmedBits;
+  $: bits = maxLength > 0 ? untrimmedBits.slice(maxLength * -1) : untrimmedBits;
   $: lengthOfBits = bits.length;
 
   $: sups = getExponents(bits);
@@ -78,15 +81,27 @@ Take an integer and represent that as a series of bits
 <div class="hidden text-left">
   <pre>{JSON.stringify(debug, null, 2)}</pre>
 </div>
+
+<!-- safelist class="text-lg text-xs py-0.5 [&:nth-child(8n+5)]:border-l-0 " -->
 <table class="table-auto border-collapse">
   <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
           in:fly|local={transitionOptions}
-          class={`w-bit text-center ${borderStyle(lengthOfBits - idx)}`}
+          class={`text-center ${borderStyle(lengthOfBits - idx)}`}
+          class:w-bit={!compact}
+          class:w-bit-sm={compact}
+          class:text-xs={compact}
+          class:[&:nth-child(8n+5)]:border-l-0={octetBorder}
         >
-          <small>2<sup>{sup}</sup></small>
+          <small>
+            {#if powered}
+              {Math.pow(2, sup)}
+            {:else}
+              2<sup>{sup}</sup>
+            {/if}
+          </small>
         </th>
       {/each}
     </tr>
@@ -97,10 +112,14 @@ Take an integer and represent that as a series of bits
       {#each bits as bit, idx (reverseIdx(idx))}
         <td
           in:fly|local={transitionOptions}
-          class={`relative hover:z-10 bg-yellow-200 hover:outline outline-gray-300 w-bit text-center ${borderStyle(
+          class={`relative hover:z-10 bg-yellow-200 hover:outline outline-gray-300 text-center ${borderStyle(
             lengthOfBits - idx
           )}`}
-          class:text-gray-800={!!bit}
+          class:[&:nth-child(8n+5)]:border-l-0={octetBorder}
+          class:w-bit={!compact}
+          class:py-0.5={!compact}
+          class:w-bit-sm={compact}
+          class:text-lg={!compact}
           style={style(bit)}
         >
           <Bit checked={!!bit} position={idx} on:flip={onFlip} />

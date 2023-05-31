@@ -46,7 +46,7 @@ Visualize a sub pixel with 8 bits
       <BitHex
         bind:integer
         minLength={8}
-        max={8}
+        maxLength={8}
         borderOctal={false}
         borderHex={false}
         overrideCellBg={`${tint.color}50`}

@@ -37,8 +37,6 @@ A bit flipper
   }
 
   label > input + span {
-    font-size: 1.2rem;
-    height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -11,12 +11,14 @@ Take an integer and represent that as a series of numbers with a base
 </script>
 
 <script lang="ts">
+  export let compact = false;
   export let bitsToBundle = 4;
   export let integer = 42;
 
   export let lengthOfBits: number;
-  export let max = -1;
+  export let maxLength = -1;
   export let drawBorder = true;
+  export let octetBorder = false;
   export let overrideCellBg: string | null = null;
 
   const border = {
@@ -32,7 +34,8 @@ Take an integer and represent that as a series of numbers with a base
     return border.none;
   };
 
-  $: widthClass = bitsToBundle === 4 ? 'w-hex' : bitsToBundle === 3 ? 'w-octal' : '';
+  $: widthClass =
+    bitsToBundle === 4 ? (compact ? 'w-hex-sm' : 'w-hex') : bitsToBundle === 3 ? 'w-octal' : '';
   $: borderStyle = [borderExtra(), drawBorder ? 'border-l-2 first:border-l-0' : 'border-l-0'].join(
     ' '
   );
@@ -45,9 +48,12 @@ Take an integer and represent that as a series of numbers with a base
   $: extractDigits = genExtractDigits(bitsToBundle);
   $: shouldBeLength = Math.ceil(lengthOfBits / bitsToBundle); // firstly tidy
   $: _digits = extractDigits(integer).slice(shouldBeLength * -1);
-  $: paddingLength = lengthOfBits > _digits.length * bitsToBundle ? 1 : 0; // secondly pad
+  $: paddingLength = Math.max(
+    lengthOfBits > _digits.length * bitsToBundle ? 1 : 0,
+    shouldBeLength - _digits.length
+  ); // secondly pad
   $: untrimmedDigits = [...Array.from({ length: paddingLength }, () => 0), ..._digits];
-  $: digits = max > 0 ? untrimmedDigits.slice(max * -1) : untrimmedDigits;
+  $: digits = maxLength > 0 ? untrimmedDigits.slice(maxLength * -1) : untrimmedDigits;
   $: sups = getExponents(digits);
   $: constructInteger = genConstructInteger(bitsToBundle);
 
@@ -82,11 +88,16 @@ Take an integer and represent that as a series of numbers with a base
 <div class="hidden text-left">
   <pre>{JSON.stringify(debug, null, 2)}</pre>
 </div>
-<table class="table-auto border-collapse">
+<!-- safe list class="text-sm even:border-l-0" -->
+<table class="table-auto border-collapse" class:text-sm={compact}>
   <thead class="bg-slate-50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
-        <th in:fly|local={transitionOptions} class={cellClasses}>
+        <th
+          in:fly|local={transitionOptions}
+          class={cellClasses}
+          class:even:border-l-0={octetBorder}
+        >
           <small>{base}<sup>{sup}</sup></small>
         </th>
       {/each}
@@ -99,6 +110,7 @@ Take an integer and represent that as a series of numbers with a base
         <td
           in:fly|local={transitionOptions}
           class={`relative hover:z-10 focus-within:z-10 outline-gray-300 hover:outline ${cellClasses} ${cellBg}`}
+          class:even:border-l-0={octetBorder}
           style={style(digit)}
         >
           <Digit {digit} {base} position={idx} on:update={onUpdate} />
