@@ -5,7 +5,7 @@ Represent IPv4 address including prefix notation
   import BitHex from './BitHex.svelte';
   import IPv4Prefix from './IPv4Prefix.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
-  import { assemble, disassemble } from '@lib/ipv4';
+  import { assemble, disassemble, calcHosts } from '@lib/ipv4';
 
   const min = 0;
   const max = 255;
@@ -28,7 +28,7 @@ Represent IPv4 address including prefix notation
     address = assemble(octets);
   };
 
-  $: addresses = (1 << (32 - prefix)) >>> 0;
+  $: addresses = calcHosts(prefix) + 2;
 </script>
 
 <div class="flex lt-sm:overflow-x-auto">
@@ -78,10 +78,12 @@ Represent IPv4 address including prefix notation
     <div class="py-0.5 flex flex-col grow text-gray-600">
       <div class="grow text-center flex flex-col">
         <div class="grow" />
+        <!-- safe list class="text-sm text-xs ![font-size:0.6rem]" -->
         <div
           class="leading-3"
           class:text-sm={addresses > 99999}
           class:text-xs={addresses > 99999999}
+          class:![font-size:0.6rem]={addresses > 999999999}
         >
           {addresses.toLocaleString()}
         </div>
