@@ -5,20 +5,19 @@ Represent IPv4 address including prefix notation
   import BitHex from './BitHex.svelte';
   import IPv4Prefix from './IPv4Prefix.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
+  import { assemble, disassemble } from '@lib/ipv4';
 
   const min = 0;
   const max = 255;
   const length = 32;
-
-  const shifts = [3, 2, 1, 0].map((n) => n * 8);
 </script>
 
 <script lang="ts">
-  export let integer = 0xc0a80000;
+  export let address = 0xc0a80000;
   export let prefix = 16;
 
   // break down into 4 octets
-  $: octets = shifts.map((n) => (integer >>> n) & 0xff);
+  $: octets = disassemble(address);
 
   const onChange = (position: number, e: Event) => {
     const target = e.target as HTMLInputElement;
@@ -26,29 +25,33 @@ Represent IPv4 address including prefix notation
 
     octets[position] = value;
 
-    let newInteger = 0;
-    octets.forEach((octet, idx) => {
-      newInteger += (octet << shifts[idx]) >>> 0;
-    });
-
-    integer = newInteger;
+    address = assemble(octets);
   };
+
+  $: addresses = (1 << (32 - prefix)) >>> 0;
 </script>
 
 <div class="flex lt-sm:overflow-x-auto">
   <div class="grow" />
   <div>
-    <div class="text-gray-600">
-      <BitHex
-        bind:integer
-        colReverse={true}
-        minLength={length}
-        maxLength={length}
-        borderOctal={false}
-        borderHex={true}
-        compact={true}
-        octetBorder={true}
-      />
+    <div class="relative">
+      <div class="absolute w-full h-full rounded overflow-clip">
+        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
+      </div>
+      <div class="mix-blend-multiply">
+        <div class="text-gray-600">
+          <BitHex
+            bind:integer={address}
+            colReverse={true}
+            minLength={length}
+            maxLength={length}
+            borderOctal={false}
+            borderHex={true}
+            compact={true}
+            octetBorder={true}
+          />
+        </div>
+      </div>
     </div>
     <div class="flex lt-sm:hidden">
       {#each octets as octet, idx}
@@ -73,7 +76,17 @@ Represent IPv4 address including prefix notation
   </div>
   <div class="flex flex-col">
     <div class="py-0.5 flex flex-col grow text-gray-600">
-      <div class="grow" />
+      <div class="grow text-center flex flex-col">
+        <div class="grow" />
+        <div
+          class="leading-3"
+          class:text-sm={addresses > 99999}
+          class:text-xs={addresses > 99999999}
+        >
+          {addresses.toLocaleString()}
+        </div>
+        <div><small>addresses</small></div>
+      </div>
       <div>
         <IPv4Prefix bind:integer={prefix} />
       </div>

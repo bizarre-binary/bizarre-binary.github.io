@@ -14,7 +14,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "vite": "vite",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest ",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },

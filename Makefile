@@ -2,6 +2,14 @@
 dev: install
 	npm run dev
 
+.PHONY: test
+test: install
+	npm test
+
+.PHONY: test-watch
+test-watch: install
+	npm run test:watch
+
 .PHONY: install
 install:
 	npm i
