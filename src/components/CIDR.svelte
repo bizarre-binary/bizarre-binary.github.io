@@ -2,8 +2,6 @@
 Visualize CIDR
 -->
 <script context="module" lang="ts">
-  import type { BitsIntegerUpdateEvent } from './parts/Bits.svelte';
-  import Bits from './parts/Bits.svelte';
   import { debounce } from '@lib/debounce';
   const cacheKey = 'ip-notation';
 
@@ -23,7 +21,7 @@ Visualize CIDR
   import IPv4 from './blend/IPv4.svelte';
   import { calcIP, render as renderIPs } from '@lib/ipv4';
   import type { IPInfo } from '@lib/ipv4';
-  import { getBaseLog } from '@lib/math';
+  import IPv4Network from './blend/IPv4Network.svelte';
   let { address, prefix } = initialNotation();
   $: {
     cacheNotation(address, prefix);
@@ -51,94 +49,20 @@ Visualize CIDR
 
   $: maskBits = 'mask' in calced ? calced.mask : 0;
   $: networkBits = 'network' in calced ? calced.network : 0;
-
-  function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
-    if ('mask' in calced) {
-      address = ((address & ~calced.mask) >>> 0) + integer;
-    }
-  }
-
-  const minExponent = (n: number, mask: number, prefix: number) => {
-    // when increasing
-    if (n > mask) {
-      // loop until find the rightMostOn
-      let toShift = 0;
-
-      while (toShift < length) {
-        const rightMostOn = 1 << toShift;
-        const masked = (n & rightMostOn) >>> 0;
-
-        if (0 < masked) {
-          return length - toShift;
-        }
-
-        toShift++;
-      }
-    }
-    // when decreasing
-    else if (mask > n) {
-      const pad = Math.pow(2, length - prefix - 1);
-      const toFlip = n + pad;
-      const flipped = ~toFlip >>> 0;
-
-      return length - getBaseLog(2, flipped) - 1;
-    }
-
-    // fallback to previous value
-    return prefix;
-  };
-
-  function onUpdateForMask({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
-    if ('mask' in calced) {
-      let p = minExponent(integer, calced.mask, prefix);
-      prefix = Math.max(0, Math.min(p, 31));
-    }
-  }
 </script>
 
 <div class="sm:mx--6">
   <IPv4 bind:address bind:prefix>
-    <div slot="extra-bits">
-      <small class="mx-2 text-gray-600">
-        <pre class="text-gray-400 inline-block">IP & Netmask = </pre>
-        <pre class="inline-block">Network: {network}</pre>
-      </small>
-      <Bits
-        hideHeader={true}
-        integer={networkBits}
-        multipleOf={length}
-        maxLength={length}
-        borderOctal={false}
-        borderHex={true}
-        compact={true}
-        octetBorder={true}
-        on:update={onUpdateForNetwork}
-        disabledBits={~maskBits >>> 0}
-      />
-      <small>
-        <pre class="mx-2 text-gray-400">Netmask: {mask}</pre>
-      </small>
-      <div class="relative">
-        <div class="absolute w-full h-full rounded-t overflow-clip z--10">
-          <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
-        </div>
-        <div class="mix-blend-multiply">
-          <Bits
-            hideHeader={true}
-            integer={maskBits}
-            multipleOf={length}
-            maxLength={length}
-            borderOctal={false}
-            borderHex={true}
-            compact={true}
-            octetBorder={true}
-            overrideCellBg={'#ffffff00'}
-            on:update={onUpdateForMask}
-            disabledBits={0b1}
-          />
-        </div>
-      </div>
-    </div>
+    <IPv4Network
+      slot="extra-bits"
+      {length}
+      {maskBits}
+      {networkBits}
+      bind:address
+      bind:prefix
+      renderedMask={mask}
+      renderedNetwork={network}
+    />
   </IPv4>
 </div>
 
