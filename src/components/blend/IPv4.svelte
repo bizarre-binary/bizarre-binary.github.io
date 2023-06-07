@@ -56,7 +56,7 @@ Represent IPv4 address including prefix notation
     </div>
     <div class="flex lt-sm:hidden">
       {#each octets as octet, idx}
-        <div class="flex-1 flex group text-2xl mt-1">
+        <div class="flex-1 flex group text-2xl mt-1 relative">
           <!-- adding max-w-[[n]rem] for Firefox -->
           <InputNumberLocaled
             {min}
@@ -66,7 +66,9 @@ Represent IPv4 address including prefix notation
             value={octet}
             on:change={(e) => onChange(idx, e)}
           />
-          <div class="group-last:hidden translate-x-0.8 font-bold z-10">.</div>
+          <div class="absolute bottom-0 right-0 group-last:hidden translate-x-0.8 font-bold z-10">
+            .
+          </div>
         </div>
       {/each}
     </div>
