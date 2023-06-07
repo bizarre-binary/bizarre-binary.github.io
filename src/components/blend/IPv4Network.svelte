@@ -9,13 +9,13 @@ to augment IPv4 with Network and Netmask visualization
   export let length = 32;
   export let address = 0xffffffff;
   export let prefix = 0xffffffff;
-  export let networkBits = 0xffffffff;
-  export let maskBits = 0xffffffff;
+  export let network = 0xffffffff;
+  export let mask = 0xffffffff;
   export let renderedNetwork = 'placeholder';
   export let renderedMask = 'placeholder';
 
   function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
-    address = ((address & ~maskBits) >>> 0) + integer;
+    address = ((address & ~mask) >>> 0) + integer;
   }
 
   const minExponent = (n: number, mask: number, prefix: number) => {
@@ -49,7 +49,7 @@ to augment IPv4 with Network and Netmask visualization
   };
 
   function onUpdateForMask({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
-    let p = minExponent(integer, maskBits, prefix);
+    let p = minExponent(integer, mask, prefix);
     prefix = Math.max(0, Math.min(p, 31));
   }
 </script>
@@ -60,7 +60,7 @@ to augment IPv4 with Network and Netmask visualization
 </small>
 <Bits
   hideHeader={true}
-  integer={networkBits}
+  integer={network}
   multipleOf={length}
   maxLength={length}
   borderOctal={false}
@@ -68,7 +68,7 @@ to augment IPv4 with Network and Netmask visualization
   compact={true}
   octetBorder={true}
   on:update={onUpdateForNetwork}
-  disabledBits={~maskBits >>> 0}
+  disabledBits={~mask >>> 0}
 />
 <small>
   <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
@@ -80,7 +80,7 @@ to augment IPv4 with Network and Netmask visualization
   <div class="mix-blend-multiply">
     <Bits
       hideHeader={true}
-      integer={maskBits}
+      integer={mask}
       multipleOf={length}
       maxLength={length}
       borderOctal={false}

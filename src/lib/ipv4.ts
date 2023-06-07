@@ -10,9 +10,12 @@ export const assemble = (octets: number[]) => {
   }, 0);
 };
 
-export type IPInfo = {
+export type IPInfoMini = {
   prefix: number;
   address: number;
+};
+
+export type IPInfo = IPInfoMini & {
   network: number;
   mask: number;
   broadcast: number;
@@ -21,28 +24,39 @@ export type IPInfo = {
   hosts: number;
 };
 
-type CalcIPResult =
-  | IPInfo
-  | {
-      prefix: number;
-      address: number;
-    };
+type CalcIPResult = IPInfo | IPInfoMini;
 
 const toString = (addr: number) =>
   disassemble(addr)
     .map((n) => n.toString())
     .join('.');
 
-export const render = ({ address, network, mask, broadcast, min, max, hosts, prefix }: IPInfo) => {
+export const render = (result: CalcIPResult) => {
+  if ('network' in result) {
+    const { address, network, mask, broadcast, min, max, hosts, prefix } = result;
+    return {
+      prefix: prefix.toString(),
+      address: toString(address),
+      network: `${toString(network)}/${prefix}`,
+      mask: `${toString(mask)} = ${prefix}`,
+      broadcast: toString(broadcast),
+      min: toString(min),
+      max: toString(max),
+      hosts: hosts.toLocaleString(),
+    };
+  }
+
+  const { address, prefix } = result;
+
   return {
     prefix: prefix.toString(),
     address: toString(address),
-    network: `${toString(network)}/${prefix}`,
-    mask: `${toString(mask)} = ${prefix}`,
-    broadcast: toString(broadcast),
-    min: toString(min),
-    max: toString(max),
-    hosts: hosts.toLocaleString(),
+    network: '',
+    broadcast: '',
+    min: '',
+    mask: '',
+    max: '',
+    hosts: '',
   };
 };
 
