@@ -10,14 +10,14 @@ export const assemble = (octets: number[]) => {
   }, 0);
 };
 
-type IPInfo = {
+export type IPInfo = {
   prefix: number;
-  address: number[];
-  network: number[];
-  mask: number[];
-  broadcast: number[];
-  min: number[];
-  max: number[];
+  address: number;
+  network: number;
+  mask: number;
+  broadcast: number;
+  min: number;
+  max: number;
   hosts: number;
 };
 
@@ -25,26 +25,15 @@ type CalcIPResult =
   | IPInfo
   | {
       prefix: number;
-      address: number[];
-    }
-  | {
-      prefix: string;
-      address: string;
-      network: string;
-      mask: string;
-      broadcast: string;
-      min: string;
-      max: string;
-      hosts: string;
-    }
-  | {
-      prefix: string;
-      address: string;
+      address: number;
     };
 
-const toString = (octets: number[]) => octets.map((n) => n.toString()).join('.');
+const toString = (addr: number) =>
+  disassemble(addr)
+    .map((n) => n.toString())
+    .join('.');
 
-const render = ({ address, network, mask, broadcast, min, max, hosts, prefix }: IPInfo) => {
+export const render = ({ address, network, mask, broadcast, min, max, hosts, prefix }: IPInfo) => {
   return {
     prefix: prefix.toString(),
     address: toString(address),
@@ -65,43 +54,31 @@ export const calcHosts = (prefix: number) => {
 };
 
 // inspired by the usage of https://gitlab.com/ipcalc/ipcalc
-export const calcIP = (address: number, prefix: number, shouldRender = true): CalcIPResult => {
+export const calcIP = (address: number, prefix: number): CalcIPResult => {
   // early return of anomaly case of 32
   if (prefix === 32) {
-    if (shouldRender) {
-      return {
-        prefix: prefix.toString(),
-        address: toString(disassemble(address)),
-      };
-    }
     return {
       prefix,
-      address: disassemble(address),
+      address,
     };
   }
 
   const invertedPrefix = 32 - prefix;
   const mask = prefix === 0 ? 0x0 : ((0xffffffff >>> invertedPrefix) << invertedPrefix) >>> 0;
-  const network = address & mask;
+  const network = (address & mask) >>> 0;
   const hosts = calcHosts(prefix);
 
-  const [min, max, broadcast] = [1, hosts, hosts + 1]
-    .map((adjust) => network + adjust)
-    .map((addr) => disassemble(addr));
+  const [min, max, broadcast] = [1, hosts, hosts + 1].map((adjust) => network + adjust);
 
   const result = {
     prefix,
-    address: disassemble(address),
-    network: disassemble(network),
-    mask: disassemble(mask),
+    address,
+    network,
+    mask,
     min,
     max,
     broadcast,
     hosts,
   };
-
-  if (shouldRender) {
-    return render(result);
-  }
   return result;
 };

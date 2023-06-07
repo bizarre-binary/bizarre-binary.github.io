@@ -2,12 +2,17 @@
 Take an integer and represent that as a series of bits
 -->
 <script context="module" lang="ts">
+  export interface BitsIntegerUpdateEvent {
+    integer: number;
+  }
+
   import Bit from './Bit.svelte';
   import type { BitFlipEvent } from './Bit.svelte';
   import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
   import { motion } from '../../lib/defaults';
   import { toHex, fromHex } from '../../lib/convert';
+  import { createEventDispatcher } from 'svelte';
 
   const defaultMultipleOf = 4;
   const extractBit = genExtractDigits(1);
@@ -21,6 +26,8 @@ Take an integer and represent that as a series of bits
 </script>
 
 <script lang="ts">
+  export let hideHeader = false;
+  export let disabledBits = 0b0;
   export let compact = false;
   export let powered = false;
   export let integer = 42;
@@ -76,16 +83,31 @@ Take an integer and represent that as a series of bits
 
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => lengthOfBits - idx;
+
+  const dispatch = createEventDispatcher<{ update: BitsIntegerUpdateEvent }>();
+
+  $: {
+    dispatch('update', {
+      integer,
+    });
+  }
+
+  // just using disabledBits without parameter causes the lazy drawing which is not optimal in this case
+  // hence send disabledBits as param with toLA
+  function isDisabled(idx: number, toLA: number) {
+    const operated = ((1 << (31 - idx)) >>> 0) & toLA;
+    return operated >>> 0 > 0;
+  }
 </script>
 
 <div class="hidden text-left">
   <pre>{JSON.stringify(debug, null, 2)}</pre>
 </div>
 
-<!-- safelist class="text-lg text-xs py-0.5 [&:nth-child(8n+5)]:border-l-0 " -->
+<!-- safelist class="text-lg text-xs py-0.5 [&:nth-child(8n+5)]:border-l-0 hover:outline" -->
 <table class="table-auto border-collapse">
   <thead class="bg-slate-50">
-    <tr>
+    <tr class:hidden={hideHeader}>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
           in:fly|local={transitionOptions}
@@ -110,9 +132,10 @@ Take an integer and represent that as a series of bits
     <tr class="border-0">
       <!-- (idx) is important for transition animation -->
       {#each bits as bit, idx (reverseIdx(idx))}
+        {@const disabled = isDisabled(idx, disabledBits)}
         <td
           in:fly|local={transitionOptions}
-          class={`relative hover:z-10 bg-yellow-200 hover:outline outline-gray-300 text-center ${borderStyle(
+          class={`relative hover:z-10 bg-yellow-200 outline-gray-300 text-center ${borderStyle(
             lengthOfBits - idx
           )}`}
           class:[&:nth-child(8n+5)]:border-l-0={octetBorder}
@@ -120,9 +143,10 @@ Take an integer and represent that as a series of bits
           class:py-0.5={!compact}
           class:w-bit-sm={compact}
           class:text-lg={!compact}
+          class:hover:outline={!disabled}
           style={style(bit)}
         >
-          <Bit checked={!!bit} position={idx} on:flip={onFlip} />
+          <Bit checked={!!bit} position={idx} on:flip={onFlip} {disabled} />
         </td>
       {/each}
     </tr>

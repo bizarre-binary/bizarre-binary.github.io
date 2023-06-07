@@ -4,6 +4,7 @@ A logarithmical <input type="range">
 <script context="module" lang="ts">
   import { toHsl } from '@lib/color';
   import RangeMarker from './RangeMarker.svelte';
+  import { getBaseLog } from '@lib/math';
 </script>
 
 <script lang="ts">
@@ -13,7 +14,6 @@ A logarithmical <input type="range">
   export let scale = 10; // to control the granularity
 
   export let base = 2;
-  const getBaseLog = (x: number, y: number) => Math.log(y) / Math.log(x);
 
   const log = (n: number) => getBaseLog(base, n);
 

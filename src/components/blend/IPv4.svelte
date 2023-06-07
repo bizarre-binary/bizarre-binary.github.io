@@ -34,8 +34,9 @@ Represent IPv4 address including prefix notation
 <div class="flex lt-sm:overflow-x-auto">
   <div class="grow" />
   <div>
+    <slot name="extra-bits" />
     <div class="relative">
-      <div class="absolute w-full h-full rounded overflow-clip">
+      <div class="absolute w-full h-full rounded-b overflow-clip z--10">
         <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
       </div>
       <div class="mix-blend-multiply">

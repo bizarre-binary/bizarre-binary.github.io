@@ -15,6 +15,7 @@ A bit flipper
 
   export let checked = false;
   export let position = 0;
+  export let disabled = false;
 
   // avoid `$: dispatch ...` as I want the dispatch to happen from user interaction only
   const flip = () => {
@@ -26,8 +27,8 @@ A bit flipper
 </script>
 
 <label>
-  <input type="checkbox" bind:checked on:change={flip} />
-  <span class="bg-white" />
+  <input type="checkbox" bind:checked on:change={flip} class="peer" {disabled} />
+  <span class="bg-white peer-disabled:!cursor-default peer-disabled:text-gray-300" />
 </label>
 
 <style>
@@ -43,10 +44,6 @@ A bit flipper
     cursor: pointer;
   }
 
-  label > input + span:hover {
-    transform: scale(0.95);
-  }
-
   label > input + span:after {
     content: '0';
   }
@@ -54,11 +51,6 @@ A bit flipper
   label > input:checked + span {
     background: var(--blue);
     transform: scale(1.1);
-  }
-
-  label > input:checked + span:hover {
-    background: var(--blue);
-    transform: scale(1.05);
   }
 
   label > input:checked + span:after {
