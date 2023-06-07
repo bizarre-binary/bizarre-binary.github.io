@@ -36,6 +36,7 @@ A digit that represent any number up to hexadecimal
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import { focusIt } from '@lib/dom';
 
   const dispatch = createEventDispatcher<{ update: UpdateDigitEvent }>();
 
@@ -60,21 +61,7 @@ A digit that represent any number up to hexadecimal
   }
 
   const focusNeighbour = (target: EventTarget | null, adjust: number) => {
-    const from = target as HTMLElement;
-    if (from) {
-      // assuming `table` is a good common root to query
-      const closestTable = from.closest('table');
-
-      if (closestTable) {
-        const next = closestTable.querySelector(
-          `select[data-position="${position + adjust}"]`
-        ) as HTMLElement;
-
-        if (next) {
-          next.focus();
-        }
-      }
-    }
+    focusIt(target, `select[data-position="${position + adjust}"]`, 'table');
   };
 
   const superChargeKeyDown = (e: KeyboardEvent) => {
