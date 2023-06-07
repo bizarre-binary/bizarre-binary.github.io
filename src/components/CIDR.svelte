@@ -54,24 +54,19 @@ Visualize CIDR
 
   function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
     if ('mask' in calced) {
-      address = (address & ~calced.mask) + integer;
+      address = ((address & ~calced.mask) >>> 0) + integer;
     }
   }
 
   const minExponent = (n: number, mask: number, prefix: number) => {
     // when increasing
     if (n > mask) {
-      // handle special case early: flipping the first bit
-      if (n === Math.pow(2, 31)) {
-        return 1;
-      }
-
       // loop until find the rightMostOn
       let toShift = 0;
 
       while (toShift < length) {
         const rightMostOn = 1 << toShift;
-        const masked = n & rightMostOn;
+        const masked = (n & rightMostOn) >>> 0;
 
         if (0 < masked) {
           return length - toShift;
@@ -82,14 +77,9 @@ Visualize CIDR
     }
     // when decreasing
     else if (mask > n) {
-      // handle special case early: flipping the first bit
-      if (mask - n === Math.pow(2, 31)) {
-        return 0;
-      }
-
       const pad = Math.pow(2, length - prefix - 1);
       const toFlip = n + pad;
-      const flipped = ~toFlip;
+      const flipped = ~toFlip >>> 0;
 
       return length - getBaseLog(2, flipped) - 1;
     }
@@ -123,7 +113,7 @@ Visualize CIDR
         compact={true}
         octetBorder={true}
         on:update={onUpdateForNetwork}
-        disabledBits={Math.max(0, ~maskBits >>> 0)}
+        disabledBits={~maskBits >>> 0}
       />
       <small>
         <pre class="mx-2 text-gray-400">Netmask: {mask}</pre>
