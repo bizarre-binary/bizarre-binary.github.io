@@ -99,7 +99,7 @@ Represent IPv4 address including prefix notation
         min={0}
         max={31}
         strictRangeOnInput={true}
-        class="text-center text-2xl w-20 mt-1 bg-gray-50 rounded"
+        class="text-center text-2xl w-20 mt-1 bg-gray-50 rounded input-number-hide-arrows"
         bind:value={prefix}
       />
     </div>

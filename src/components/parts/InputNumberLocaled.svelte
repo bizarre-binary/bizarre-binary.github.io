@@ -17,7 +17,7 @@ Two things are enhanced:
   export let max = 999999999;
   export let strictRangeOnInput = false;
 
-  let actualInputUI: HTMLElement;
+  let actualInputUI: HTMLInputElement;
 
   let integer = 42;
   export { integer as value };
@@ -94,6 +94,11 @@ Two things are enhanced:
       }}
       on:blur={() => {
         whenFocused = false;
+
+        // tidy the input text to reflect the calculated value
+        if (actualInputUI) {
+          actualInputUI.value = integer.toString();
+        }
       }}
       on:change
     />
