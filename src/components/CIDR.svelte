@@ -65,7 +65,11 @@ Visualize CIDR
 <IPv4Chart
   {min}
   {max}
-  {address}
+  {length}
+  {prefix}
+  bind:address
+  {network}
+  {mask}
   {broadcast}
   {hosts}
   {renderedHosts}
@@ -73,4 +77,5 @@ Visualize CIDR
   {renderedMin}
   {renderedMax}
   {renderedBroadcast}
+  {renderedNetwork}
 />

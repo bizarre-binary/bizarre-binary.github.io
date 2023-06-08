@@ -96,3 +96,6 @@ export const calcIP = (address: number, prefix: number): CalcIPResult => {
   };
   return result;
 };
+
+export const newAddressFrom = (address: number, mask: number, network: number) =>
+  ((address & ~mask) >>> 0) + ((network & mask) >>> 0);

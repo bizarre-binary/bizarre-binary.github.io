@@ -6,6 +6,7 @@ to augment IPv4 with Network and Netmask visualization
   import type { BitsIntegerUpdateEvent } from '../parts/Bits.svelte';
   import Bits from '../parts/Bits.svelte';
   import { getBaseLog } from '@lib/math';
+  import { newAddressFrom } from '@lib/ipv4';
   export let length = 32;
   export let address = 0xffffffff;
   export let prefix = 0xffffffff;
@@ -15,7 +16,7 @@ to augment IPv4 with Network and Netmask visualization
   export let renderedMask = 'placeholder';
 
   function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
-    address = ((address & ~mask) >>> 0) + integer;
+    address = newAddressFrom(address, mask, integer);
   }
 
   const minExponent = (n: number, mask: number, prefix: number) => {
