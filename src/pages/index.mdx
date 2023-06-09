@@ -5,17 +5,24 @@ title: Interact with Binary Numbers!
 
 import Number from '../components/glue/EmbeddableNumber.svelte';
 import Color from '../components/glue/EmbeddableColor.svelte';
+import CIDR from '../components/glue/EmbeddableCIDR.svelte';
 
-This is [Bit Visualizer](./toys/bit-visualizer).
+This is [Bit Visualizer](./toys/bit-visualizer)
 
 <div class="mt-7">
   <Number client:visible />
 </div>
 
-Below is [True Color Picker](./toys/color).
+Below is [True Color Picker](./toys/color)
 
 <div class="my-7">
   <Color client:visible />
 </div>
 
-And more will come!
+And [IPv4 CIDR Calculator](./toys/ipv4)
+
+<div class="my-7">
+  <CIDR client:visible />
+</div>
+
+And [more](./toys) will come!
