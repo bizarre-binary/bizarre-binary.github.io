@@ -59,19 +59,19 @@ Visualize various IPv4 related info
   $: isAddressHost = !isAddressNetwork && !isAddressBroadcast;
 </script>
 
-<div class="flex mt-5">
+<div class="flex">
   <div class="grow" />
   <div class="w-full sm:w-[94%]">
     <!-- overview -->
     <div>
-      <div class="flex text-center text-sm text-gray items-end">
-        <div class="flex-1 text-left text-xs">0.0.0.0</div>
+      <div class="flex text-center text-gray items-end text-xs lt-xs:text-[0.5rem]">
+        <div class="flex-1 text-left">0.0.0.0</div>
         <div class="flex-1 text-left">64.0.0.0</div>
         <div class="flex-1">128.0.0.0</div>
         <div class="flex-1 text-right">192.0.0.0</div>
-        <div class="flex-1 text-right text-xs">255.255.255.255</div>
+        <div class="flex-1 text-right">255.255.255.255</div>
       </div>
-      <table class="h-3 w-full">
+      <table class="h-2 w-full">
         <tr>
           {#each [1, 2, 3, 4] as idx}
             <td data-position={idx} class="border-x-1 border-gray-300" />
@@ -99,16 +99,16 @@ Visualize various IPv4 related info
         />
       </div>
 
-      <div class="flex items-center" class:flex-row-reverse={startInPercent > 70}>
-        <div class="flex items-center">
+      <div
+        class="flex items-center"
+        class:flex-row-reverse={startInPercent > (prefix < 3 ? 74 : 85)}
+      >
+        <div class="flex items-center mx--2">
           <div class="i-bi-arrow-down ml-1" />
           <div class="i-bi-zoom-in mr-1" />
-          <div class="text-sm">
-            <PartialTransition notation={renderedNetwork} />
-          </div>
         </div>
-        <div class="mx-2 text-xs flex">
-          (<PartialTransition notation={addressCount.toLocaleString()} />)
+        <div class="mx-2 text-sm flex">
+          <PartialTransition notation={addressCount.toLocaleString()} />
         </div>
       </div>
       <div class="grow flex ml-2">
@@ -122,7 +122,7 @@ Visualize various IPv4 related info
       </div>
     </div>
     <div
-      class="mt-2 h-2 w-full rounded bg-cyan flex"
+      class="mt-2 h-2 w-full rounded-sm bg-cyan flex"
       style:--un-bg-opacity={`${opacityForDetailInPercent}%`}
     >
       <div class="h-full" style:width={`${beforeIP}%`} />
@@ -150,7 +150,9 @@ Visualize various IPv4 related info
                 <div class="grow" />
                 <!-- safe list class="text-gray-700" -->
                 <div class:text-gray-700={isAddressHost}>
-                  <span class:hidden={!hostsValid}> {renderedMin} - {renderedMax} =</span>
+                  <span class:hidden={!hostsValid} class="lt-xs:hidden">
+                    {renderedMin} - {renderedMax} =</span
+                  >
                   {prefix < 31 ? renderedHosts : addressCount.toLocaleString()} hosts
                 </div>
                 <div class="grow" />
@@ -168,7 +170,7 @@ Visualize various IPv4 related info
         </tr>
       </table>
       <div class="flex text-center">
-        <div class="flex-1 text-left text-xs text-gray">
+        <div class="flex-1 text-left text-gray text-xs lt-xs:text-[0.5rem]">
           <PartialTransition notation={renderedNetworkWithouPrefix} />
         </div>
         <div class="flex-1 text-center flex text-lime-800 items-center">
@@ -179,7 +181,7 @@ Visualize various IPv4 related info
               address = address - 1;
             }}
           />
-          <div class="w-32 flex text-sm">
+          <div class="xs:w-32 flex text-sm lt-xs:text-[0.5rem]">
             <div class="grow" />
             <PartialTransition notation={renderedAddress} />
             <div class="grow" />
@@ -192,7 +194,7 @@ Visualize various IPv4 related info
           />
           <div class="grow" />
         </div>
-        <div class="flex-1 text-right text-xs text-gray flex">
+        <div class="flex-1 text-right text-gray flex text-xs lt-xs:text-[0.5rem]">
           <div class="grow" />
           <PartialTransition notation={renderedBroadcast} />
         </div>

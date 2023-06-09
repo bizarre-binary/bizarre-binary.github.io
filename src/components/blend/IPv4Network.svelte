@@ -55,27 +55,8 @@ to augment IPv4 with Network and Netmask visualization
   }
 </script>
 
-<small class="mx-2 text-gray-600">
-  <pre class="text-gray-400 inline-block">IP & Netmask = </pre>
-  <pre class="inline-block">Network: {renderedNetwork}</pre>
-</small>
-<Bits
-  hideHeader={true}
-  integer={network}
-  multipleOf={length}
-  maxLength={length}
-  borderOctal={false}
-  borderHex={true}
-  compact={true}
-  octetBorder={true}
-  on:update={onUpdateForNetwork}
-  disabledBits={~mask >>> 0}
-/>
-<small>
-  <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
-</small>
 <div class="relative">
-  <div class="absolute w-full h-full rounded-t overflow-clip z--10">
+  <div class="absolute w-full h-full rounded-b overflow-clip z--10">
     <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
   </div>
   <div class="mix-blend-multiply">
@@ -94,3 +75,24 @@ to augment IPv4 with Network and Netmask visualization
     />
   </div>
 </div>
+<small class="absolute mt-0.6">
+  <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
+</small>
+<small class="opacity-0">placeholder</small>
+<Bits
+  hideHeader={true}
+  integer={network}
+  multipleOf={length}
+  maxLength={length}
+  borderOctal={false}
+  borderHex={true}
+  compact={true}
+  octetBorder={true}
+  on:update={onUpdateForNetwork}
+  disabledBits={~mask >>> 0}
+/>
+<small class="mx-2 text-gray-600 absolute mt-0.6">
+  <pre class="text-gray-400 inline-block">IP & Netmask = </pre>
+  <pre class="inline-block text-cyan">Network: {renderedNetwork}</pre>
+</small>
+<small class="opacity-0">placeholder</small>

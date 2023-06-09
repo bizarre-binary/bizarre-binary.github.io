@@ -50,6 +50,7 @@ Visualize a sub pixel with 8 bits
         borderOctal={false}
         borderHex={false}
         overrideCellBg={`${tint.color}50`}
+        noMargin={true}
       />
     </div>
   </div>
@@ -74,7 +75,7 @@ Visualize a sub pixel with 8 bits
           {min}
           {max}
           bind:value={integerInput}
-          class="focus:outline-none w-17 px-2 bg-transparent"
+          class="focus:outline-none w-17 px-2 bg-transparent font-mono"
         />
       </div>
       <div class="grow" />

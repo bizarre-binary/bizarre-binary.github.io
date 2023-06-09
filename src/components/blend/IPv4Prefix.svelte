@@ -9,6 +9,7 @@ for CIDR network prefix
 
 <script lang="ts">
   export let integer = 16;
+  export let hideHeader = false;
 </script>
 
 <div>
@@ -20,5 +21,6 @@ for CIDR network prefix
     borderHex={false}
     compact={true}
     powered={true}
+    {hideHeader}
   />
 </div>

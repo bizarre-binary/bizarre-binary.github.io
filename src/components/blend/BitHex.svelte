@@ -8,6 +8,7 @@ A combination of bit and hexadecimal together
 
 <script lang="ts">
   export let colReverse = false;
+  export let noMargin = false;
   export let compact = false;
   export let integer = 42;
   export let minLength = 0;
@@ -22,7 +23,7 @@ A combination of bit and hexadecimal together
 
 <!-- safe list class="flex flex-col-reverse my-0.5" -->
 <div class:flex={colReverse} class:flex-col-reverse={colReverse}>
-  <div class="flex my-0.5">
+  <div class="flex" class:my-0.5={!noMargin}>
     <div class="grow" />
     <Bits
       bind:integer
@@ -35,7 +36,7 @@ A combination of bit and hexadecimal together
       {octetBorder}
     />
   </div>
-  <div class="flex" class:my-0.5={!colReverse}>
+  <div class="flex" class:my-0.5={!colReverse && !noMargin}>
     <div class="grow" />
     <Digits
       bind:integer

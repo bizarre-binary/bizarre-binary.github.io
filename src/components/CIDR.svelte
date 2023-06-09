@@ -62,20 +62,22 @@ Visualize CIDR
   </IPv4>
 </div>
 
-<IPv4Chart
-  {min}
-  {max}
-  {length}
-  {prefix}
-  bind:address
-  {network}
-  {mask}
-  {broadcast}
-  {hosts}
-  {renderedHosts}
-  {renderedAddress}
-  {renderedMin}
-  {renderedMax}
-  {renderedBroadcast}
-  {renderedNetwork}
-/>
+<div class="lt-sm:px-1 mt-2">
+  <IPv4Chart
+    {min}
+    {max}
+    {length}
+    {prefix}
+    bind:address
+    {network}
+    {mask}
+    {broadcast}
+    {hosts}
+    {renderedHosts}
+    {renderedAddress}
+    {renderedMin}
+    {renderedMax}
+    {renderedBroadcast}
+    {renderedNetwork}
+  />
+</div>

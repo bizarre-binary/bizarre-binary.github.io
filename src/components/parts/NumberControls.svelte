@@ -52,7 +52,7 @@ A auxiliary controls that supports changing numbers using buttons and input box
       {min}
       {max}
       bind:value={integer}
-      class="w-full text-right rounded-md px-1.5 border border-solid max-w-[9rem] input-number-hide-arrows"
+      class="w-full text-right rounded-md px-1.5 border border-solid max-w-[9rem] input-number-hide-arrows font-mono"
     />
   </div>
 </div>
