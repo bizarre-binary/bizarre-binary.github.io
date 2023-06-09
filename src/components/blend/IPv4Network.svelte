@@ -7,6 +7,7 @@ to augment IPv4 with Network and Netmask visualization
   import Bits from '../parts/Bits.svelte';
   import { getBaseLog } from '@lib/math';
   import { newAddressFrom } from '@lib/ipv4';
+  import PartialTransition from '@components/parts/PartialTransition.svelte';
   export let length = 32;
   export let address = 0xffffffff;
   export let prefix = 0xffffffff;
@@ -92,7 +93,10 @@ to augment IPv4 with Network and Netmask visualization
   disabledBits={~mask >>> 0}
 />
 <small class="mx-2 text-gray-600 absolute mt-0.6">
-  <pre class="text-gray-400 inline-block">IP & Netmask = </pre>
-  <pre class="inline-block text-cyan">Network: {renderedNetwork}</pre>
+  <pre class="text-gray-400 inline-block lt-xs:hidden">IP & Netmask = </pre>
+  <pre class="inline-block text-cyan">Network:</pre>
+  <div class="inline-block text-cyan">
+    <PartialTransition notation={renderedNetwork} />
+  </div>
 </small>
 <small class="opacity-0">placeholder</small>
