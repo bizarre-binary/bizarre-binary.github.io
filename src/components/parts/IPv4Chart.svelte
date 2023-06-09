@@ -126,7 +126,10 @@ Visualize various IPv4 related info
       style:--un-bg-opacity={`${opacityForDetailInPercent}%`}
     >
       <div class="h-full" style:width={`${beforeIP}%`} />
-      <div class="h-full bg-lime-800 rounded" style:width={`${relativeIPSizeWithMin}%`} />
+      <div
+        class="mix-blend-hard-light h-full bg-lime-900 rounded"
+        style:width={`${relativeIPSizeWithMin}%`}
+      />
       <div class="h-full grow" />
     </div>
     <div>
@@ -173,7 +176,7 @@ Visualize various IPv4 related info
         <div class="flex-1 text-left text-gray text-xs lt-xs:text-[0.5rem]">
           <PartialTransition notation={renderedNetworkWithouPrefix} />
         </div>
-        <div class="flex-1 text-center flex text-lime-800 items-center">
+        <div class="flex-1 text-center flex text-lime-600 items-center">
           <div class="grow" />
           <button
             class="i-bi-arrow-bar-left mx-1"
