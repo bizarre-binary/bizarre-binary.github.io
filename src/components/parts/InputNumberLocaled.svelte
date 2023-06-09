@@ -62,6 +62,20 @@ Two things are enhanced:
     if (actualInputUI) actualInputUI.focus();
     whenFocused = true;
   }
+
+  const onBlur = (e: Event) => {
+    whenFocused = false;
+
+    // to ignore window itself get blurred - somehow not progressing to below prevents element's being invisible
+    if (document.activeElement === e.target) {
+      return;
+    }
+
+    // tidy the input text to reflect the calculated value
+    if (actualInputUI) {
+      actualInputUI.value = integer.toString();
+    }
+  };
 </script>
 
 <!-- inspired by https://github.com/yairEO/react-number-input but with a different approach of using two input tags instead of manipulating the text -->
@@ -92,14 +106,7 @@ Two things are enhanced:
       on:focus={() => {
         whenFocused = true;
       }}
-      on:blur={() => {
-        whenFocused = false;
-
-        // tidy the input text to reflect the calculated value
-        if (actualInputUI) {
-          actualInputUI.value = integer.toString();
-        }
-      }}
+      on:blur={onBlur}
       on:change
     />
   </div>
