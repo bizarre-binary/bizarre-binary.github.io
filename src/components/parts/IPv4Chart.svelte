@@ -86,11 +86,11 @@ Visualize various IPv4 related info
     <!-- overview -->
     <div>
       <div class="flex text-center text-gray items-end text-xs lt-xs:text-[0.5rem]">
-        <div class="flex-1 text-left">0.0.0.0</div>
+        <div class="flex-1 text-left ml--2 mr-2">0.0.0.0</div>
         <div class="flex-1 text-left">64.0.0.0</div>
         <div class="flex-1">128.0.0.0</div>
         <div class="flex-1 text-right">192.0.0.0</div>
-        <div class="flex-1 text-right">255.255.255.255</div>
+        <div class="flex-1 text-right ml-2 mr--2">255.255.255.255</div>
       </div>
       <table class="h-2 w-full">
         <tr>
