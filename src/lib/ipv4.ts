@@ -99,3 +99,26 @@ export const calcIP = (address: number, prefix: number): CalcIPResult => {
 
 export const newAddressFrom = (address: number, mask: number, network: number) =>
   ((address & ~mask) >>> 0) + ((network & mask) >>> 0);
+
+const patternToMatch = /^([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})\/([0-9]{1,2})$/;
+// thanks to https://stackoverflow.com/a/36760050/1570165
+const patternToTest = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}\/(3[0-2]|[1-2][0-9]|[0-9])$/;
+// to be inserted as https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+export const pattern = patternToTest.toString().slice(1, -1);
+
+const failed = { address: -1, prefix: -1 };
+
+export const parseFrom = (text: string) => {
+  const passed = patternToTest.test(text);
+
+  if (!passed) return failed;
+
+  const matched = text.match(patternToMatch);
+
+  if (!matched) return failed;
+
+  const [a, b, c, d, prefix] = matched.slice(1).map((n) => Number(n));
+  const address = assemble([a, b, c, d]);
+
+  return { address, prefix };
+};

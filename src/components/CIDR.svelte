@@ -48,7 +48,7 @@ Visualize CIDR
 </script>
 
 <div class="sm:mx--6">
-  <IPv4 bind:address bind:prefix>
+  <IPv4 bind:address bind:prefix {renderedAddress}>
     <IPv4Network
       slot="extra-bits"
       bind:address

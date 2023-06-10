@@ -66,7 +66,7 @@ Two things are enhanced:
   const onBlur = (e: Event) => {
     whenFocused = false;
 
-    // to ignore window itself get blurred - somehow not progressing to below prevents element's being invisible
+    // to ignore when window itself get blurred - somehow not progressing to below prevents element's being invisible
     if (document.activeElement === e.target) {
       return;
     }

@@ -5,6 +5,7 @@ Represent IPv4 address including prefix notation
   import BitHex from './BitHex.svelte';
   import IPv4Prefix from './IPv4Prefix.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
+  import IPv4Input from '../parts/IPv4Input.svelte';
   import { assemble, disassemble, calcHosts } from '@lib/ipv4';
 
   const min = 0;
@@ -14,6 +15,7 @@ Represent IPv4 address including prefix notation
 
 <script lang="ts">
   export let address = 0xc0a80000;
+  export let renderedAddress = 'placeholder';
   export let prefix = 16;
 
   // break down into 4 octets
@@ -29,10 +31,14 @@ Represent IPv4 address including prefix notation
   };
 
   $: addresses = calcHosts(prefix) + 2;
+
+  let showingWholeInput = false;
 </script>
 
+<IPv4Input bind:address bind:prefix {renderedAddress} bind:show={showingWholeInput} />
+
 <!-- for xs only -->
-<div class="sm:hidden items-end mb-2 flex">
+<div class="sm:hidden items-end mb-2 flex" class:invisible={showingWholeInput}>
   <div class="grow" />
   <div class="flex text-2xl lt-xs:text-lg mr-2 items-center">
     <div>
@@ -70,7 +76,7 @@ Represent IPv4 address including prefix notation
 <div class="flex lt-sm:overflow-x-auto px-2 mx--2">
   <div class="grow" />
   <div>
-    <div class="flex lt-sm:hidden">
+    <div class="flex lt-sm:hidden" class:invisible={showingWholeInput}>
       {#each octets as octet, idx}
         <div class="flex-1 flex group text-2xl mb-2 relative">
           <!-- adding max-w-[[n]rem] for Firefox -->
@@ -114,7 +120,7 @@ Represent IPv4 address including prefix notation
     <div class="grow" />
   </div>
   <div class="flex flex-col lt-sm:hidden">
-    <div class="lt-sm:hidden mb-2">
+    <div class="lt-sm:hidden mb-2" class:invisible={showingWholeInput}>
       <InputNumberLocaled
         min={0}
         max={31}
