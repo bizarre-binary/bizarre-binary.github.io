@@ -56,6 +56,10 @@ to augment IPv4 with Network and Netmask visualization
   }
 </script>
 
+<small class="absolute mt-0.6">
+  <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
+</small>
+<small class="opacity-0">placeholder</small>
 <div class="relative">
   <div class="absolute w-full h-full rounded-b overflow-clip z--10">
     <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
@@ -76,8 +80,12 @@ to augment IPv4 with Network and Netmask visualization
     />
   </div>
 </div>
-<small class="absolute mt-0.6">
-  <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
+<small class="mx-2 text-gray-600 absolute mt-0.6">
+  <pre class="inline-block text-cyan">Network:</pre>
+  <div class="inline-block text-cyan">
+    <PartialTransition notation={renderedNetwork} />
+  </div>
+  <pre class="text-gray-400 inline-block lt-xs:hidden">= Address & Netmask</pre>
 </small>
 <small class="opacity-0">placeholder</small>
 <Bits
@@ -92,11 +100,3 @@ to augment IPv4 with Network and Netmask visualization
   on:update={onUpdateForNetwork}
   disabledBits={~mask >>> 0}
 />
-<small class="mx-2 text-gray-600 absolute mt-0.6">
-  <pre class="text-gray-400 inline-block lt-xs:hidden">IP & Netmask = </pre>
-  <pre class="inline-block text-cyan">Network:</pre>
-  <div class="inline-block text-cyan">
-    <PartialTransition notation={renderedNetwork} />
-  </div>
-</small>
-<small class="opacity-0">placeholder</small>

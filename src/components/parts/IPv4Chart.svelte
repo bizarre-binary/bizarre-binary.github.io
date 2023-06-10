@@ -62,6 +62,21 @@ Visualize various IPv4 related info
 <div class="flex">
   <div class="grow" />
   <div class="w-full sm:w-[94%]">
+    <div class="text-gray-400 my-3">
+      <span class="i-bi-bar-chart inline-block text-gray-400 translate-y-0.5" />
+      <span class="text-gray-200">
+        <span class="text-gray-300"> IPv4 </span>
+        /
+        <small>
+          <span class="text-cyan"> Network </span>
+
+          /
+          <small>
+            <span class="text-lime-600"> Address </span>
+          </small>
+        </small>
+      </span>
+    </div>
     <!-- overview -->
     <div>
       <div class="flex text-center text-gray items-end text-xs lt-xs:text-[0.5rem]">
