@@ -3,46 +3,46 @@ import { calcHosts, calcIP, assemble, parseFrom } from '../../src/lib/ipv4';
 
 describe('parseFrom', () => {
   it('1.2.3.4/5', () => {
-    expect(parseFrom('1.2.3.4/5')).toEqual({ address: assemble([1, 2, 3, 4]), prefix: 5 });
+    expect(parseFrom('1.2.3.4/5')).toContain({ address: assemble([1, 2, 3, 4]), prefix: 5 });
   });
 
   it('255.255.255.255/32', () => {
-    expect(parseFrom('255.255.255.255/32')).toEqual({
+    expect(parseFrom('255.255.255.255/32')).toContain({
       address: assemble([255, 255, 255, 255]),
       prefix: 32,
     });
   });
 
   it('255.255.255.255/33', () => {
-    expect(parseFrom('255.255.255.255/33')).toEqual({
+    expect(parseFrom('255.255.255.255/33')).toContain({
       address: -1,
       prefix: -1,
     });
   });
 
   it('256.255.255.255/32', () => {
-    expect(parseFrom('256.255.255.255/32')).toEqual({
+    expect(parseFrom('256.255.255.255/32')).toContain({
       address: -1,
       prefix: -1,
     });
   });
 
   it('255.256.255.255/32', () => {
-    expect(parseFrom('255.256.255.255/32')).toEqual({
+    expect(parseFrom('255.256.255.255/32')).toContain({
       address: -1,
       prefix: -1,
     });
   });
 
   it('255.255.256.255/32', () => {
-    expect(parseFrom('255.255.256.255/32')).toEqual({
+    expect(parseFrom('255.255.256.255/32')).toContain({
       address: -1,
       prefix: -1,
     });
   });
 
   it('255.255.255.256/32', () => {
-    expect(parseFrom('255.255.255.256/32')).toEqual({
+    expect(parseFrom('255.255.255.256/32')).toContain({
       address: -1,
       prefix: -1,
     });

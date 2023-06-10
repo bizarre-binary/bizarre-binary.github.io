@@ -108,7 +108,7 @@ export const pattern = patternToTest.toString().slice(1, -1);
 
 const failed = { address: -1, prefix: -1 };
 
-export const parseFrom = (text: string) => {
+export const parseFrom = (text: string): { address: number; prefix: number; msg?: string } => {
   const passed = patternToTest.test(text);
 
   if (!passed) return failed;
@@ -120,5 +120,12 @@ export const parseFrom = (text: string) => {
   const [a, b, c, d, prefix] = matched.slice(1).map((n) => Number(n));
   const address = assemble([a, b, c, d]);
 
-  return { address, prefix };
+  const succeeded = { address, prefix };
+
+  if (prefix < 32) {
+    return succeeded;
+  }
+
+  // avoid calculating 32 as prefix as it doesn't seem to be useful and complicate the logics and UI
+  return { address, prefix: 31, msg: `Prefix ${prefix} stepped down to 31` };
 };

@@ -1,11 +1,10 @@
 <!-- @component
 A convenient addition to allow pasting/editing as whole
 -->
-<script context="module" lang="ts">
-  import { pattern, parseFrom } from '@lib/ipv4';
-</script>
-
 <script lang="ts">
+  import { pattern, parseFrom } from '@lib/ipv4';
+  import Toast from './Toast.svelte';
+
   export let address = 0xc0a80000;
   export let renderedAddress = 'placeholder';
   export let prefix = 16;
@@ -23,9 +22,11 @@ A convenient addition to allow pasting/editing as whole
     elm.select();
   };
 
+  let toast: string | null = null;
+
   const evaluate = () => {
-    const { address: addr, prefix: pref } = parseFrom(inputAsWhole);
-    const isValid = addr > 0 && pref > 0;
+    const { address: addr, prefix: pref, msg } = parseFrom(inputAsWhole);
+    const isValid = addr > -1 && pref > -1;
 
     if (!isValid) {
       return;
@@ -33,6 +34,12 @@ A convenient addition to allow pasting/editing as whole
 
     address = addr;
     prefix = pref;
+
+    // give feedback on changes from actual input
+    if (msg) {
+      inputAsWhole = placeholder; // also update the input itself
+      toast = msg;
+    }
   };
 
   const onBtnClick = () => {
@@ -56,6 +63,7 @@ A convenient addition to allow pasting/editing as whole
   };
 </script>
 
+<Toast bind:text={toast} type="warning" />
 <div class="relative">
   <div class="absolute text-gray-600 left-5 top-2 lt-sm:top-5 lt-sm:left-0 lt-xs:top--1 z-30">
     <button
