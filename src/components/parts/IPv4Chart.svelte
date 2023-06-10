@@ -111,7 +111,7 @@ Visualize various IPv4 related info
     </div>
     <!-- detail -->
     <div class="w-full flex text-cyan items-center mt-2">
-      <div class="min-w-6" style:width={`${startInPercent}%`}>
+      <div class="min-w-8" style:width={`${startInPercent}%`}>
         <button
           class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
           on:click={() => {
@@ -121,9 +121,8 @@ Visualize various IPv4 related info
           &#60;
         </button>
       </div>
-
       <!-- safe list class="order-2 mr-1 lt-sm:order-2 lt-sm:mr-1 lt-xs:order-2 lt-xs:mr-1 !order-4 !mx-0 lt-xs:!order-4 lt-xs:!mx-0" -->
-      <div class="flex items-center ml-4">
+      <div class="flex items-center">
         <div
           class="flex items-center mx--2 text-gray"
           class:order-2={showCursorInTheMiddle}
@@ -147,7 +146,7 @@ Visualize various IPv4 related info
           <PartialTransition notation={addressCount.toLocaleString()} />
         </small>
       </div>
-      <div class="grow flex ml-2">
+      <div class="grow flex min-w-10">
         <div class="grow" />
         <button
           class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
