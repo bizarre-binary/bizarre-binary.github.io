@@ -40,7 +40,7 @@ Represent IPv4 address including prefix notation
 <!-- for xs only -->
 <div class="sm:hidden items-end mb-2 flex" class:invisible={showingWholeInput}>
   <div class="grow" />
-  <div class="flex text-2xl lt-xs:text-lg mr-2 items-center">
+  <div class="flex text-2xl lt-sm:text-xl lt-xs:text-lg mr-2 items-center">
     <div>
       <div class="flex">
         {#each octets as octet, idx}
@@ -50,7 +50,7 @@ Represent IPv4 address including prefix notation
               {min}
               {max}
               strictRangeOnInput={true}
-              class="text-center w-12 lt-xs:w-8 input-number-hide-arrows bg-gray-100 rounded font-mono"
+              class="text-center w-12 lt-sm:w-10 lt-xs:w-8 input-number-hide-arrows bg-gray-100 rounded font-mono"
               value={octet}
               on:change={(e) => onChange(idx, e)}
             />
