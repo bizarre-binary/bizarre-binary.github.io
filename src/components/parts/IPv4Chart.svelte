@@ -7,6 +7,7 @@ Visualize various IPv4 related info
 
 <script lang="ts">
   import { newAddressFrom } from '@lib/ipv4';
+  import { fade } from 'svelte/transition';
   import PartialTransition from './PartialTransition.svelte';
 
   export let length = 32;
@@ -102,11 +103,14 @@ Visualize various IPv4 related info
     </div>
     <div class="h-2 w-full flex bg-gray-100">
       <div class="h-full" style:width={`${startInPercent}%`} />
-      <div
-        class="h-full bg-cyan rounded"
-        style:width={`${sizeInPercentWithMin}%`}
-        style:--un-bg-opacity={`${opacityInPercent}%`}
-      />
+      {#key network}
+        <div
+          in:fade
+          class="h-full bg-cyan rounded"
+          style:width={`${sizeInPercentWithMin}%`}
+          style:--un-bg-opacity={`${opacityInPercent}%`}
+        />
+      {/key}
       <div class="h-full grow" />
     </div>
     <!-- detail -->
@@ -163,10 +167,13 @@ Visualize various IPv4 related info
       style:--un-bg-opacity={`${opacityForDetailInPercent}%`}
     >
       <div class="h-full" style:width={`${beforeIP}%`} />
-      <div
-        class="mix-blend-hard-light h-full bg-lime-900 rounded"
-        style:width={`${relativeIPSizeWithMin}%`}
-      />
+      {#key address}
+        <div
+          in:fade
+          class="mix-blend-hard-light h-full bg-lime-900 rounded"
+          style:width={`${relativeIPSizeWithMin}%`}
+        />
+      {/key}
       <div class="h-full grow" />
     </div>
     <div>
