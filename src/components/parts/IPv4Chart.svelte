@@ -69,7 +69,7 @@ Visualize various IPv4 related info
   <div class="grow" />
   <div class="w-full sm:w-[94%]">
     <div class="text-gray-400 mt-1 mb-3">
-      <span class="i-bi-bar-chart inline-block text-gray-400 translate-y-0.5" />
+      <span class="i-bi-bar-chart-fill inline-block text-gray-300 translate-y-0.5 -scale-x-100" />
       <span class="text-gray-200">
         <span class="text-gray-300"> IPv4 </span>
         /
