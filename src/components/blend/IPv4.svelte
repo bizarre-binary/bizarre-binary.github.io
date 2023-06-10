@@ -73,7 +73,7 @@ Represent IPv4 address including prefix notation
   <div class="grow" />
 </div>
 <!-- main -->
-<div class="flex lt-sm:overflow-x-auto px-2 mx--2">
+<div class="flex lt-sm:overflow-x-auto px-2 mx--2 pb-2">
   <div class="grow" />
   <div>
     <div class="flex lt-sm:hidden" class:invisible={showingWholeInput}>

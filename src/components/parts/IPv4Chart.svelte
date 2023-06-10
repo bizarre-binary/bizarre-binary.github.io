@@ -57,12 +57,18 @@ Visualize various IPv4 related info
   $: isAddressNetwork = network === address;
   $: isAddressBroadcast = broadcast === address;
   $: isAddressHost = !isAddressNetwork && !isAddressBroadcast;
+
+  $: showCursorAtTheEnd = startInPercent > 84;
+  $: showCursorAtTheEndForXS = startInPercent > 74;
+  $: showCursorInTheMiddle = startInPercent > 69;
+  $: showCursorInTheMiddleForSM = startInPercent > 59;
+  $: showCursorInTheMiddleForXS = startInPercent > 49;
 </script>
 
 <div class="flex">
   <div class="grow" />
   <div class="w-full sm:w-[94%]">
-    <div class="text-gray-400 my-3">
+    <div class="text-gray-400 mt-1 mb-3">
       <span class="i-bi-bar-chart inline-block text-gray-400 translate-y-0.5" />
       <span class="text-gray-200">
         <span class="text-gray-300"> IPv4 </span>
@@ -107,37 +113,54 @@ Visualize various IPv4 related info
     <div class="w-full flex text-cyan items-center mt-2">
       <div class="min-w-6" style:width={`${startInPercent}%`}>
         <button
-          class="i-bi-arrow-bar-left"
+          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
           on:click={() => {
             address = newAddressFrom(address, mask, network - networkUnit);
           }}
-        />
+        >
+          &#60;
+        </button>
       </div>
 
-      <div
-        class="flex items-center"
-        class:flex-row-reverse={startInPercent > (prefix < 3 ? 74 : 85)}
-      >
-        <div class="flex items-center mx--2">
+      <!-- safe list class="order-2 mr-1 lt-sm:order-2 lt-sm:mr-1 lt-xs:order-2 lt-xs:mr-1 !order-4 !mx-0 lt-xs:!order-4 lt-xs:!mx-0" -->
+      <div class="flex items-center ml-4">
+        <div
+          class="flex items-center mx--2 text-gray"
+          class:order-2={showCursorInTheMiddle}
+          class:mr-1={showCursorInTheMiddle}
+          class:lt-sm:order-2={showCursorInTheMiddleForSM}
+          class:lt-sm:mr-1={showCursorInTheMiddleForSM}
+          class:lt-xs:order-2={showCursorInTheMiddleForXS}
+          class:lt-xs:mr-1={showCursorInTheMiddleForXS}
+          class:!order-4={showCursorAtTheEnd}
+          class:!mx-0={showCursorAtTheEnd}
+          class:lt-xs:!order-4={showCursorAtTheEndForXS}
+          class:lt-xs:!mx-0={showCursorAtTheEndForXS}
+        >
           <div class="i-bi-arrow-down ml-1" />
           <div class="i-bi-zoom-in mr-1" />
         </div>
-        <div class="mx-2 text-sm flex">
-          <PartialTransition notation={addressCount.toLocaleString()} />
+        <div class="order-1 mx-2 text-sm flex lt-xs:text-xs">
+          <PartialTransition notation={renderedNetwork} />
         </div>
+        <small class="order-3 lt-xs:text-[0.5rem] before:content-['('] after:content-[')'] flex">
+          <PartialTransition notation={addressCount.toLocaleString()} />
+        </small>
       </div>
       <div class="grow flex ml-2">
         <div class="grow" />
         <button
-          class="i-bi-arrow-bar-right"
+          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
           on:click={() => {
             address = newAddressFrom(address, mask, network + networkUnit);
           }}
-        />
+        >
+          &#62;
+        </button>
       </div>
     </div>
     <div
-      class="mt-2 h-2 w-full rounded-sm bg-cyan flex"
+      class="mt-3 h-2 w-full rounded-sm bg-cyan flex"
       style:--un-bg-opacity={`${opacityForDetailInPercent}%`}
     >
       <div class="h-full" style:width={`${beforeIP}%`} />
@@ -191,25 +214,29 @@ Visualize various IPv4 related info
         <div class="flex-1 text-left text-gray text-xs lt-xs:text-[0.5rem]">
           <PartialTransition notation={renderedNetworkWithouPrefix} />
         </div>
-        <div class="flex-1 text-center flex text-lime-600 items-center">
+        <div class="flex-1 text-center flex text-lime-600 items-center mt-1">
           <div class="grow" />
           <button
-            class="i-bi-arrow-bar-left mx-1"
+            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:color:white hover:border-white"
             on:click={() => {
               address = address - 1;
             }}
-          />
+          >
+            &#60;
+          </button>
           <div class="xs:w-32 flex text-sm lt-xs:text-[0.5rem]">
             <div class="grow" />
             <PartialTransition notation={renderedAddress} />
             <div class="grow" />
           </div>
           <button
-            class="i-bi-arrow-bar-right mx-1"
+            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:color:white hover:border-white"
             on:click={() => {
               address = address + 1;
             }}
-          />
+          >
+            &#62;
+          </button>
           <div class="grow" />
         </div>
         <div class="flex-1 text-right text-gray flex text-xs lt-xs:text-[0.5rem]">
