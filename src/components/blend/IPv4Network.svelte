@@ -56,8 +56,11 @@ to augment IPv4 with Network and Netmask visualization
   }
 </script>
 
-<small class="absolute mt-0.6">
-  <pre class="mx-2 text-gray-400">Netmask: {renderedMask}</pre>
+<small class="absolute mt-0.6 text-gray-400">
+  <pre class="inline-block ml-2">Netmask:</pre>
+  <div class="inline-block">
+    <PartialTransition notation={renderedMask} fstDelimiter={' = '} />
+  </div>
 </small>
 <small class="opacity-0">placeholder</small>
 <div class="relative">
