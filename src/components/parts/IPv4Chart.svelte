@@ -167,7 +167,7 @@ Visualize various IPv4 related info
       style:--un-bg-opacity={`${opacityForDetailInPercent}%`}
     >
       <div class="h-full" style:width={`${beforeIP}%`} />
-      {#key address}
+      {#key address - network}
         <div
           in:fade
           class="mix-blend-hard-light h-full bg-lime-900 rounded"
