@@ -71,7 +71,7 @@ to augment IPv4 with Network and Netmask visualization
     </div>
   </small>
 </div>
-<small class="opacity-0"><pre>placeholder</pre></small>
+<small><pre class="opacity-0">placeholder</pre></small>
 <div class="relative">
   <div class="absolute w-full h-full rounded-b overflow-clip z--10">
     <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
@@ -100,7 +100,7 @@ to augment IPv4 with Network and Netmask visualization
     </div>
     <pre class="text-gray-400 inline-block lt-xs:hidden">= Address & Netmask</pre>
   </small>
-  <small class="opacity-0"><pre>placeholder</pre></small>
+  <small><pre class="opacity-0">placeholder</pre></small>
 </div>
 <Bits
   hideHeader={true}

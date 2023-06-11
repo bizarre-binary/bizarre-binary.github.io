@@ -50,7 +50,7 @@ Represent IPv4 address including prefix notation
               {min}
               {max}
               strictRangeOnInput={true}
-              class="text-center w-12 lt-sm:w-10 lt-xs:w-8 input-number-hide-arrows bg-gray-100 rounded font-mono"
+              class="text-center w-12 lt-sm:w-10 lt-xs:w-8 input-number-hide-arrows bg-gray-50 rounded font-mono"
               value={octet}
               on:change={(e) => onChange(idx, e)}
             />
@@ -64,7 +64,7 @@ Represent IPv4 address including prefix notation
         min={0}
         max={31}
         strictRangeOnInput={true}
-        class="text-center w-8 mt-1 bg-gray-100 rounded input-number-hide-arrows font-mono"
+        class="text-center w-8 mt-1 bg-gray-50 rounded input-number-hide-arrows font-mono"
         bind:value={prefix}
       />
     </div>
