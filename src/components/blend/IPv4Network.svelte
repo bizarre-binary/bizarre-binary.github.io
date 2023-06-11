@@ -56,13 +56,22 @@ to augment IPv4 with Network and Netmask visualization
   }
 </script>
 
-<small class="absolute mt-0.6 text-gray-400">
-  <pre class="inline-block ml-2">Netmask:</pre>
-  <div class="inline-block">
-    <PartialTransition notation={renderedMask} fstDelimiter={' = '} />
-  </div>
-</small>
-<small class="opacity-0">placeholder</small>
+<div class="relative">
+  <small class="absolute text-gray-400 w-full">
+    <div class="relative">
+      <div class="absolute w-full h-full overflow-clip z--10">
+        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
+      </div>
+      <div class="mix-blend-colo/r">
+        <pre class="inline-block ml-2">Netmask:</pre>
+        <div class="inline-block">
+          <PartialTransition notation={renderedMask} fstDelimiter={' = '} />
+        </div>
+      </div>
+    </div>
+  </small>
+</div>
+<small class="opacity-0"><pre>placeholder</pre></small>
 <div class="relative">
   <div class="absolute w-full h-full rounded-b overflow-clip z--10">
     <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
@@ -83,14 +92,16 @@ to augment IPv4 with Network and Netmask visualization
     />
   </div>
 </div>
-<small class="mx-2 text-gray-600 absolute mt-0.6">
-  <pre class="inline-block text-cyan">Network:</pre>
-  <div class="inline-block text-cyan">
-    <PartialTransition notation={renderedNetwork} />
-  </div>
-  <pre class="text-gray-400 inline-block lt-xs:hidden">= Address & Netmask</pre>
-</small>
-<small class="opacity-0">placeholder</small>
+<div class="relative mb-1">
+  <small class="absolute mx-2 text-gray-600 mt-0.6">
+    <pre class="inline-block text-cyan">Network:</pre>
+    <div class="inline-block text-cyan">
+      <PartialTransition notation={renderedNetwork} />
+    </div>
+    <pre class="text-gray-400 inline-block lt-xs:hidden">= Address & Netmask</pre>
+  </small>
+  <small class="opacity-0"><pre>placeholder</pre></small>
+</div>
 <Bits
   hideHeader={true}
   integer={network}
