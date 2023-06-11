@@ -217,7 +217,7 @@ Visualize various IPv4 related info
         </tr>
       </table>
       <div class="flex text-center">
-        <div class="flex-1 text-left text-gray text-xs lt-xs:text-[0.5rem]">
+        <div class="flex-1 text-left text-gray text-xs lt-sm:text-[0.6rem] lt-xs:text-[0.5rem]">
           <PartialTransition notation={renderedNetworkWithouPrefix} />
         </div>
         <div class="flex-1 text-center flex text-lime-600 items-center mt-1">
@@ -245,7 +245,9 @@ Visualize various IPv4 related info
           </button>
           <div class="grow" />
         </div>
-        <div class="flex-1 text-right text-gray flex text-xs lt-xs:text-[0.5rem]">
+        <div
+          class="flex-1 text-right text-gray flex text-xs lt-sm:text-[0.6rem] lt-xs:text-[0.5rem]"
+        >
           <div class="grow" />
           <PartialTransition notation={renderedBroadcast} />
         </div>
