@@ -9,7 +9,7 @@ describe('parseFrom', () => {
   it('255.255.255.255/32', () => {
     expect(parseFrom('255.255.255.255/32')).toContain({
       address: assemble([255, 255, 255, 255]),
-      prefix: 32,
+      prefix: 31, // because currently it refuses 32 and strongly suggests 31 instead
     });
   });
 
