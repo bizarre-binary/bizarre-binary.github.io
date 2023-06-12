@@ -1,5 +1,6 @@
 ---
 import Header from '../components/app/Header.astro';
+import SideNavs from '../components/app/SideNavs.astro';
 import GATag from '../components/app/GATag.astro';
 import PWA from '../components/app/PWA.astro';
 import GlobalStyle from '../components/app/GlobalStyle.astro';
@@ -32,9 +33,10 @@ const description = titleFromProps ? `${defaultTitle} - ${title}` : title;
     <PWA />
   </head>
   <body class="m-auto max-w-prose px-2 md:px-0 flex flex-col [min-height:100svh]">
-    <header class="py-3 sticky z-20 top-0 bg-white">
-      <Header />
+    <header class="sticky z-20 top-0">
+      <Header fillBg={true} />
     </header>
+    <SideNavs />
     <main>
       <slot />
     </main>
