@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import { format } from '../lib/date';
+import { links } from '@lib/links';
 
 interface Frontmatter {
   title: string;
@@ -18,6 +19,8 @@ export interface Props {
 const { frontmatter } = Astro.props;
 
 const { title, author, toy, dateCreated, dateUpdated } = frontmatter;
+
+const linkToAuthor = author ? links[author] : undefined;
 
 const dates = [format(dateCreated), format(dateUpdated)].filter((d) => !!d);
 
@@ -39,7 +42,8 @@ const formattedDate = dates.map((date, idx) => `${prefixes[idx]} ${date}`).join(
         <small class="text-slate">
           {author && (
             <span>
-              <span class="text-stone">written by</span> {author}
+              <span class="text-stone">written by</span>{' '}
+              {linkToAuthor ? <a href={linkToAuthor}>{author}</a> : author}
             </span>
           )}
           {formattedDate && <span class="text-stone">{formattedDate}</span>}
