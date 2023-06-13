@@ -2,37 +2,48 @@
 import HeaderLink from './HeaderLink.astro';
 import LinkToHome from './LinkToHome.astro';
 
-const { fillBg } = Astro.props;
+const { sticky } = Astro.props;
 ---
 
-<div
-  class:list={[
-    'py-3',
-    'flex',
-    'flex-row',
-    'items-center',
-    'lg:ml--48',
-    'xl:ml--60',
-    { 'bg-white': fillBg },
-  ]}
->
-  <div class="w-48 xl:w-60">
-    <LinkToHome />
-  </div>
-  <div class="mx-3 lg:hidden"></div>
-  <nav>
-    <section class="">
+<>
+  {
+    sticky && (
+      // "background" that spans from end to end horizontally
+      <div class="absolute top-0 left-0 w-full z-20">
+        <div class="fixed h-13 bg-white/90 w-full" />
+      </div>
+    )
+  }
+  <!-- actual header -->
+  <header
+    class:list={[
+      'py-3',
+      'flex',
+      'flex-row',
+      'items-center',
+      'lg:ml--48',
+      'xl:ml--60',
+      { sticky: sticky },
+      { 'top-0': sticky },
+      { 'z-20': sticky },
+    ]}
+  >
+    <nav class="w-48 xl:w-60">
+      <LinkToHome />
+    </nav>
+    <div class="mx-3 lg:mx-1"></div>
+    <nav>
       <ul class="unset flex gap-4 [&>li]:p-0">
         <li><HeaderLink href="/toys">Toys</HeaderLink></li>
         <li><HeaderLink href="/posts">Posts</HeaderLink></li>
       </ul>
-    </section>
-  </nav>
-  <div class="flex-grow"></div>
-  <a
-    href="https://github.com/bizarre-binary/bizarre-binary.github.io"
-    aria-label="Open the repo on GitHub"
-  >
-    <div class="i-bi-git text-yellow-400 text-xl"></div>
-  </a>
-</div>
+    </nav>
+    <div class="flex-grow"></div>
+    <a
+      href="https://github.com/bizarre-binary/bizarre-binary.github.io"
+      aria-label="Open the repo on GitHub"
+    >
+      <div class="i-bi-git text-yellow-400 text-xl"></div>
+    </a>
+  </header>
+</>
