@@ -1,0 +1,41 @@
+---
+// this is a component that makes it easy to provide unobtrusive side nav bars
+// with builtin visual feedback when sidebar is being treated with more priority
+// than the main contents
+
+import LinkToHome from './LinkToHome.astro';
+---
+
+<!-- optionally appear from large screen -->
+<aside class="absolute top-0 left-0 w-full lt-lg:hidden bg-transparent">
+  <!-- "invisible" to act as a placeholder while the real one is coming from ./Header.astro -->
+  <header class="py-2.5 invisible">
+    <LinkToHome />
+  </header>
+  <div class="flex">
+    <div class="flex-1 flex">
+      <div class="grow"></div>
+      <div class="w-48 xl:w-60 relative">
+        <!-- slot for "left" side -->
+        <!-- expose group-hover for the slot -->
+        <!-- prettier-ignore -->
+        <div
+          class="w-48 xl:w-60 fixed hover:z-20 group h-full hover:bg-white/80 empty:hidden"
+        ><slot name="left" /></div>
+      </div>
+    </div>
+    <!-- placeholder to represent the main content-->
+    <div class="w-prose"></div>
+    <div class="flex-1 flex">
+      <div class="w-48 xl:w-60 relative">
+        <!-- slot for "right" side -->
+        <!-- expose group-hover for the slot -->
+        <!-- prettier-ignore -->
+        <div
+          class="w-48 xl:w-60 fixed hover:z-20 group h-full hover:bg-white/80 empty:hidden"
+        ><slot name="right" /></div>
+      </div>
+      <div class="grow"></div>
+    </div>
+  </div>
+</aside>

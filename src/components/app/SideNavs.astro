@@ -1,5 +1,5 @@
 ---
-import LinkToHome from './LinkToHome.astro';
+import AuxiliaryFrame from './AuxiliaryFrame.astro';
 const path = Astro.url.pathname.replace(/\/$/, '');
 
 const allToys = await Astro.glob('../../pages/toys/*.mdx');
@@ -14,34 +14,20 @@ const pathMatchesUrl = (url: string) => {
 };
 ---
 
-<!-- -z-10 is important to be not blocking interactivity on the main components as this components expands to full screen -->
-<aside class="fixed top-0 left-0 h-full w-full flex lt-lg:hidden -z-10">
-  <div class="flex-1 flex">
-    <div class="grow"></div>
-    <!-- main -->
-    <div class="w-48 xl:w-60 text-gray-500">
-      <!-- "invisible" to act as a place holder while the real one is coming from ./Header.astro -->
-      <header class="py-2.5 sticky top-0 w-full invisible">
-        <LinkToHome />
-      </header>
-      <!-- safe list class="text-gray-800" -->
-      <nav class="px-3">
-        <h2 class="mt-10 my-2 font-bold text-gray-500">Toys</h2>
-        <ul class="text-sm">
-          {
-            allToys.map((toy) => (
-              <li class="truncate">
-                <a href={toy.url} class={toy.url && pathMatchesUrl(toy.url) ? 'text-gray-800' : ''}>
-                  {toy.frontmatter.title}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-    </div>
-  </div>
-  <!-- place holder to represent the actual content-->
-  <div class="w-prose"></div>
-  <div class="flex-1"></div>
-</aside>
+<AuxiliaryFrame>
+  <nav slot="left" class="mt-10 px-3">
+    <h2 class="my-2 font-bold text-gray-500">Toys</h2>
+    <!-- safe list class="text-gray-800" -->
+    <ul class="text-sm text-gray-500">
+      {
+        allToys.map((toy) => (
+          <li class="truncate hover:text-gray-700">
+            <a href={toy.url} class={toy.url && pathMatchesUrl(toy.url) ? 'text-gray-800' : ''}>
+              {toy.frontmatter.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</AuxiliaryFrame>

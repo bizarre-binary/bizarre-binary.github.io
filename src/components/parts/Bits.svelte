@@ -106,7 +106,7 @@ Take an integer and represent that as a series of bits
 
 <!-- safelist class="text-lg text-xs py-0.5 [&:nth-child(8n+5)]:border-l-0 hover:outline" -->
 <table class="table-auto border-collapse">
-  <thead class="bg-slate-50">
+  <thead class="bg-slate-100/50">
     <tr class:hidden={hideHeader}>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th

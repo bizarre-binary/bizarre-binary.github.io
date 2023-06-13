@@ -90,7 +90,7 @@ Take an integer and represent that as a series of numbers with a base
 </div>
 <!-- safe list class="text-sm even:border-l-0" -->
 <table class="table-auto border-collapse" class:text-sm={compact}>
-  <thead class="bg-slate-50">
+  <thead class="bg-slate-100/50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th

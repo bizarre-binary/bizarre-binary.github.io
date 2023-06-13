@@ -32,10 +32,11 @@ const description = titleFromProps ? `${defaultTitle} - ${title}` : title;
     <GlobalStyle />
     <PWA />
   </head>
-  <body class="m-auto max-w-prose px-2 md:px-0 flex flex-col [min-height:100svh] overflow-x-hidden">
+  <body class="m-auto max-w-prose px-2 md:px-0 [min-height:100svh]">
     <Header sticky={true} />
     <SideNavs />
-    <main>
+    <!-- apply relative so that main is on top of other fixed components like SideNavs -->
+    <main class="relative">
       <slot />
     </main>
     <div class="grow"></div>
