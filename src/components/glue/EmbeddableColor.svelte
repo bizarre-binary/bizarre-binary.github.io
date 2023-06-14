@@ -7,7 +7,7 @@ Wrap Color to work better with astro mdx files
   import OpacitySkeleton from '../parts/OpacitySkeleton.svelte';
 </script>
 
-<div class="not-prose">
+<div class="not-prose my-7">
   <OpacitySkeleton>
     <Color />
   </OpacitySkeleton>
