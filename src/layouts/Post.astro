@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import Title from '../components/app/Title.astro';
 import { format } from '../lib/date';
 import { links } from '@lib/links';
 
@@ -36,7 +37,7 @@ const formattedDate = dates.map((date, idx) => `${prefixes[idx]} ${date}`).join(
 <Layout title={title}>
   <!-- .prose seems to with weird gap without margin so mitigate that with `-my-[n]` -->
   <article class="prose -my-3">
-    <h1 class="sticky top-0 z-10 text-3xl sm:text-4xl mb-3">{title}</h1>
+    <Title title={title} />
     {
       !toy && (
         <small class="text-slate">
