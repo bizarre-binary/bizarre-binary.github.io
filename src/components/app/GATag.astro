@@ -3,7 +3,7 @@
 
 <>
   <!-- Google tag (gtag.js) -->
-  <script async type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-2PFC5181P7"
+  <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-2PFC5181P7"
   ></script>
   <script type="text/partytown">
     window.dataLayer = window.dataLayer || [];
@@ -11,6 +11,7 @@
       dataLayer.push(arguments);
     }
 
+    // to filter out non-production or non-official deployment views
     if (window.location.hostname === 'bizarre-binary.github.io') {
       gtag('js', new Date());
       gtag('config', 'G-2PFC5181P7');
