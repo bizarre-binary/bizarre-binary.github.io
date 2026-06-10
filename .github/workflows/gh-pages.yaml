@@ -17,22 +17,25 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
-      - run: npm ci
-      - run: npm test
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
   build:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
       - name: Install, build, and upload your site output
         uses: withastro/action@v0
         with:
             node-version: 18
+            package-manager: pnpm
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -1,27 +1,27 @@
 .PHONY: dev
 dev: install
-	npm run dev
+	pnpm dev
 
 .PHONY: test
 test: install
-	npm test
+	pnpm test
 
 .PHONY: test-watch
 test-watch: install
-	npm run test:watch
+	pnpm test:watch
 
 .PHONY: install
 install:
-	npm i
+	pnpm install
 
 .PHONY: clean-install
 clean-install:
-	npm ci
+	pnpm install --frozen-lockfile
 
 .PHONY: build
 build: install
-	npm run build
+	pnpm build
 
 .PHONY: preview
 preview: build
-	npm run preview
+	pnpm preview

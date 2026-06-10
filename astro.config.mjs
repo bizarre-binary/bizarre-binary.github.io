@@ -19,7 +19,7 @@ const markdown = {
     [
       rehypeAutolinkHeadings,
       {
-        behaviour: 'append',
+        behavior: 'append',
       },
     ],
     rehypeMathjax,
