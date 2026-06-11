@@ -94,7 +94,7 @@ Take an integer and represent that as a series of numbers with a base
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
-          in:fly|local={transitionOptions}
+          in:fly={transitionOptions}
           class={cellClasses}
           class:even:border-l-0={octetBorder}
         >
@@ -108,7 +108,7 @@ Take an integer and represent that as a series of numbers with a base
       <!-- (idx) is important for transition animation -->
       {#each digits as digit, idx (reverseIdx(idx))}
         <td
-          in:fly|local={transitionOptions}
+          in:fly={transitionOptions}
           class={`relative hover:z-10 focus-within:z-10 outline-gray-300 hover:outline ${cellClasses} ${cellBg}`}
           class:even:border-l-0={octetBorder}
           style={style(digit)}

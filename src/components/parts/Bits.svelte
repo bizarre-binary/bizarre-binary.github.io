@@ -110,7 +110,7 @@ Take an integer and represent that as a series of bits
     <tr class:hidden={hideHeader}>
       {#each sups as sup, idx (reverseIdx(idx))}
         <th
-          in:fly|local={transitionOptions}
+          in:fly={transitionOptions}
           class={`text-center ${borderStyle(lengthOfBits - idx)}`}
           class:w-bit={!compact}
           class:w-bit-sm={compact}
@@ -134,7 +134,7 @@ Take an integer and represent that as a series of bits
       {#each bits as bit, idx (reverseIdx(idx))}
         {@const disabled = isDisabled(idx, disabledBits)}
         <td
-          in:fly|local={transitionOptions}
+          in:fly={transitionOptions}
           class={`relative hover:z-10 bg-yellow-200 outline-gray-300 text-center ${borderStyle(
             lengthOfBits - idx
           )}`}
