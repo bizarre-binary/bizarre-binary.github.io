@@ -94,11 +94,13 @@ Visualize various IPv4 related info
         <div class="flex-1 text-right ml-2 mr--2">255.255.255.255</div>
       </div>
       <table class="h-2 w-full">
-        <tr>
-          {#each [1, 2, 3, 4] as idx}
-            <td data-position={idx} class="border-x-1 border-gray-300" />
-          {/each}
-        </tr>
+        <tbody>
+          <tr>
+            {#each [1, 2, 3, 4] as idx}
+              <td data-position={idx} class="border-x-1 border-gray-300" />
+            {/each}
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="h-2 w-full flex bg-gray-100">
@@ -178,7 +180,8 @@ Visualize various IPv4 related info
     </div>
     <div>
       <table class="min-h-3 w-full">
-        <tr>
+        <tbody>
+          <tr>
           {#each [1] as idx}
             <!-- safe list class="!hidden" -->
             <td
@@ -214,7 +217,8 @@ Visualize various IPv4 related info
               </div>
             </td>
           {/each}
-        </tr>
+          </tr>
+        </tbody>
       </table>
       <div class="flex text-center">
         <div class="flex-1 text-left text-gray text-xs lt-sm:text-[0.6rem] lt-xs:text-[0.5rem]">

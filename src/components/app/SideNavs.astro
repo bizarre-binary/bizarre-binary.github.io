@@ -2,7 +2,7 @@
 import AuxiliaryFrame from './AuxiliaryFrame.astro';
 const path = Astro.url.pathname.replace(/\/$/, '');
 
-const allToys = await Astro.glob('../../pages/toys/*.mdx');
+const allToys = Object.values(import.meta.glob('../../pages/toys/*.mdx', { eager: true }));
 
 const pathMatchesUrl = (url: string) => {
   let sanitized = url;

@@ -1,5 +1,5 @@
 ---
-const allToys = await Astro.glob('../../pages/toys/*.mdx');
+const allToys = Object.values(import.meta.glob('../../pages/toys/*.mdx', { eager: true }));
 ---
 
 <ul>

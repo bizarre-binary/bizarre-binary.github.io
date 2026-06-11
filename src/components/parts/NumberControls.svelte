@@ -9,12 +9,13 @@ A auxiliary controls that supports changing numbers using buttons and input box
     fn: (value: V, key: string, index: number) => R
   ) => Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
 
-  export enum NCClickEvent {
-    increment,
-    decrement,
-    setToMax,
-    setToMin,
-  }
+  export const NCClickEvent = {
+    increment: 0,
+    decrement: 1,
+    setToMax: 2,
+    setToMin: 3,
+  } as const;
+  export type NCClickEvent = (typeof NCClickEvent)[keyof typeof NCClickEvent];
 </script>
 
 <script lang="ts">

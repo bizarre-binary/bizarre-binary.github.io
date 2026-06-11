@@ -1,5 +1,5 @@
 ---
-const allPosts = await Astro.glob('../../pages/posts/*.mdx');
+const allPosts = Object.values(import.meta.glob('../../pages/posts/*.mdx', { eager: true }));
 ---
 
 <ul>
