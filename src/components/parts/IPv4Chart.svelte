@@ -96,7 +96,7 @@ Visualize various IPv4 related info
       <table class="h-2 w-full">
         <tbody>
           <tr>
-            {#each [1, 2, 3, 4] as idx}
+            {#each [1, 2, 3, 4] as idx (idx)}
               <td data-position={idx} class="border-x-1 border-gray-300" />
             {/each}
           </tr>
@@ -182,41 +182,41 @@ Visualize various IPv4 related info
       <table class="min-h-3 w-full">
         <tbody>
           <tr>
-          {#each [1] as idx}
-            <!-- safe list class="!hidden" -->
-            <td
-              data-position={idx}
-              class="px-1 text-[0.6rem]/1 text-gray border-x-1 border-gray-300"
-            >
-              <div class="flex">
-                <div
-                  class="flex-1"
-                  class:!hidden={!hostsValid}
-                  class:font-bold={isAddressNetwork}
-                  class:text-black={isAddressNetwork}
-                >
-                  Network
-                </div>
-                <div class="grow" />
-                <!-- safe list class="text-gray-700" -->
-                <div class:text-gray-700={isAddressHost}>
-                  <span class:hidden={!hostsValid} class="lt-xs:hidden">
-                    {renderedMin} - {renderedMax} =</span
+            {#each [1] as idx (idx)}
+              <!-- safe list class="!hidden" -->
+              <td
+                data-position={idx}
+                class="px-1 text-[0.6rem]/1 text-gray border-x-1 border-gray-300"
+              >
+                <div class="flex">
+                  <div
+                    class="flex-1"
+                    class:!hidden={!hostsValid}
+                    class:font-bold={isAddressNetwork}
+                    class:text-black={isAddressNetwork}
                   >
-                  {prefix < 31 ? renderedHosts : addressCount.toLocaleString()} hosts
+                    Network
+                  </div>
+                  <div class="grow" />
+                  <!-- safe list class="text-gray-700" -->
+                  <div class:text-gray-700={isAddressHost}>
+                    <span class:hidden={!hostsValid} class="lt-xs:hidden">
+                      {renderedMin} - {renderedMax} =</span
+                    >
+                    {prefix < 31 ? renderedHosts : addressCount.toLocaleString()} hosts
+                  </div>
+                  <div class="grow" />
+                  <div
+                    class="flex-1 text-right"
+                    class:!hidden={!hostsValid}
+                    class:font-bold={isAddressBroadcast}
+                    class:text-black={isAddressBroadcast}
+                  >
+                    Broadcast
+                  </div>
                 </div>
-                <div class="grow" />
-                <div
-                  class="flex-1 text-right"
-                  class:!hidden={!hostsValid}
-                  class:font-bold={isAddressBroadcast}
-                  class:text-black={isAddressBroadcast}
-                >
-                  Broadcast
-                </div>
-              </div>
-            </td>
-          {/each}
+              </td>
+            {/each}
           </tr>
         </tbody>
       </table>

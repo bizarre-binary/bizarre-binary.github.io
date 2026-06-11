@@ -19,17 +19,19 @@ const { title } = Astro.props;
 
 <!-- thanks to https://davidwalsh.name/detect-sticky -->
 <script>
+  /* eslint-disable prettier/prettier */
   const el = document.querySelector('[data-stuck-small]');
 
   const observer = new IntersectionObserver(
     ([e]) => {
-      el &&
+      if (el) {
         ['opacity-100'].forEach((cls) => {
           el.classList.toggle(cls, e.intersectionRatio < 1);
         });
+      }
     },
     { threshold: [1] }
   );
 
-  el && observer.observe(el);
+  if (el) observer.observe(el);
 </script>

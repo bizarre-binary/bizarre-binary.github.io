@@ -94,7 +94,7 @@ A digit that represent any number up to hexadecimal
     bind:value={digit}
     on:keydown={superChargeKeyDown}
   >
-    {#each [...digits].reverse() as d}
+    {#each [...digits].reverse() as d, i (i)}
       <!-- styling option is necessary on Edge browser if not Windows in general -->
       <!-- to reset the trick above for Safari -->
       <option value={d} class="text-center text-black">

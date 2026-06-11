@@ -27,7 +27,7 @@ To apply partial fade transition currently for IPv4 Addresses
 <!-- \00A0 = &nbsp; - https://github.com/sveltejs/svelte/issues/3014#issuecomment-501143936 -->
 <!-- safe list class="font-mono first:hidden before:content-['\00A0'] after:content-['\00A0']" -->
 <div class="flex" class:font-mono={mono}>
-  {#each texts as text, idx}
+  {#each texts as text, idx (idx)}
     <div
       class={["before:content-['\\00A0'] after:content-['\\00A0']", 'first:hidden']
         .slice(idx > 3 && isFstDelimiterWrappedBySpaces ? 0 : 1)

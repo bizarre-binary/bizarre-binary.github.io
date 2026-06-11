@@ -43,7 +43,7 @@ Represent IPv4 address including prefix notation
   <div class="flex text-2xl lt-sm:text-xl lt-xs:text-lg mr-2 items-center">
     <div>
       <div class="flex">
-        {#each octets as octet, idx}
+        {#each octets as octet, idx (idx)}
           <div class="flex-1 flex group mt-1">
             <div class="group-first:hidden font-bold z-10">.</div>
             <InputNumberLocaled
@@ -77,7 +77,7 @@ Represent IPv4 address including prefix notation
   <div class="grow" />
   <div>
     <div class="flex lt-sm:hidden" class:invisible={showingWholeInput}>
-      {#each octets as octet, idx}
+      {#each octets as octet, idx (idx)}
         <div class="flex-1 flex group text-2xl mb-2 relative">
           <!-- adding max-w-[[n]rem] for Firefox -->
           <InputNumberLocaled

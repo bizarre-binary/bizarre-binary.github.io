@@ -3,21 +3,23 @@ A toast
 -->
 
 <script lang="ts">
+  import { afterUpdate } from 'svelte';
+
   export let text: string | null = null;
   export let durationInSec = 1;
   export let type = 'info';
 
-  const clearToast = (toast: string | null) => {
-    if (toast) {
+  let lastText: string | null = null;
+
+  afterUpdate(() => {
+    if (text !== null && text !== lastText) {
+      lastText = text;
       setTimeout(() => {
         text = null;
+        lastText = null;
       }, 1000 * durationInSec);
     }
-  };
-
-  $: {
-    clearToast(text);
-  }
+  });
 </script>
 
 <!-- safe list class="alert alert-info alert-success alert-warning alert-error" -->

@@ -45,7 +45,7 @@ Take an integer and represent that as a series of bits
   $: lengthOfBits = bits.length;
 
   $: sups = getExponents(bits);
-  $: constructInteger = genConstructInteger();
+  const constructInteger = genConstructInteger();
   $: debug = { changedPosition, bits };
 
   function onFlip({ detail: { position, checked } }: CustomEvent<BitFlipEvent>) {
@@ -68,7 +68,7 @@ Take an integer and represent that as a series of bits
     return border.hidden;
   };
 
-  $: borderStyle = (idx: number) => [border.common, borderExtra(idx)].join(' ');
+  const borderStyle = (idx: number) => [border.common, borderExtra(idx)].join(' ');
 
   const maxAlpha = overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255;
   const getOpacityHex = (n: number) =>

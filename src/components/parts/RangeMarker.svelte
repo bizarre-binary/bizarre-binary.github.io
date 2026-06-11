@@ -8,7 +8,7 @@ A marker to be used for ./LogRange.svelte
 </script>
 
 <div class="flex text-gray-400 overflow-x-clip">
-  {#each sups as sup}
+  {#each sups as sup (sup)}
     <div class="flex-1 text-center mb--3.9 translate-x-1/10">
       <div class="mb--2 translate-x-1/4 xs:translate-x-0">
         <small>

@@ -79,7 +79,7 @@ A convenient addition to allow pasting/editing as whole
   >
     <div
       class="tooltip before:text-xs before:mb-1 after:mb-1 tooltip-open mb-20 tooltip-accent w-full"
-      data-tip={'select/copy/paste/edit'}
+      data-tip="select/copy/paste/edit"
     >
       <input
         class="invalid:bg-yellow-100 w-full px-1 text-center rounded border border-gray sm:tracking-widest"

@@ -14,10 +14,10 @@ export default defineConfig({
     presetWind3(),
     presetTypography({
       cssExtend: {
-        'h1': { 'font-weight': '600', 'margin-top': '1rem' },
+        h1: { 'font-weight': '600', 'margin-top': '1rem' },
         'blockquote p:first-of-type::before': { content: 'none' },
         'blockquote p:last-of-type::after': { content: 'none' },
-        'hr': { 'border-top-width': '0' },
+        hr: { 'border-top-width': '0' },
       },
     }),
   ],

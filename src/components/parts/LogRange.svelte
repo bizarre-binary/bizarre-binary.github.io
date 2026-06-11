@@ -47,9 +47,9 @@ A logarithmical <input type="range">
   const supMin = Math.max(0, log(min));
   const supMax = Math.ceil(log(max));
 
-  $: sups = [...Array(supMax - supMin + 1).keys()].map((n: number) => n + supMin).reverse();
-  $: supsSmall = sups.filter((n: number) => n % 2 === 0);
-  $: supsXS = supsSmall.filter((n: number) => n % 8 === 0);
+  const sups = [...Array(supMax - supMin + 1).keys()].map((n: number) => n + supMin).reverse();
+  const supsSmall = sups.filter((n: number) => n % 2 === 0);
+  const supsXS = supsSmall.filter((n: number) => n % 8 === 0);
 
   let standardWidth = 1; // 1 is just a placeholder and it will be updated
 </script>

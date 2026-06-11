@@ -69,7 +69,7 @@ to augment IPv4 with Network and Netmask visualization
 <small class="absolute text-gray-400 w-full">
   <pre class="inline-block ml-2">Netmask:</pre>
   <div class="inline-block">
-    <PartialTransition notation={renderedMask} fstDelimiter={' = '} />
+    <PartialTransition notation={renderedMask} fstDelimiter=" = " />
   </div>
 </small>
 <small><pre class="opacity-0">placeholder</pre></small>
@@ -87,7 +87,7 @@ to augment IPv4 with Network and Netmask visualization
       borderHex={true}
       compact={true}
       octetBorder={true}
-      overrideCellBg={'#ffffff00'}
+      overrideCellBg="#ffffff00"
       on:update={onUpdateForMask}
       disabledBits={0b1}
     />

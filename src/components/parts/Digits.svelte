@@ -93,11 +93,7 @@ Take an integer and represent that as a series of numbers with a base
   <thead class="bg-slate-100/50">
     <tr>
       {#each sups as sup, idx (reverseIdx(idx))}
-        <th
-          in:fly={transitionOptions}
-          class={cellClasses}
-          class:even:border-l-0={octetBorder}
-        >
+        <th in:fly={transitionOptions} class={cellClasses} class:even:border-l-0={octetBorder}>
           <small>{base}<sup>{sup}</sup></small>
         </th>
       {/each}
