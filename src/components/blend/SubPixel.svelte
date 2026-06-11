@@ -67,7 +67,7 @@ Visualize a sub pixel with 8 bits
       <div class="grow" />
       <!-- an "hack" for square - https://stackoverflow.com/a/19068538/1570165 -->
       <div
-        class="rounded outline outline-gray-50 block w-0 h-0 pr-[1.3rem] pb-[1.3rem] mx-0.3"
+        class="rounded ring-1 ring-gray-50 block w-0 h-0 pr-[1.3rem] pb-[1.3rem] mx-0.3"
         style:background-color={color}
       />
       <div class="text-xl sm:text-base">

@@ -115,7 +115,7 @@ Represent IPv4 address including prefix notation
     </div>
     <slot name="extra-bits" />
   </div>
-  <div class="flex flex-col mx-2 text-2xl lt-sm:hidden">
+  <div class="flex flex-col mx-2 text-2xl lt-sm:hidden" class:invisible={showingWholeInput}>
     <div class="lt-sm:text-base sm:translate-x--0.8 lt-sm:mb-1 lt-sm:font-bold">/</div>
     <div class="grow" />
   </div>

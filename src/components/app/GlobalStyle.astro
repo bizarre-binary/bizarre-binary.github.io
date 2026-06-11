@@ -37,6 +37,15 @@ import 'daisyui/themes.css';
     sub {
       bottom: -0.25em;
     }
+    /* Browser UA stylesheet sets border-width on inputs (specificity 0,0,1 beats UnoCSS preflight's * reset).
+       This explicit rule wins at author level and prevents dark 1px borders on all inputs. */
+    input {
+      border-width: 0;
+    }
+    /* DaisyUI v5 tab height is calc(--size-selector * 10) = 2.5rem = 40px. Match production at 2rem. */
+    .tabs-lift {
+      --tab-height: 2rem;
+    }
     /* DaisyUI v5 raised --border to 2px; keep 1px for all bordered elements */
     .btn,
     .tabs-lift .tab.tab-active {
