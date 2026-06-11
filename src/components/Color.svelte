@@ -14,9 +14,8 @@ Visualize True color
 
   const pixelsKey = 'color-pixels';
 
-  // for this to work consistently client:only directive is necessary from .astro components
   export const initialPixels = (): ColorStorage => {
-    const cached = localStorage.getItem(pixelsKey);
+    const cached = typeof localStorage !== 'undefined' ? localStorage.getItem(pixelsKey) : null;
     return cached
       ? JSON.parse(cached)
       : {
@@ -30,6 +29,7 @@ Visualize True color
   let { pixels, selected } = initialPixels();
 
   export const cachePixel = debounce((selected: number) => {
+    if (typeof localStorage === 'undefined') return;
     localStorage.setItem(pixelsKey, JSON.stringify({ pixels, selected }));
   });
 

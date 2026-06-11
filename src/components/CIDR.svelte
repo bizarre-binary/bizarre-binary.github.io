@@ -6,11 +6,12 @@ Visualize CIDR
   const cacheKey = 'ip-notation';
 
   export const initialNotation = () => {
-    const cached = localStorage.getItem(cacheKey);
+    const cached = typeof localStorage !== 'undefined' ? localStorage.getItem(cacheKey) : null;
     return cached ? JSON.parse(cached) : { address: 0xc0a80000, prefix: 16 };
   };
 
   export const cacheNotation = debounce((address: number, prefix: number) => {
+    if (typeof localStorage === 'undefined') return;
     localStorage.setItem(cacheKey, JSON.stringify({ address, prefix }));
   });
 

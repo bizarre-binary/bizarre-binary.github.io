@@ -13,13 +13,13 @@ A demo that helps develop components
   const max = 4_294_967_295; // under the limit of 32 bits
   const integerKey = 'number-integer';
 
-  // for this to work consistently client:only directive is necessary from .astro components
   export const initialInteger = () => {
-    const cached = localStorage.getItem(integerKey);
+    const cached = typeof localStorage !== 'undefined' ? localStorage.getItem(integerKey) : null;
     return cached ? parseInt(cached) : 42;
   };
 
   export const cacheInteger = debounce((integer: number) => {
+    if (typeof localStorage === 'undefined') return;
     localStorage.setItem(integerKey, integer.toString());
   });
 </script>
