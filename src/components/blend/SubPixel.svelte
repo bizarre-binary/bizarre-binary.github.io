@@ -90,7 +90,7 @@ Visualize a sub pixel with 8 bits
         {max}
         bind:value={integer}
         class="block [@media(pointer:coarse)]:hidden range range-sm"
-        style:--range-shdw={rangeShdw}
+        style:color={`hsl(${rangeShdw})`}
       />
       <!-- touch screen -->
       <input
@@ -99,7 +99,7 @@ Visualize a sub pixel with 8 bits
         {max}
         bind:value={integer}
         class="hidden [@media(pointer:coarse)]:block range range-lg"
-        style:--range-shdw={rangeShdw}
+        style:color={`hsl(${rangeShdw})`}
       />
     </div>
   </div>

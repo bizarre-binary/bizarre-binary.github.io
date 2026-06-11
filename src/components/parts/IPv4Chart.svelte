@@ -117,7 +117,7 @@ Visualize various IPv4 related info
     <div class="w-full flex text-cyan items-center mt-2">
       <div class="min-w-8" style:width={`${startInPercent}%`}>
         <button
-          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
+          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:text-white hover:border-white"
           on:click={() => {
             address = newAddressFrom(address, mask, network - networkUnit);
           }}
@@ -153,7 +153,7 @@ Visualize various IPv4 related info
       <div class="grow flex min-w-10">
         <div class="grow" />
         <button
-          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:color:white hover:border-white"
+          class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-cyan mx-1 my-0.5 hover:bg-cyan hover:text-white hover:border-white"
           on:click={() => {
             address = newAddressFrom(address, mask, network + networkUnit);
           }}
@@ -223,7 +223,7 @@ Visualize various IPv4 related info
         <div class="flex-1 text-center flex text-lime-600 items-center mt-1">
           <div class="grow" />
           <button
-            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:color:white hover:border-white"
+            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:text-white hover:border-white"
             on:click={() => {
               address = address - 1;
             }}
@@ -236,7 +236,7 @@ Visualize various IPv4 related info
             <div class="grow" />
           </div>
           <button
-            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:color:white hover:border-white"
+            class="btn btn-xs btn-outline btn-square rounded-lg pb-0.5 text-lime-600 mx-1 my-0.5 hover:bg-lime-600 hover:text-white hover:border-white"
             on:click={() => {
               address = address + 1;
             }}

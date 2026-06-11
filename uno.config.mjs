@@ -1,8 +1,8 @@
 // why this file? - https://github.com/unocss/unocss/discussions/2280
 
-import { defineConfig, presetUno, presetTypography } from 'unocss';
+import { defineConfig, presetWind3 } from 'unocss';
 import presetIcons from '@unocss/preset-icons';
-import { presetDaisy } from 'unocss-preset-daisy';
+import { presetTypography } from '@unocss/preset-typography';
 
 const bitWidth = 1.5;
 
@@ -11,9 +11,15 @@ export default defineConfig({
     presetIcons({
       /* options */
     }),
-    presetUno(),
-    presetDaisy(),
-    presetTypography(),
+    presetWind3(),
+    presetTypography({
+      cssExtend: {
+        'h1': { 'font-weight': '600', 'margin-top': '1rem' },
+        'blockquote p:first-of-type::before': { content: 'none' },
+        'blockquote p:last-of-type::after': { content: 'none' },
+        'hr': { 'border-top-width': '0' },
+      },
+    }),
   ],
   // use `safelist` to include ones that are not scanned from static analysis
   safelist: [

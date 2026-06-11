@@ -58,8 +58,8 @@ Visualize True color
 
   $: labelStyle = (isSelected: boolean, pixel: number, selectedPixel: number) =>
     !isSelected
-      ? `background-color: ${hex(pixel)};--bc: ${hsl(selectedPixel)};`
-      : `--tab-border-color: ${hex(pixel)} !important;`;
+      ? `background-color: ${hex(pixel)};--bc: ${hsl(selectedPixel)};border-bottom-color: hsl(${hsl(selectedPixel)});`
+      : `--tab-border-color: ${hex(pixel)};`;
   $: hexStyle = (isSelected: boolean, pixel: number) =>
     !isSelected
       ? `color: ${tabTextColor(pixel)};`
@@ -68,18 +68,17 @@ Visualize True color
 
 <div class="flex w-screen sm:w-auto">
   <div class="grow" />
-  <div class="tabs mb-2 sm:mb-1">
-    <!-- uno safelist class="rounded-br rounded-bl tab-active tab-lifted sm:hover:outline hover:cursor-default z-10" -->
+  <div class="tabs tabs-lift mb-2 sm:mb-1">
+    <!-- uno safelist class="rounded-br rounded-bl tab-active sm:hover:outline hover:cursor-default z-10" -->
     {#each pixels as pixel, idx}
       <label
-        class={'tab tab-bordered rounded-t !px-1 !sm:px-3 text-xs sm:text-base ![--un-border-opacity:1] border-b-1 outline-gray-300 hover:z-20 [@media(hover:none)]:outline-0'}
+        class={'tab rounded-t !px-1 !sm:px-3 text-xs sm:text-base ![--un-border-opacity:1] border-b-1 outline-gray-300 hover:z-20 [@media(hover:none)]:outline-0'}
         class:rounded-br={idx === selected - 1}
         class:rounded-bl={idx === selected + 1}
         class:sm:hover:outline={idx !== selected}
         class:z-10={idx == selected}
         class:hover:cursor-default={idx == selected}
         class:tab-active={idx === selected}
-        class:tab-lifted={idx === selected}
         style={labelStyle(selected === idx, pixel, pixels[selected])}
       >
         <input

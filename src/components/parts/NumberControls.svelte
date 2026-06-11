@@ -52,14 +52,14 @@ A auxiliary controls that supports changing numbers using buttons and input box
       {min}
       {max}
       bind:value={integer}
-      class="w-full text-right rounded-md px-1.5 border border-solid max-w-[9rem] input-number-hide-arrows font-mono"
+      class="w-full text-right rounded-md px-1.5 border border-solid border-gray-200 max-w-[9rem] input-number-hide-arrows font-mono"
     />
   </div>
 </div>
 <div>
   <!-- safe list class="btn-disabled" -->
   <button
-    class="btn btn-outline btn-xs btn-info min-w-12"
+    class="btn btn-outline btn-xs btn-info min-w-12 uppercase"
     on:click={setToMax}
     disabled={integer == max}
     class:btn-disabled={integer === max}
@@ -68,7 +68,7 @@ A auxiliary controls that supports changing numbers using buttons and input box
   </button>
   <small class="text-gray-400">{formatted.max}</small>
   <button
-    class="btn btn-outline btn-xs btn-primary min-w-12"
+    class="btn btn-outline btn-xs btn-primary min-w-12 uppercase"
     on:click={setToMin}
     disabled={integer === min}
     class:btn-disabled={integer === min}

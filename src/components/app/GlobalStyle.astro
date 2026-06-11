@@ -1,4 +1,6 @@
 ---
+import 'daisyui/daisyui.css';
+import 'daisyui/themes.css';
 ---
 
 <>
@@ -9,11 +11,47 @@
     }
     html {
       font-family: system-ui, sans-serif;
-      background-color: #f6f6f6;
+      background-color: var(--color-base-100);
     }
     code {
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
         Bitstream Vera Sans Mono, Courier New, monospace;
+    }
+    sub, sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+    sup { top: -0.5em; }
+    sub { bottom: -0.25em; }
+    /* DaisyUI v5 raised --border to 2px; keep 1px for all bordered elements */
+    .btn, .tabs-lift .tab.tab-active {
+      border-width: 1px;
+    }
+    .tabs-lift .tab.tab-active {
+      border-bottom-width: 0;
+    }
+    /* Firefox can't parse DaisyUI v5's --radius-start/--radius-end variables (empty-comment
+       separator syntax). Inline the gradients directly using the same values DaisyUI computes. */
+    .tabs-lift .tab.tab-active::before {
+      left: calc(-1 * var(--tab-radius-limit));
+      background-image:
+        radial-gradient(circle at top left, #0000 calc(69% - 1px), var(--tab-border-color) 69%, var(--tab-bg) calc(69% + 1px)),
+        radial-gradient(circle at top right, #0000 calc(69% - 1px), var(--tab-border-color) 69%, var(--tab-bg) calc(69% + 1px));
+    }
+    /* Edge tabs: no concave corner on the outer side (nothing to connect to) */
+    .tabs-lift .tab.tab-active:first-child::before {
+      left: 0;
+      width: calc(100% + var(--tab-radius-limit));
+      background-image:
+        radial-gradient(circle at top right, #0000 calc(69% - 1px), var(--tab-border-color) 69%, var(--tab-bg) calc(69% + 1px));
+      background-position: top right;
+    }
+    .tabs-lift .tab.tab-active:last-child::before {
+      width: calc(100% + var(--tab-radius-limit));
+      background-image:
+        radial-gradient(circle at top left, #0000 calc(69% - 1px), var(--tab-border-color) 69%, var(--tab-bg) calc(69% + 1px));
     }
   </style>
 </>

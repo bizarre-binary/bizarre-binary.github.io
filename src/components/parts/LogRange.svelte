@@ -83,8 +83,27 @@ A logarithmical <input type="range">
         value={valueL}
         on:change={onChange}
         class="range range-xs"
-        style:--range-shdw={rangeShdw}
+        style:--range-progress="hsl({rangeShdw})"
+        style:--range-bg="oklch(0.85 0 0)"
       />
     </div>
   </div>
 </div>
+
+<style>
+  /* DaisyUI v5 caps range width at clamp(3rem, 20rem, 100%); override for this full-width layout */
+  input {
+    width: 100%;
+  }
+  /* Thinner, neutral-gray track for the xs range — DaisyUI v5 default is 8px */
+  :global(.range-xs::-webkit-slider-runnable-track) {
+    background-color: oklch(0.92 0 0);
+    height: 2px;
+    border-width: 0;
+  }
+  :global(.range-xs::-moz-range-track) {
+    background-color: oklch(0.92 0 0);
+    height: 2px;
+    border-width: 0;
+  }
+</style>
