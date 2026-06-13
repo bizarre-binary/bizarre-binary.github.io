@@ -1,7 +1,7 @@
 {
-  "target": "es6",
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "target": "ES6",
     "baseUrl": ".",
     "paths": {
       "@lib/*": [
