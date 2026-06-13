@@ -1,7 +1,7 @@
 <!-- @component
 A bit flipper
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   export interface BitFlipEvent {
     checked: boolean;
     position: number;
@@ -25,9 +25,13 @@ A bit flipper
 
   const dispatch = createEventDispatcher<{ flip: BitFlipEvent }>();
 
-  export let checked = false;
-  export let position = 0;
-  export let disabled = false;
+  interface Props {
+    checked?: boolean;
+    position?: number;
+    disabled?: boolean;
+  }
+
+  let { checked = $bindable(false), position = 0, disabled = false }: Props = $props();
 
   // avoid `$: dispatch ...` as I want the dispatch to happen from user interaction only
   const flip = () => {
@@ -65,8 +69,8 @@ A bit flipper
     ].join(' ')}
     type="checkbox"
     bind:checked
-    on:change={flip}
-    on:keydown={onKeydown}
+    onchange={flip}
+    onkeydown={onKeydown}
     {disabled}
   />
   <span
@@ -75,6 +79,6 @@ A bit flipper
       'peer-disabled:text-gray-300',
       "after:content-['0'] after:peer-checked:content-['1']",
     ].join(' ')}
-  />
+  ></span>
 </label>
 <!-- styling was originally based on https://codepen.io/bcmdr/pen/oEwqPX -->

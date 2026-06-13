@@ -1,15 +1,19 @@
 <!-- @component
 for CIDR network prefix
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import Bits from '../parts/Bits.svelte';
 
   const length = 5;
 </script>
 
 <script lang="ts">
-  export let integer = 16;
-  export let hideHeader = false;
+  interface Props {
+    integer?: number;
+    hideHeader?: boolean;
+  }
+
+  let { integer = $bindable(16), hideHeader = false }: Props = $props();
 </script>
 
 <div>

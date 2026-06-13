@@ -1,7 +1,7 @@
 <!-- @component
 Visualize True color
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import { toRGBA, fromRGBA, toHex } from '@lib/convert';
   import { isHexDark, toHsl } from '@lib/color';
   import { debounce } from '@lib/debounce';
@@ -26,7 +26,7 @@ Visualize True color
 </script>
 
 <script lang="ts">
-  let { pixels, selected } = initialPixels();
+  let { pixels, selected } = $state(initialPixels());
 
   export const cachePixel = debounce((selected: number) => {
     if (typeof localStorage === 'undefined') return;
@@ -35,10 +35,10 @@ Visualize True color
 
   import Pixel from './blend/Pixel.svelte';
 
-  $: selectedPixel = toRGBA(pixels[selected]);
-  $: {
+  let selectedPixel = $derived(toRGBA(pixels[selected]));
+  $effect(() => {
     cachePixel(selected);
-  }
+  });
 
   function onUpdate({ detail: { position, rgba } }: CustomEvent<UpdatePixelEvent>) {
     pixels[position] = fromRGBA(rgba);
@@ -67,7 +67,7 @@ Visualize True color
 </script>
 
 <div class="flex w-screen sm:w-auto">
-  <div class="grow" />
+  <div class="grow"></div>
   <div class="tabs tabs-lift mb-2 sm:mb-1">
     <!-- uno safelist class="rounded-br rounded-bl tab-active sm:hover:outline hover:cursor-default z-10" -->
     {#each pixels as pixel, idx (idx)}
@@ -97,7 +97,7 @@ Visualize True color
       </label>
     {/each}
   </div>
-  <div class="grow" />
+  <div class="grow"></div>
 </div>
 
 <!-- mx--n is to center even with some overflow (within the size of n) -->

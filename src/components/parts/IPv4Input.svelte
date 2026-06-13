@@ -5,16 +5,26 @@ A convenient addition to allow pasting/editing as whole
   import { pattern, parseFrom } from '@lib/ipv4';
   import Toast from './Toast.svelte';
 
-  export let address = 0xc0a80000;
-  export let renderedAddress = 'placeholder';
-  export let prefix = 16;
-  export let show = false;
+  interface Props {
+    address?: number;
+    renderedAddress?: string;
+    prefix?: number;
+    show?: boolean;
+  }
 
-  $: placeholder = `${renderedAddress}/${prefix}`;
-  $: inputAsWhole = placeholder;
+  let {
+    // eslint-disable-next-line no-useless-assignment
+    address = $bindable(0xc0a80000),
+    renderedAddress = 'placeholder',
+    prefix = $bindable(16),
+    show = $bindable(false),
+  }: Props = $props();
 
-  let input: HTMLInputElement;
-  let button: HTMLButtonElement;
+  let placeholder = $derived(`${renderedAddress}/${prefix}`);
+  let inputAsWhole = $derived(placeholder);
+
+  let input: HTMLInputElement = $state();
+  let button: HTMLButtonElement = $state();
 
   const selectText = (e: Event) => {
     // on mobile Safari (Webkit), keyboard will not show up unlike other "normal" browsers - https://github.com/jquery-archive/jquery-mobile/issues/3016
@@ -22,7 +32,7 @@ A convenient addition to allow pasting/editing as whole
     elm.select();
   };
 
-  let toast: string | null = null;
+  let toast: string | null = $state(null);
 
   const evaluate = () => {
     const { address: addr, prefix: pref, msg } = parseFrom(inputAsWhole);
@@ -66,12 +76,8 @@ A convenient addition to allow pasting/editing as whole
 <Toast bind:text={toast} type="warning" />
 <div class="relative">
   <div class="absolute text-gray-600 left-5 top-2 lt-sm:top-5 lt-sm:left-0 lt-xs:top--1 z-30">
-    <button
-      class="i-bi-pencil ml-1"
-      on:click={onBtnClick}
-      bind:this={button}
-      class:invisible={show}
-    />
+    <button class="i-bi-pencil ml-1" onclick={onBtnClick} bind:this={button} class:invisible={show}
+    ></button>
   </div>
   <div
     class="absolute font-mono text-xl lt-sm:text-2xl lt-xs:text-lg text-gray-600 left-11 top-1 lt-sm:top-3 lt-xs:top-4 lt-sm:left-9 lt-xs:left-6 z-30 w-[88%]"
@@ -88,9 +94,9 @@ A convenient addition to allow pasting/editing as whole
         bind:value={inputAsWhole}
         {placeholder}
         {pattern}
-        on:focus={selectText}
-        on:change={evaluate}
-        on:blur={onInputBlur}
+        onfocus={selectText}
+        onchange={evaluate}
+        onblur={onInputBlur}
       />
     </div>
   </div>

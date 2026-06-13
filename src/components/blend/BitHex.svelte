@@ -1,30 +1,45 @@
 <!-- @component
 A combination of bit and hexadecimal together
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import Bits, { toBits } from '../parts/Bits.svelte';
   import Digits from '../parts/Digits.svelte';
 </script>
 
 <script lang="ts">
-  export let colReverse = false;
-  export let noMargin = false;
-  export let compact = false;
-  export let integer = 42;
-  export let minLength = 0;
-  export let maxLength = -1;
-  export let borderHex = true;
-  export let borderOctal = true;
-  export let octetBorder = false;
-  export let overrideCellBg: string | null = null;
+  interface Props {
+    colReverse?: boolean;
+    noMargin?: boolean;
+    compact?: boolean;
+    integer?: number;
+    minLength?: number;
+    maxLength?: number;
+    borderHex?: boolean;
+    borderOctal?: boolean;
+    octetBorder?: boolean;
+    overrideCellBg?: string | null;
+  }
+
+  let {
+    colReverse = false,
+    noMargin = false,
+    compact = false,
+    integer = $bindable(42),
+    minLength = 0,
+    maxLength = -1,
+    borderHex = true,
+    borderOctal = true,
+    octetBorder = false,
+    overrideCellBg = null,
+  }: Props = $props();
   // caculate initial value to prevent initial UI glitch
-  $: lengthOfBits = Math.max(toBits(integer).length, minLength);
+  let lengthOfBits = $derived(Math.max(toBits(integer).length, minLength));
 </script>
 
 <!-- safe list class="flex flex-col-reverse my-0.5" -->
 <div class:flex={colReverse} class:flex-col-reverse={colReverse}>
   <div class="flex" class:my-0.5={!noMargin}>
-    <div class="grow" />
+    <div class="grow"></div>
     <Bits
       bind:integer
       multipleOf={lengthOfBits}
@@ -37,7 +52,7 @@ A combination of bit and hexadecimal together
     />
   </div>
   <div class="flex" class:my-0.5={!colReverse && !noMargin}>
-    <div class="grow" />
+    <div class="grow"></div>
     <Digits
       bind:integer
       {lengthOfBits}

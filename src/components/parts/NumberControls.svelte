@@ -1,7 +1,7 @@
 <!-- @component
 A auxiliary controls that supports changing numbers using buttons and input box
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import { createEventDispatcher } from 'svelte';
 
   const objectMap = <V, R>(
@@ -20,13 +20,17 @@ A auxiliary controls that supports changing numbers using buttons and input box
 
 <script lang="ts">
   import InputNumberLocaled from './InputNumberLocaled.svelte';
-  export let min = 0;
-  export let max = 999999999;
 
-  export let integer = 42;
+  interface Props {
+    min?: number;
+    max?: number;
+    integer?: number;
+  }
 
-  $: formatted = objectMap({ max, min }, (n: number) =>
-    new Intl.NumberFormat('en-US', {}).format(n)
+  let { min = 0, max = 999999999, integer = $bindable(42) }: Props = $props();
+
+  let formatted = $derived(
+    objectMap({ max, min }, (n: number) => new Intl.NumberFormat('en-US', {}).format(n))
   );
 
   const dispatch = createEventDispatcher<{ click: NCClickEvent }>();
@@ -61,7 +65,7 @@ A auxiliary controls that supports changing numbers using buttons and input box
   <!-- safe list class="btn-disabled" -->
   <button
     class="btn btn-outline btn-xs btn-info min-w-12 uppercase"
-    on:click={setToMax}
+    onclick={setToMax}
     disabled={integer == max}
     class:btn-disabled={integer === max}
   >
@@ -70,17 +74,17 @@ A auxiliary controls that supports changing numbers using buttons and input box
   <small class="text-gray-400">{formatted.max}</small>
   <button
     class="btn btn-outline btn-xs btn-primary min-w-12 uppercase"
-    on:click={setToMin}
+    onclick={setToMin}
     disabled={integer === min}
     class:btn-disabled={integer === min}
   >
     min
   </button>
   <small class="text-gray-400">{formatted.min}</small>
-  <button class="btn btn-outline btn-xs btn-success min-w-12" on:click={increment}>
+  <button class="btn btn-outline btn-xs btn-success min-w-12" onclick={increment}>
     {integer === max ? 'min' : '+1'}
   </button>
-  <button class="btn btn-outline btn-xs btn-warning min-w-12" on:click={decrement}>
+  <button class="btn btn-outline btn-xs btn-warning min-w-12" onclick={decrement}>
     {integer === min ? 'max' : '-1'}
   </button>
 </div>

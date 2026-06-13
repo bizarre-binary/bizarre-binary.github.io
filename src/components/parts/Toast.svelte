@@ -3,15 +3,17 @@ A toast
 -->
 
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
+  interface Props {
+    text?: string | null;
+    durationInSec?: number;
+    type?: string;
+  }
 
-  export let text: string | null = null;
-  export let durationInSec = 1;
-  export let type = 'info';
+  let { text = $bindable<string | null>(null), durationInSec = 1, type = 'info' }: Props = $props();
 
-  let lastText: string | null = null;
+  let lastText: string | null = $state(null);
 
-  afterUpdate(() => {
+  $effect(() => {
     if (text !== null && text !== lastText) {
       lastText = text;
       setTimeout(() => {

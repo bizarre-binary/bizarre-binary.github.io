@@ -1,7 +1,7 @@
 <!-- @component
 A demo that helps develop components
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import OctBitHex from './blend/OctBitHex.svelte';
   import LogRange from './parts/LogRange.svelte';
   import NumberControls from './parts/NumberControls.svelte';
@@ -25,25 +25,28 @@ A demo that helps develop components
 </script>
 
 <script lang="ts">
-  let integer = initialInteger();
+  let integer = $state(initialInteger());
 
-  // use `integerInput` to bridge the input and real value
-  $: integerInput = integer;
+  // integerInput bridges the typed input and the committed integer:
+  // - writable so bindings and onControl can mutate it freely
+  // - re-syncs from integer when integer changes from an external source (e.g. bit flip)
+  let integerInput = $derived(integer);
 
   // throttle integer input update to be out of the way of with svelte transitions
   const reconsile = debounce((newValue) => {
     integer = newValue || 0; // in case the input has empty string
   });
 
-  $: {
-    reconsile(integerInput);
-    cacheInteger(integer);
-  }
-
-  $: {
+  // clamp before reconsile so we never commit an out-of-range value to integer
+  $effect.pre(() => {
     if (integerInput < min) integerInput = min;
     if (integerInput > max) integerInput = max;
-  }
+  });
+
+  $effect.pre(() => {
+    reconsile(integerInput);
+    cacheInteger(integer);
+  });
 
   function onControl(e: CustomEvent<NCClickEvent>) {
     const fn = {
@@ -79,7 +82,7 @@ A demo that helps develop components
       <div dir="ltr">
         <OctBitHex bind:integer />
       </div>
-      <div class="grow" />
+      <div class="grow"></div>
     </div>
     <div dir="ltr" class="text-right">
       <NumberControls bind:integer={integerInput} {max} {min} on:click={onControl} />

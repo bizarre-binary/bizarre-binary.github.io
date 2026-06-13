@@ -1,7 +1,7 @@
 <!-- @component
 A digit that represent any number up to hexadecimal
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   export interface UpdateDigitEvent {
     digit: number;
     position: number;
@@ -40,12 +40,13 @@ A digit that represent any number up to hexadecimal
 
   const dispatch = createEventDispatcher<{ update: UpdateDigitEvent }>();
 
-  export let base = 16;
-  export let digit = 0;
+  interface Props {
+    base?: number;
+    digit?: number;
+    position?: number;
+  }
 
-  $: render = (n: number) => n.toString(base).toUpperCase();
-
-  export let position = 0;
+  let { base = 16, digit = $bindable(0), position = 0 }: Props = $props();
 
   const safeUpdate = (newDigit: number, position: number) => {
     const safeDigit = Math.min(base - 1, Math.max(0, newDigit));
@@ -54,11 +55,6 @@ A digit that represent any number up to hexadecimal
       position,
     });
   };
-
-  $: digits = [...Array(base).keys()];
-  $: {
-    safeUpdate(digit, position);
-  }
 
   const focusNeighbour = (target: EventTarget | null, adjust: number) => {
     focusIt(target, `select[data-position="${position + adjust}"]`, 'table');
@@ -78,6 +74,11 @@ A digit that represent any number up to hexadecimal
       }
     }
   };
+  let render = $derived((n: number) => n.toString(base).toUpperCase());
+  let digits = $derived([...Array(base).keys()]);
+  $effect(() => {
+    safeUpdate(digit, position);
+  });
 </script>
 
 <div class="relative">
@@ -92,7 +93,7 @@ A digit that represent any number up to hexadecimal
     data-position={position}
     class="relative w-full text-transparent bg-transparent appearance-none"
     bind:value={digit}
-    on:keydown={superChargeKeyDown}
+    onkeydown={superChargeKeyDown}
   >
     {#each [...digits].reverse() as d, i (i)}
       <!-- styling option is necessary on Edge browser if not Windows in general -->

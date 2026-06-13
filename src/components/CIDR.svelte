@@ -1,7 +1,7 @@
 <!-- @component
 Visualize CIDR
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import { debounce } from '@lib/debounce';
   const cacheKey = 'ip-notation';
 
@@ -23,21 +23,21 @@ Visualize CIDR
   import { calcIP, render as renderIPs } from '@lib/ipv4';
   import IPv4Network from './blend/IPv4Network.svelte';
   import IPv4Chart from './parts/IPv4Chart.svelte';
-  let { address, prefix } = initialNotation();
-  $: {
+  let { address, prefix } = $state(initialNotation());
+  $effect(() => {
     cacheNotation(address, prefix);
-  }
+  });
 
-  $: calced = calcIP(address, prefix);
+  let calced = $derived(calcIP(address, prefix));
 
-  $: mask = 'mask' in calced ? calced.mask : 0;
-  $: network = 'network' in calced ? calced.network : 0;
-  $: min = 'min' in calced ? calced.min : 0;
-  $: max = 'max' in calced ? calced.max : 0;
-  $: broadcast = 'broadcast' in calced ? calced.broadcast : 0;
-  $: hosts = 'hosts' in calced ? calced.hosts : 0;
+  let mask = $derived('mask' in calced ? calced.mask : 0);
+  let network = $derived('network' in calced ? calced.network : 0);
+  let min = $derived('min' in calced ? calced.min : 0);
+  let max = $derived('max' in calced ? calced.max : 0);
+  let broadcast = $derived('broadcast' in calced ? calced.broadcast : 0);
+  let hosts = $derived('hosts' in calced ? calced.hosts : 0);
 
-  $: ({
+  let {
     address: renderedAddress,
     network: renderedNetwork,
     mask: renderedMask,
@@ -45,11 +45,12 @@ Visualize CIDR
     min: renderedMin,
     max: renderedMax,
     hosts: renderedHosts,
-  } = renderIPs(calced));
+  } = $derived(renderIPs(calced));
 </script>
 
 <div class="sm:mx--6">
   <IPv4 bind:address bind:prefix {renderedAddress}>
+    <!-- @migration-task: migrate this slot by hand, `extra-bits` is an invalid identifier -->
     <IPv4Network
       slot="extra-bits"
       bind:address

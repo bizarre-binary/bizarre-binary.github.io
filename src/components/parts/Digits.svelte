@@ -1,25 +1,38 @@
 <!-- @component
 Take an integer and represent that as a series of numbers with a base
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import Digit from './Digit.svelte';
   import type { UpdateDigitEvent } from './Digit.svelte';
-  import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
   import { motion } from '../../lib/defaults';
   import { fromHex, toHex } from '../../lib/convert';
 </script>
 
 <script lang="ts">
-  export let compact = false;
-  export let bitsToBundle = 4;
-  export let integer = 42;
+  import { fly } from 'svelte/transition';
 
-  export let lengthOfBits: number;
-  export let maxLength = -1;
-  export let drawBorder = true;
-  export let octetBorder = false;
-  export let overrideCellBg: string | null = null;
+  interface Props {
+    compact?: boolean;
+    bitsToBundle?: number;
+    integer?: number;
+    lengthOfBits: number;
+    maxLength?: number;
+    drawBorder?: boolean;
+    octetBorder?: boolean;
+    overrideCellBg?: string | null;
+  }
+
+  let {
+    compact = false,
+    bitsToBundle = 4,
+    integer = $bindable(42),
+    lengthOfBits,
+    maxLength = -1,
+    drawBorder = true,
+    octetBorder = false,
+    overrideCellBg = null,
+  }: Props = $props();
 
   const border = {
     common: 'digit-border-common',
@@ -34,31 +47,31 @@ Take an integer and represent that as a series of numbers with a base
     return border.none;
   };
 
-  $: widthClass =
-    bitsToBundle === 4 ? (compact ? 'w-hex-sm' : 'w-hex') : bitsToBundle === 3 ? 'w-octal' : '';
-  $: borderStyle = [borderExtra(), drawBorder ? 'border-l-2 first:border-l-0' : 'border-l-0'].join(
-    ' '
+  let widthClass = $derived(
+    bitsToBundle === 4 ? (compact ? 'w-hex-sm' : 'w-hex') : bitsToBundle === 3 ? 'w-octal' : ''
+  );
+  let borderStyle = $derived(
+    [borderExtra(), drawBorder ? 'border-l-2 first:border-l-0' : 'border-l-0'].join(' ')
   );
 
-  $: cellBg = bitsToBundle === 3 ? 'bg-sky-200' : 'bg-purple-200';
+  let cellBg = $derived(bitsToBundle === 3 ? 'bg-sky-200' : 'bg-purple-200');
 
-  $: cellClasses = `text-center ${widthClass} ${borderStyle}`;
+  let cellClasses = $derived(`text-center ${widthClass} ${borderStyle}`);
 
-  $: base = Math.pow(2, bitsToBundle);
-  $: extractDigits = genExtractDigits(bitsToBundle);
-  $: shouldBeLength = Math.ceil(lengthOfBits / bitsToBundle); // firstly tidy
-  $: _digits = extractDigits(integer).slice(shouldBeLength * -1);
-  $: paddingLength = Math.max(
-    lengthOfBits > _digits.length * bitsToBundle ? 1 : 0,
-    shouldBeLength - _digits.length
+  let base = $derived(Math.pow(2, bitsToBundle));
+  let extractDigits = $derived(genExtractDigits(bitsToBundle));
+  let shouldBeLength = $derived(Math.ceil(lengthOfBits / bitsToBundle)); // firstly tidy
+  let _digits = $derived(extractDigits(integer).slice(shouldBeLength * -1));
+  let paddingLength = $derived(
+    Math.max(lengthOfBits > _digits.length * bitsToBundle ? 1 : 0, shouldBeLength - _digits.length)
   ); // secondly pad
-  $: untrimmedDigits = [...Array.from({ length: paddingLength }, () => 0), ..._digits];
-  $: digits = maxLength > 0 ? untrimmedDigits.slice(maxLength * -1) : untrimmedDigits;
-  $: sups = getExponents(digits);
-  $: constructInteger = genConstructInteger(bitsToBundle);
+  let untrimmedDigits = $derived([...Array.from({ length: paddingLength }, () => 0), ..._digits]);
+  let digits = $derived(maxLength > 0 ? untrimmedDigits.slice(maxLength * -1) : untrimmedDigits);
+  let sups = $derived(getExponents(digits));
+  let constructInteger = $derived(genConstructInteger(bitsToBundle));
 
-  let changedPosition = 0;
-  $: debug = { len: _digits.length, changedPosition, _digits, digits };
+  let changedPosition = $state(0);
+  let debug = $derived({ len: _digits.length, changedPosition, _digits, digits });
 
   function onUpdate({ detail: { position, digit } }: CustomEvent<UpdateDigitEvent>) {
     changedPosition = position;
@@ -69,7 +82,7 @@ Take an integer and represent that as a series of numbers with a base
 
   const ratioToBase = (digit: number) => (digit + 1) / base;
 
-  const maxAlpha = overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255;
+  let maxAlpha = $derived(overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255);
 
   const getOpacityHex = (n: number) =>
     toHex(Math.max(0, Math.min(maxAlpha, Math.round(n * maxAlpha))), 2);

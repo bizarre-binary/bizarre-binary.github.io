@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (extra-bits to extra_bits) making the component unusable -->
 <!-- @component
 Represent IPv4 address including prefix notation
 -->

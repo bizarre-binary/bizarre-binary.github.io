@@ -5,7 +5,12 @@ to prevent UI "glitch" of "folding" and "unfolding"
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
-  let mounted = false;
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
+  let mounted = $state(false);
   onMount(() => {
     mounted = true;
   });
@@ -13,5 +18,5 @@ to prevent UI "glitch" of "folding" and "unfolding"
 
 <!-- flipping direction twice and adding flex here and there to overflow on left not right - thanks to https://stackoverflow.com/a/39874526/1570165 -->
 <div class="opacity-0 transition-opacity transition-duration-300" class:opacity-100={mounted}>
-  <slot />
+  {@render children?.()}
 </div>

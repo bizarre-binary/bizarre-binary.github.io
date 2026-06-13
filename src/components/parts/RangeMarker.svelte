@@ -3,8 +3,12 @@ A marker to be used for ./LogRange.svelte
 -->
 
 <script lang="ts">
-  export let base = 2;
-  export let sups: number[] = [];
+  interface Props {
+    base?: number;
+    sups?: number[];
+  }
+
+  let { base = 2, sups = [] }: Props = $props();
 </script>
 
 <div class="flex text-gray-400 overflow-x-clip">

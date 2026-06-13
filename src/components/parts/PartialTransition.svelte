@@ -5,23 +5,31 @@ To apply partial fade transition currently for IPv4 Addresses
   import type { TransitionConfig } from 'svelte/transition';
   import { fade } from 'svelte/transition';
 
-  export let fstDelimiter = '/';
-  export let sndDelimiter = '.';
+  interface Props {
+    fstDelimiter?: string;
+    sndDelimiter?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    transition?: (...args: any[]) => TransitionConfig;
+    mono?: boolean;
+    notation?: string;
+  }
 
+  let {
+    fstDelimiter = '/',
+    sndDelimiter = '.',
+    transition = fade,
+    mono = true,
+    notation = '0.0.0.0/0',
+  }: Props = $props();
   // this is a bit of involved workaround to show wrapped spaces properly in the fstDelimiter
-  $: isFstDelimiterWrappedBySpaces =
-    fstDelimiter.at(0) === fstDelimiter.at(-1) && fstDelimiter.at(0) === ' ';
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export let transition: (...args: any[]) => TransitionConfig = fade;
-  export let mono = true;
-
-  export let notation = '0.0.0.0/0';
-  $: splits = notation.split(fstDelimiter);
-  $: address = splits[0];
-  $: chunks = address.split(sndDelimiter);
-  $: prefix = splits[1];
-  $: texts = prefix ? [...chunks, prefix] : chunks;
+  let isFstDelimiterWrappedBySpaces = $derived(
+    fstDelimiter.at(0) === fstDelimiter.at(-1) && fstDelimiter.at(0) === ' '
+  );
+  let splits = $derived(notation.split(fstDelimiter));
+  let address = $derived(splits[0]);
+  let chunks = $derived(address.split(sndDelimiter));
+  let prefix = $derived(splits[1]);
+  let texts = $derived(prefix ? [...chunks, prefix] : chunks);
 </script>
 
 <!-- \00A0 = &nbsp; - https://github.com/sveltejs/svelte/issues/3014#issuecomment-501143936 -->

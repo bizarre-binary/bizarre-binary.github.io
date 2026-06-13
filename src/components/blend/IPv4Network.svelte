@@ -8,13 +8,25 @@ to augment IPv4 with Network and Netmask visualization
   import { getBaseLog } from '@lib/math';
   import { newAddressFrom } from '@lib/ipv4';
   import PartialTransition from '@components/parts/PartialTransition.svelte';
-  export let length = 32;
-  export let address = 0xffffffff;
-  export let prefix = 0xffffffff;
-  export let network = 0xffffffff;
-  export let mask = 0xffffffff;
-  export let renderedNetwork = 'placeholder';
-  export let renderedMask = 'placeholder';
+  interface Props {
+    length?: number;
+    address?: number;
+    prefix?: number;
+    network?: number;
+    mask?: number;
+    renderedNetwork?: string;
+    renderedMask?: string;
+  }
+
+  let {
+    length = 32,
+    address = $bindable(0xffffffff),
+    prefix = $bindable(0xffffffff),
+    network = 0xffffffff,
+    mask = 0xffffffff,
+    renderedNetwork = 'placeholder',
+    renderedMask = 'placeholder',
+  }: Props = $props();
 
   function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
     address = newAddressFrom(address, mask, integer);
@@ -60,7 +72,7 @@ to augment IPv4 with Network and Netmask visualization
   <small class="absolute text-gray-400 w-full">
     <div class="relative">
       <div class="absolute w-full h-full">
-        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
+        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`}></div>
       </div>
       <pre class="opacity-0">placeholder</pre>
     </div>
@@ -75,7 +87,7 @@ to augment IPv4 with Network and Netmask visualization
 <small><pre class="opacity-0">placeholder</pre></small>
 <div class="relative">
   <div class="absolute w-full h-full rounded-b overflow-clip z--10">
-    <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
+    <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`}></div>
   </div>
   <div class="mix-blend-multiply">
     <Bits

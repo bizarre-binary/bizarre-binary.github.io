@@ -1,26 +1,14 @@
 <!-- @component
 A logarithmical <input type="range">
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import { toHsl } from '@lib/color';
   import RangeMarker from './RangeMarker.svelte';
   import { getBaseLog } from '@lib/math';
 </script>
 
 <script lang="ts">
-  export let min = 0;
-  export let max = 42;
-  export let value = 10;
-  export let scale = 10; // to control the granularity
-
-  export let base = 2;
-
   const log = (n: number) => getBaseLog(base, n);
-
-  $: minL = Math.max(0, log(min) * scale);
-  $: maxL = Math.ceil(log(max) * scale);
-
-  $: valueL = Math.max(0, log(value) * scale);
 
   const onChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
@@ -39,7 +27,23 @@ A logarithmical <input type="range">
     if (value > max) value = max;
   };
 
-  export let tint = '#fff094';
+  interface Props {
+    min?: number;
+    max?: number;
+    value?: number;
+    scale?: number; // to control the granularity
+    base?: number;
+    tint?: string;
+  }
+
+  let {
+    min = 0,
+    max = 42,
+    value = $bindable(10),
+    scale = 10,
+    base = 2,
+    tint = '#fff094',
+  }: Props = $props();
 
   const hsl = toHsl(tint);
   const rangeShdw = `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
@@ -51,7 +55,10 @@ A logarithmical <input type="range">
   const supsSmall = sups.filter((n: number) => n % 2 === 0);
   const supsXS = supsSmall.filter((n: number) => n % 8 === 0);
 
-  let standardWidth = 1; // 1 is just a placeholder and it will be updated
+  let standardWidth = $state(1); // 1 is just a placeholder and it will be updated
+  let minL = $derived(Math.max(0, log(min) * scale));
+  let maxL = $derived(Math.ceil(log(max) * scale));
+  let valueL = $derived(Math.max(0, log(value) * scale));
 </script>
 
 <div class="ml--12 xs:ml-0">
@@ -81,7 +88,7 @@ A logarithmical <input type="range">
         min={minL}
         max={maxL}
         value={valueL}
-        on:change={onChange}
+        onchange={onChange}
         class="range range-xs"
         style:--range-progress="hsl({rangeShdw})"
         style:--range-bg="oklch(0.85 0 0)"

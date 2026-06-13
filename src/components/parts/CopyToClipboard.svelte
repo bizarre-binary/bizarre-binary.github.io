@@ -1,29 +1,36 @@
 <!-- @component
 A wrapper for copy to clipboard function
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
-  export let textToCopy = '';
-  let showFeedback = false;
-  let copyStatus = true;
+  interface Props {
+    textToCopy?: string;
+    children?: import('svelte').Snippet;
+  }
 
-  let actualCopiedText = '';
+  let { textToCopy = '', children }: Props = $props();
+  let showFeedback = $state(false);
+  let copyStatus = $state(true);
+
+  let actualCopiedText = $state('');
 
   const success = 'success';
   const error = 'error';
 
-  $: feedback = copyStatus
-    ? { type: success, message: `\`${actualCopiedText}\` copied!`, duration: 2000 }
-    : {
-        type: error,
-        message: 'failed to copy to clipboard',
-        duration: 3000,
-      };
+  let feedback = $derived(
+    copyStatus
+      ? { type: success, message: `\`${actualCopiedText}\` copied!`, duration: 2000 }
+      : {
+          type: error,
+          message: 'failed to copy to clipboard',
+          duration: 3000,
+        }
+  );
 
-  let ccElement: HTMLElement;
+  let ccElement: HTMLElement = $state();
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   const giveFeedback = (status: boolean) => {
@@ -62,7 +69,7 @@ A wrapper for copy to clipboard function
     }
   };
 
-  $: tooltipText = showFeedback ? feedback.message : 'click to copy';
+  let tooltipText = $derived(showFeedback ? feedback.message : 'click to copy');
 
   onMount(() => {
     //TODO maybe there is a way to prevent importing again for no good reason
@@ -82,9 +89,9 @@ A wrapper for copy to clipboard function
     class="hidden"
     bind:this={ccElement}
     value={textToCopy}
-    on:clipboard-copy={validateCopying}>Copy</clipboard-copy
+    onclipboard-copy={validateCopying}>Copy</clipboard-copy
   >
-  <button class="hover:outline outline-gray rounded p-1" on:click={copyText}>
-    <slot />
+  <button class="hover:outline outline-gray rounded p-1" onclick={copyText}>
+    {@render children?.()}
   </button>
 </div>

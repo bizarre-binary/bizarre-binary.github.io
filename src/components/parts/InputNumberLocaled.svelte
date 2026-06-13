@@ -10,20 +10,29 @@ Two things are enhanced:
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  let clazz = '';
-  export { clazz as class };
+  interface Props {
+    class?: string;
+    min?: number;
+    max?: number;
+    strictRangeOnInput?: boolean;
+    value?: number;
+    onchange?: (e: Event) => void;
+  }
 
-  export let min = 0;
-  export let max = 999999999;
-  export let strictRangeOnInput = false;
+  let {
+    class: clazz = '',
+    min = 0,
+    max = 999999999,
+    strictRangeOnInput = false,
+    value: integer = $bindable(42),
+    onchange,
+  }: Props = $props();
 
-  let actualInputUI: HTMLInputElement;
+  let actualInputUI: HTMLInputElement = $state();
 
-  let integer = 42;
-  export { integer as value };
-  $: integerInput = integer;
+  let integerInput = $derived(integer);
 
-  let unsanitary = false;
+  let unsanitary = $state(false);
   const sanitizeInput = (toSanitize: number) => {
     // purpose of this sanitization is to prevent the value end up being null
     // e.g.:
@@ -38,25 +47,25 @@ Two things are enhanced:
     unsanitary = false;
   };
 
-  $: {
+  $effect.pre(() => {
     if (strictRangeOnInput) {
       if (integerInput < min) integerInput = min;
       if (integerInput > max) integerInput = max;
     }
 
     sanitizeInput(integerInput);
-  }
+  });
 
-  $: localed = integer.toLocaleString();
+  let localed = $derived(integer.toLocaleString());
 
   // workaround with astro SSR
-  let domDocument: Document;
+  let domDocument: Document = $state();
   onMount(() => {
     domDocument = document;
   });
 
   // `whenFocused` is to key to not be in a way to move focus around with tab and shift tab key
-  $: whenFocused = domDocument ? domDocument.activeElement === actualInputUI : false;
+  let whenFocused = $derived(domDocument ? domDocument.activeElement === actualInputUI : false);
 
   function focusInput() {
     if (actualInputUI) actualInputUI.focus();
@@ -88,7 +97,7 @@ Two things are enhanced:
       <input
         value={localed}
         class={clazz}
-        on:focus={focusInput}
+        onfocus={focusInput}
         aria-label="number in base 10 (to show)"
       />
     {/if}
@@ -103,11 +112,11 @@ Two things are enhanced:
       class={clazz}
       class:bg-yellow-200={unsanitary}
       aria-label="number in base 10 (to edit)"
-      on:focus={() => {
+      onfocus={() => {
         whenFocused = true;
       }}
-      on:blur={onBlur}
-      on:change
+      onblur={onBlur}
+      {onchange}
     />
   </div>
 </div>

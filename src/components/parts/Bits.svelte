@@ -1,14 +1,13 @@
 <!-- @component
 Take an integer and represent that as a series of bits
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   export interface BitsIntegerUpdateEvent {
     integer: number;
   }
 
   import Bit from './Bit.svelte';
   import type { BitFlipEvent } from './Bit.svelte';
-  import { fly } from 'svelte/transition';
   import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
   import { motion } from '../../lib/defaults';
   import { toHex, fromHex } from '../../lib/convert';
@@ -26,27 +25,45 @@ Take an integer and represent that as a series of bits
 </script>
 
 <script lang="ts">
-  export let hideHeader = false;
-  export let disabledBits = 0b0;
-  export let compact = false;
-  export let powered = false;
-  export let integer = 42;
-  export let multipleOf = defaultMultipleOf;
-  export let maxLength = -1;
-  export let borderOctal = true;
-  export let borderHex = true;
-  export let octetBorder = false;
-  export let overrideCellBg: string | null = null;
+  import { fly } from 'svelte/transition';
 
-  let changedPosition = 0;
+  interface Props {
+    hideHeader?: boolean;
+    disabledBits?: number;
+    compact?: boolean;
+    powered?: boolean;
+    integer?: number;
+    multipleOf?: number;
+    maxLength?: number;
+    borderOctal?: boolean;
+    borderHex?: boolean;
+    octetBorder?: boolean;
+    overrideCellBg?: string | null;
+  }
 
-  $: untrimmedBits = toBits(integer, multipleOf);
-  $: bits = maxLength > 0 ? untrimmedBits.slice(maxLength * -1) : untrimmedBits;
-  $: lengthOfBits = bits.length;
+  let {
+    hideHeader = false,
+    disabledBits = 0b0,
+    compact = false,
+    powered = false,
+    integer = $bindable(42),
+    multipleOf = defaultMultipleOf,
+    maxLength = -1,
+    borderOctal = true,
+    borderHex = true,
+    octetBorder = false,
+    overrideCellBg = null,
+  }: Props = $props();
 
-  $: sups = getExponents(bits);
+  let changedPosition = $state(0);
+
+  let untrimmedBits = $derived(toBits(integer, multipleOf));
+  let bits = $derived(maxLength > 0 ? untrimmedBits.slice(maxLength * -1) : untrimmedBits);
+  let lengthOfBits = $derived(bits.length);
+
+  let sups = $derived(getExponents(bits));
   const constructInteger = genConstructInteger();
-  $: debug = { changedPosition, bits };
+  let debug = $derived({ changedPosition, bits });
 
   function onFlip({ detail: { position, checked } }: CustomEvent<BitFlipEvent>) {
     changedPosition = position;
@@ -70,7 +87,7 @@ Take an integer and represent that as a series of bits
 
   const borderStyle = (idx: number) => [border.common, borderExtra(idx)].join(' ');
 
-  const maxAlpha = overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255;
+  let maxAlpha = $derived(overrideCellBg ? fromHex(overrideCellBg.substring(7, 7 + 2)) : 255);
   const getOpacityHex = (n: number) =>
     toHex(Math.max(0, Math.min(maxAlpha, Math.round(n * maxAlpha))), 2);
 
@@ -86,11 +103,11 @@ Take an integer and represent that as a series of bits
 
   const dispatch = createEventDispatcher<{ update: BitsIntegerUpdateEvent }>();
 
-  $: {
+  $effect(() => {
     dispatch('update', {
       integer,
     });
-  }
+  });
 
   // just using disabledBits without parameter causes the lazy drawing which is not optimal in this case
   // hence send disabledBits as param with toLA

@@ -17,7 +17,10 @@ describe('BitHex', () => {
   it('hex select reflects initial integer value', () => {
     render(BitHex, { props: { integer: 0 } });
     const selects = screen.getAllByRole('combobox') as HTMLSelectElement[];
-    const hexValue = selects.reduce((acc, s, i) => acc + Number(s.value) * Math.pow(16, selects.length - 1 - i), 0);
+    const hexValue = selects.reduce(
+      (acc, s, i) => acc + Number(s.value) * Math.pow(16, selects.length - 1 - i),
+      0
+    );
     expect(hexValue).toBe(0);
   });
 

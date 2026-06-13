@@ -23,7 +23,14 @@ describe('Bits', () => {
     render(Bits, { props: { integer: 32 } });
     const cbs = screen.getAllByRole('checkbox') as HTMLInputElement[];
     expect(cbs.map((cb) => cb.checked)).toEqual([
-      false, false, true, false, false, false, false, false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
     ]);
   });
 
@@ -34,7 +41,14 @@ describe('Bits', () => {
     const cbs = screen.getAllByRole('checkbox') as HTMLInputElement[];
     expect(cbs).toHaveLength(8);
     expect(cbs.map((cb) => cb.checked)).toEqual([
-      false, false, false, false, true, true, true, true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
     ]);
   });
 
