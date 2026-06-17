@@ -40,7 +40,7 @@ Visualize True color
     cachePixel(selected);
   });
 
-  function onUpdate({ detail: { position, rgba } }: CustomEvent<UpdatePixelEvent>) {
+  function onUpdate({ position, rgba }: UpdatePixelEvent) {
     pixels[position] = fromRGBA(rgba);
     pixels = pixels;
     cachePixel(position);
@@ -103,6 +103,6 @@ Visualize True color
 <!-- mx--n is to center even with some overflow (within the size of n) -->
 <div class="sm:mx--6">
   {#key selected}
-    <Pixel pixel={selectedPixel} position={selected} on:update={onUpdate} />
+    <Pixel pixel={selectedPixel} position={selected} {onUpdate} />
   {/key}
 </div>

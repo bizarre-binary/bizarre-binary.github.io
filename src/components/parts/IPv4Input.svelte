@@ -76,7 +76,12 @@ A convenient addition to allow pasting/editing as whole
 <Toast bind:text={toast} type="warning" />
 <div class="relative">
   <div class="absolute text-gray-600 left-5 top-2 lt-sm:top-5 lt-sm:left-0 lt-xs:top--1 z-30">
-    <button class="i-bi-pencil ml-1" onclick={onBtnClick} bind:this={button} class:invisible={show}
+    <button
+      class="i-bi-pencil ml-1"
+      aria-label="Edit IPv4 address"
+      onclick={onBtnClick}
+      bind:this={button}
+      class:invisible={show}
     ></button>
   </div>
   <div

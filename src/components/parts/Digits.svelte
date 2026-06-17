@@ -10,6 +10,7 @@ Take an integer and represent that as a series of numbers with a base
 </script>
 
 <script lang="ts">
+  // used in `in:fly={...}` directives below — Vite's static analysis can't see template-only usage
   import { fly } from 'svelte/transition';
 
   interface Props {
@@ -73,7 +74,7 @@ Take an integer and represent that as a series of numbers with a base
   let changedPosition = $state(0);
   let debug = $derived({ len: _digits.length, changedPosition, _digits, digits });
 
-  function onUpdate({ detail: { position, digit } }: CustomEvent<UpdateDigitEvent>) {
+  function onUpdate({ position, digit }: UpdateDigitEvent) {
     changedPosition = position;
     digits[position] = digit;
 
@@ -122,7 +123,7 @@ Take an integer and represent that as a series of numbers with a base
           class:even:border-l-0={octetBorder}
           style={style(digit)}
         >
-          <Digit {digit} {base} position={idx} on:update={onUpdate} />
+          <Digit {digit} {base} position={idx} {onUpdate} />
         </td>
       {/each}
     </tr>

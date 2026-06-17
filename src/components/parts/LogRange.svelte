@@ -45,15 +45,17 @@ A logarithmical <input type="range">
     tint = '#fff094',
   }: Props = $props();
 
-  const hsl = toHsl(tint);
-  const rangeShdw = `${hsl.h}, ${hsl.s}%, ${hsl.l}%`;
+  const hsl = $derived(toHsl(tint));
+  const rangeShdw = $derived(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
 
-  const supMin = Math.max(0, log(min));
-  const supMax = Math.ceil(log(max));
+  const supMin = $derived(Math.max(0, log(min)));
+  const supMax = $derived(Math.ceil(log(max)));
 
-  const sups = [...Array(supMax - supMin + 1).keys()].map((n: number) => n + supMin).reverse();
-  const supsSmall = sups.filter((n: number) => n % 2 === 0);
-  const supsXS = supsSmall.filter((n: number) => n % 8 === 0);
+  const sups = $derived(
+    [...Array(supMax - supMin + 1).keys()].map((n: number) => n + supMin).reverse()
+  );
+  const supsSmall = $derived(sups.filter((n: number) => n % 2 === 0));
+  const supsXS = $derived(supsSmall.filter((n: number) => n % 8 === 0));
 
   let standardWidth = $state(1); // 1 is just a placeholder and it will be updated
   let minL = $derived(Math.max(0, log(min) * scale));

@@ -50,17 +50,17 @@ Visualize CIDR
 
 <div class="sm:mx--6">
   <IPv4 bind:address bind:prefix {renderedAddress}>
-    <!-- @migration-task: migrate this slot by hand, `extra-bits` is an invalid identifier -->
-    <IPv4Network
-      slot="extra-bits"
-      bind:address
-      bind:prefix
-      {length}
-      {mask}
-      {network}
-      {renderedMask}
-      {renderedNetwork}
-    />
+    {#snippet extraBits()}
+      <IPv4Network
+        bind:address
+        bind:prefix
+        {length}
+        {mask}
+        {network}
+        {renderedMask}
+        {renderedNetwork}
+      />
+    {/snippet}
   </IPv4>
 </div>
 

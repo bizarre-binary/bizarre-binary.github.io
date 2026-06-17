@@ -1,6 +1,7 @@
 // https://astro.build/config
 
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import svelte from '@astrojs/svelte';
 import UnoCSS from 'unocss/astro';
 import mdx from '@astrojs/mdx';
@@ -12,18 +13,20 @@ import partytown from '@astrojs/partytown';
 import AstroPWA from '@vite-pwa/astro';
 
 const markdown = {
-  remarkPlugins: [remarkMath],
-  rehypePlugins: [
-    // needed for rehypeAutolinkHeadings
-    rehypeSlug,
-    [
-      rehypeAutolinkHeadings,
-      {
-        behavior: 'append',
-      },
+  processor: unified({
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [
+      // needed for rehypeAutolinkHeadings
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'append',
+        },
+      ],
+      rehypeMathjax,
     ],
-    rehypeMathjax,
-  ],
+  }),
 };
 
 // https://astro.build/config

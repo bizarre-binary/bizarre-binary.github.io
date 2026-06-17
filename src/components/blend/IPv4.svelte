@@ -1,13 +1,13 @@
-<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (extra-bits to extra_bits) making the component unusable -->
 <!-- @component
 Represent IPv4 address including prefix notation
 -->
-<script context="module" lang="ts">
+<script module lang="ts">
   import BitHex from './BitHex.svelte';
   import IPv4Prefix from './IPv4Prefix.svelte';
   import InputNumberLocaled from '../parts/InputNumberLocaled.svelte';
   import IPv4Input from '../parts/IPv4Input.svelte';
   import { assemble, disassemble, calcHosts } from '@lib/ipv4';
+  import type { Snippet } from 'svelte';
 
   const min = 0;
   const max = 255;
@@ -15,32 +15,42 @@ Represent IPv4 address including prefix notation
 </script>
 
 <script lang="ts">
-  export let address = 0xc0a80000;
-  export let renderedAddress = 'placeholder';
-  export let prefix = 16;
+  interface Props {
+    address?: number;
+    renderedAddress?: string;
+    prefix?: number;
+    extraBits?: Snippet;
+  }
 
-  // break down into 4 octets
-  $: octets = disassemble(address);
+  let {
+    address = $bindable(0xc0a80000),
+    renderedAddress = 'placeholder',
+    prefix = $bindable(16),
+    extraBits,
+  }: Props = $props();
+
+  let octets = $derived(disassemble(address));
 
   const onChange = (position: number, e: Event) => {
     const target = e.target as HTMLInputElement;
     const value = Math.min(max, Math.max(0, target.value ? Number(target.value) : min));
 
-    octets[position] = value;
-
-    address = assemble(octets);
+    // derived octets is read-only; copy, mutate, reassemble
+    const next = [...octets];
+    next[position] = value;
+    address = assemble(next);
   };
 
-  $: addresses = calcHosts(prefix) + 2;
+  let addresses = $derived(calcHosts(prefix) + 2);
 
-  let showingWholeInput = false;
+  let showingWholeInput = $state(false);
 </script>
 
 <IPv4Input bind:address bind:prefix {renderedAddress} bind:show={showingWholeInput} />
 
 <!-- for xs only -->
 <div class="sm:hidden items-end mb-2 flex" class:invisible={showingWholeInput}>
-  <div class="grow" />
+  <div class="grow"></div>
   <div class="flex text-2xl lt-sm:text-xl lt-xs:text-lg mr-2 items-center">
     <div>
       <div class="flex">
@@ -53,7 +63,7 @@ Represent IPv4 address including prefix notation
               strictRangeOnInput={true}
               class="text-center w-12 lt-sm:w-10 lt-xs:w-8 input-number-hide-arrows bg-gray-50 rounded font-mono"
               value={octet}
-              on:change={(e) => onChange(idx, e)}
+              onchange={(e) => onChange(idx, e)}
             />
           </div>
         {/each}
@@ -71,11 +81,11 @@ Represent IPv4 address including prefix notation
     </div>
   </div>
   <IPv4Prefix bind:integer={prefix} hideHeader={false} />
-  <div class="grow" />
+  <div class="grow"></div>
 </div>
 <!-- main -->
 <div class="flex lt-sm:overflow-x-auto px-2 mx--2 pb-2">
-  <div class="grow" />
+  <div class="grow"></div>
   <div>
     <div class="flex lt-sm:hidden" class:invisible={showingWholeInput}>
       {#each octets as octet, idx (idx)}
@@ -87,7 +97,7 @@ Represent IPv4 address including prefix notation
             strictRangeOnInput={true}
             class="text-center w-full max-w-[7.4rem] input-number-hide-arrows bg-gray-50 rounded mx-1 font-mono"
             value={octet}
-            on:change={(e) => onChange(idx, e)}
+            onchange={(e) => onChange(idx, e)}
           />
           <div class="absolute bottom-0 right-0 group-last:hidden translate-x-0.8 font-bold z-10">
             .
@@ -97,7 +107,7 @@ Represent IPv4 address including prefix notation
     </div>
     <div class="relative">
       <div class="absolute w-full h-full rounded-t overflow-clip z--10">
-        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`} />
+        <div class="h-full bg-gray-200" style:width={`${(prefix / 32) * 100}%`}></div>
       </div>
       <div class="mix-blend-multiply">
         <div class="text-gray-600">
@@ -114,11 +124,11 @@ Represent IPv4 address including prefix notation
         </div>
       </div>
     </div>
-    <slot name="extra-bits" />
+    {@render extraBits?.()}
   </div>
   <div class="flex flex-col mx-2 text-2xl lt-sm:hidden" class:invisible={showingWholeInput}>
     <div class="lt-sm:text-base sm:translate-x--0.8 lt-sm:mb-1 lt-sm:font-bold">/</div>
-    <div class="grow" />
+    <div class="grow"></div>
   </div>
   <div class="flex flex-col lt-sm:hidden">
     <div class="lt-sm:hidden mb-2" class:invisible={showingWholeInput}>
@@ -146,5 +156,5 @@ Represent IPv4 address including prefix notation
       </div>
     </div>
   </div>
-  <div class="grow" />
+  <div class="grow"></div>
 </div>

@@ -35,25 +35,20 @@ A digit that represent any number up to hexadecimal
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { focusIt } from '@lib/dom';
-
-  const dispatch = createEventDispatcher<{ update: UpdateDigitEvent }>();
 
   interface Props {
     base?: number;
     digit?: number;
     position?: number;
+    onUpdate?: (e: UpdateDigitEvent) => void;
   }
 
-  let { base = 16, digit = $bindable(0), position = 0 }: Props = $props();
+  let { base = 16, digit = $bindable(0), position = 0, onUpdate }: Props = $props();
 
   const safeUpdate = (newDigit: number, position: number) => {
     const safeDigit = Math.min(base - 1, Math.max(0, newDigit));
-    dispatch('update', {
-      digit: safeDigit,
-      position,
-    });
+    onUpdate?.({ digit: safeDigit, position });
   };
 
   const focusNeighbour = (target: EventTarget | null, adjust: number) => {

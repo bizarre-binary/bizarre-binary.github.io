@@ -11,7 +11,6 @@ Take an integer and represent that as a series of bits
   import { genExtractDigits, genConstructInteger, getExponents } from '../../lib/digit';
   import { motion } from '../../lib/defaults';
   import { toHex, fromHex } from '../../lib/convert';
-  import { createEventDispatcher } from 'svelte';
 
   const defaultMultipleOf = 4;
   const extractBit = genExtractDigits(1);
@@ -25,6 +24,7 @@ Take an integer and represent that as a series of bits
 </script>
 
 <script lang="ts">
+  // used in `in:fly={...}` directives below — Vite's static analysis can't see template-only usage
   import { fly } from 'svelte/transition';
 
   interface Props {
@@ -39,6 +39,7 @@ Take an integer and represent that as a series of bits
     borderHex?: boolean;
     octetBorder?: boolean;
     overrideCellBg?: string | null;
+    onUpdate?: (e: BitsIntegerUpdateEvent) => void;
   }
 
   let {
@@ -53,6 +54,7 @@ Take an integer and represent that as a series of bits
     borderHex = true,
     octetBorder = false,
     overrideCellBg = null,
+    onUpdate,
   }: Props = $props();
 
   let changedPosition = $state(0);
@@ -65,7 +67,7 @@ Take an integer and represent that as a series of bits
   const constructInteger = genConstructInteger();
   let debug = $derived({ changedPosition, bits });
 
-  function onFlip({ detail: { position, checked } }: CustomEvent<BitFlipEvent>) {
+  function onFlip({ position, checked }: BitFlipEvent) {
     changedPosition = position;
     bits[position] = checked ? 1 : 0;
 
@@ -101,12 +103,8 @@ Take an integer and represent that as a series of bits
   const transitionOptions = { duration: motion.duration };
   const reverseIdx = (idx: number) => lengthOfBits - idx;
 
-  const dispatch = createEventDispatcher<{ update: BitsIntegerUpdateEvent }>();
-
   $effect(() => {
-    dispatch('update', {
-      integer,
-    });
+    onUpdate?.({ integer });
   });
 
   // just using disabledBits without parameter causes the lazy drawing which is not optimal in this case
@@ -163,7 +161,7 @@ Take an integer and represent that as a series of bits
           class:hover:outline={!disabled}
           style={style(bit)}
         >
-          <Bit checked={!!bit} position={idx} on:flip={onFlip} {disabled} />
+          <Bit checked={!!bit} position={idx} {onFlip} {disabled} />
         </td>
       {/each}
     </tr>

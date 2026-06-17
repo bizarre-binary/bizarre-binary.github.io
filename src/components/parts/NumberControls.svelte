@@ -2,8 +2,6 @@
 A auxiliary controls that supports changing numbers using buttons and input box
 -->
 <script module lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   const objectMap = <V, R>(
     obj: { [key: string]: V },
     fn: (value: V, key: string, index: number) => R
@@ -25,27 +23,26 @@ A auxiliary controls that supports changing numbers using buttons and input box
     min?: number;
     max?: number;
     integer?: number;
+    onClick?: (e: NCClickEvent) => void;
   }
 
-  let { min = 0, max = 999999999, integer = $bindable(42) }: Props = $props();
+  let { min = 0, max = 999999999, integer = $bindable(42), onClick }: Props = $props();
 
   let formatted = $derived(
     objectMap({ max, min }, (n: number) => new Intl.NumberFormat('en-US', {}).format(n))
   );
 
-  const dispatch = createEventDispatcher<{ click: NCClickEvent }>();
-
   function increment() {
-    dispatch('click', NCClickEvent.increment);
+    onClick?.(NCClickEvent.increment);
   }
   function decrement() {
-    dispatch('click', NCClickEvent.decrement);
+    onClick?.(NCClickEvent.decrement);
   }
   function setToMax() {
-    dispatch('click', NCClickEvent.setToMax);
+    onClick?.(NCClickEvent.setToMax);
   }
   function setToMin() {
-    dispatch('click', NCClickEvent.setToMin);
+    onClick?.(NCClickEvent.setToMin);
   }
 </script>
 

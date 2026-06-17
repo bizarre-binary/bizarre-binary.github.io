@@ -21,24 +21,18 @@ A bit flipper
 <script lang="ts">
   import { focusIt } from '@lib/dom';
 
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher<{ flip: BitFlipEvent }>();
-
   interface Props {
     checked?: boolean;
     position?: number;
     disabled?: boolean;
+    onFlip?: (e: BitFlipEvent) => void;
   }
 
-  let { checked = $bindable(false), position = 0, disabled = false }: Props = $props();
+  let { checked = $bindable(false), position = 0, disabled = false, onFlip }: Props = $props();
 
-  // avoid `$: dispatch ...` as I want the dispatch to happen from user interaction only
+  // dispatch only from user interaction, not from prop changes
   const flip = () => {
-    dispatch('flip', {
-      checked,
-      position,
-    });
+    onFlip?.({ checked, position });
   };
 
   const focusNeighbour = (target: EventTarget | null, adjust: number) => {

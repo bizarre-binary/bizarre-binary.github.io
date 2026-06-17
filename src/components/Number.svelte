@@ -48,7 +48,7 @@ A demo that helps develop components
     cacheInteger(integer);
   });
 
-  function onControl(e: CustomEvent<NCClickEvent>) {
+  function onControl(e: NCClickEvent) {
     const fn = {
       [NCClickEvent.increment]: () => {
         integerInput = integerInput == max ? min : integerInput + 1;
@@ -62,7 +62,7 @@ A demo that helps develop components
       [NCClickEvent.setToMin]: () => {
         integerInput = min;
       },
-    }[e.detail];
+    }[e];
 
     fn();
   }
@@ -85,7 +85,7 @@ A demo that helps develop components
       <div class="grow"></div>
     </div>
     <div dir="ltr" class="text-right">
-      <NumberControls bind:integer={integerInput} {max} {min} on:click={onControl} />
+      <NumberControls bind:integer={integerInput} {max} {min} onClick={onControl} />
     </div>
   </div>
 </div>

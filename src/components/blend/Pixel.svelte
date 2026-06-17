@@ -2,7 +2,7 @@
 Pixel that contains sub pixels
 -->
 <script module lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { untrack } from 'svelte';
   import SubPixel from './SubPixel.svelte';
   import CopyToClipboard from '@components/parts/CopyToClipboard.svelte';
   import { toHex } from '@lib/convert';
@@ -15,25 +15,19 @@ Pixel that contains sub pixels
 </script>
 
 <script lang="ts">
-  const dispatch = createEventDispatcher<{ update: UpdatePixelEvent }>();
-
   interface Props {
     pixel?: { r: number; g: number; b: number };
     position: number;
+    onUpdate?: (e: UpdatePixelEvent) => void;
   }
 
-  let { pixel = { r: 254, g: 240, b: 138 }, position }: Props = $props();
+  let { pixel = { r: 254, g: 240, b: 138 }, position, onUpdate }: Props = $props();
 
-  export const updatePixel = (rgba: RGBA) => {
-    dispatch('update', {
-      rgba,
-      position,
-    });
-  };
-
-  let { r, g, b } = $state(pixel);
+  let r = $state(untrack(() => pixel.r));
+  let g = $state(untrack(() => pixel.g));
+  let b = $state(untrack(() => pixel.b));
   $effect(() => {
-    updatePixel({ r, g, b, a: 255 });
+    onUpdate?.({ rgba: { r, g, b, a: 255 }, position });
   });
 
   const toSubPixel = (i: number) => {

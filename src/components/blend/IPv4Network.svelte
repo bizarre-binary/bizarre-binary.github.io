@@ -28,7 +28,7 @@ to augment IPv4 with Network and Netmask visualization
     renderedMask = 'placeholder',
   }: Props = $props();
 
-  function onUpdateForNetwork({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
+  function onUpdateForNetwork({ integer }: BitsIntegerUpdateEvent) {
     address = newAddressFrom(address, mask, integer);
   }
 
@@ -62,7 +62,7 @@ to augment IPv4 with Network and Netmask visualization
     return prefix;
   };
 
-  function onUpdateForMask({ detail: { integer } }: CustomEvent<BitsIntegerUpdateEvent>) {
+  function onUpdateForMask({ integer }: BitsIntegerUpdateEvent) {
     let p = minExponent(integer, mask, prefix);
     prefix = Math.max(0, Math.min(p, 31));
   }
@@ -100,7 +100,7 @@ to augment IPv4 with Network and Netmask visualization
       compact={true}
       octetBorder={true}
       overrideCellBg="#ffffff00"
-      on:update={onUpdateForMask}
+      onUpdate={onUpdateForMask}
       disabledBits={0b1}
     />
   </div>
@@ -122,6 +122,6 @@ to augment IPv4 with Network and Netmask visualization
   borderHex={true}
   compact={true}
   octetBorder={true}
-  on:update={onUpdateForNetwork}
+  onUpdate={onUpdateForNetwork}
   disabledBits={~mask >>> 0}
 />
